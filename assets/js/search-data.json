@@ -3,7 +3,7 @@
     
         "post0": {
             "title": "とりあえずテストしてみるよー。",
-            "content": "About . This notebook is a demonstration of some of capabilities of fastpages with notebooks. . With fastpages you can save your jupyter notebooks into the _notebooks folder at the root of your repository, and they will be automatically be converted to Jekyll compliant blog posts! . VERSION . v&#34;1.4.0&#34; . println(&quot;hello world&quot;) . hello world .",
+            "content": "About . This notebook is a demonstration of some of capabilities of fastpages with notebooks. . With fastpages you can save your jupyter notebooks into the _notebooks folder at the root of your repository, and they will be automatically be converted to Jekyll compliant blog posts! . VERSION . v&#34;1.4.0&#34; . println(&quot;hello world&quot;) . hello world . π . π = 3.1415926535897... . a = 1.1 a += 0.1 a .",
             "url": "https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/testjulia.html",
             "relUrl": "/jupyter/2020/03/27/testjulia.html",
             "date": " • Mar 27, 2020"

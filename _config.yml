@@ -39,7 +39,7 @@ baseurl: "/tpt-medical-it" # the subpath of your site, e.g. "/blog".
 # Github and twitter are optional:
 minima:
   social_links:
-    twitter: @vintea_01
+#   twitter: @vintea_01
     github: Vintea01
 
 # Set this to true to get LaTeX math equation support

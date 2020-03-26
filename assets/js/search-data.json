@@ -14,7 +14,7 @@
     
         ,"post1": {
             "title": "ベイズ勉強会 Part 1 離散分布のベイズ推論",
-            "content": "&#27010;&#35542;: &#12505;&#12452;&#12474;&#25512;&#35542;&#12398;&#12527;&#12540;&#12463;&#12501;&#12525;&#12540; . 観測データ$ mathcal{D}$と観測されていない未知の変数$ mathbf{X}$の同時分布$p( mathcal{D}, mathbf{X})$を構築 | 事後分布$p( mathbf{X}| mathcal{D}) = frac{p( mathcal{D}, mathbf{X})}{p( mathcal{D})}$を求める。 . Note: 観測された変数と未知の変数に分けることで様々なタスクに同様のアプローチで対応できる . Note: 未知のパラメータ$ theta$を推論した時の予測分布$$p(x_*| mathcal{D}) = int p(x_*| theta)p( theta| mathcal{D}) d theta$$ |",
+            "content": "&#27010;&#35542;: &#12505;&#12452;&#12474;&#25512;&#35542;&#12398;&#12527;&#12540;&#12463;&#12501;&#12525;&#12540; . 観測データ$ mathcal{D}$と観測されていない未知の変数$ mathbf{X}$の同時分布$p( mathcal{D}, mathbf{X})$を構築 | 事後分布$p( mathbf{X}| mathcal{D}) = frac{p( mathcal{D}, mathbf{X})}{p( mathcal{D})}$を求める。 | . Note: 観測された変数と未知の変に分けることで様々なタスクに同様のアプローチで対応できる . . Note: 未知のパラメータ$ theta$を推論した時の予測分布$$p(x_*| mathcal{D}) = int p(x_*| theta)p( theta| mathcal{D}) d theta$$ .",
             "url": "https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html",
             "relUrl": "/jupyter/2020/03/27/gsuyamachap3_1.html",
             "date": " • Mar 27, 2020"

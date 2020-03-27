@@ -3,12 +3,12 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>ベイズ勉強会 Part 1 離散分布のベイズ推論 | T/T</title>
+<title>ベイズ勉強会 Part 1 ベイズ推論のワークフロー | T/T</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="ベイズ勉強会 Part 1 離散分布のベイズ推論" />
+<meta property="og:title" content="ベイズ勉強会 Part 1 ベイズ推論のワークフロー" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="離散分布のベイズ推論を学ぶ" />
-<meta property="og:description" content="離散分布のベイズ推論を学ぶ" />
+<meta name="description" content="ベイズ推論の一連の流れを整理する。" />
+<meta property="og:description" content="ベイズ推論の一連の流れを整理する。" />
 <link rel="canonical" href="https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html" />
 <meta property="og:url" content="https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html" />
 <meta property="og:site_name" content="T/T" />
@@ -16,15 +16,15 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-27T00:00:00-05:00" />
 <script type="application/ld+json">
-{"datePublished":"2020-03-27T00:00:00-05:00","dateModified":"2020-03-27T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html"},"description":"離散分布のベイズ推論を学ぶ","image":"https://vintea01.github.io/tpt-medical-it/images/chart-preview.png","@type":"BlogPosting","url":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html","headline":"ベイズ勉強会 Part 1 離散分布のベイズ推論","@context":"https://schema.org"}</script>
+{"datePublished":"2020-03-27T00:00:00-05:00","dateModified":"2020-03-27T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html"},"description":"ベイズ推論の一連の流れを整理する。","image":"https://vintea01.github.io/tpt-medical-it/images/chart-preview.png","@type":"BlogPosting","url":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html","headline":"ベイズ勉強会 Part 1 ベイズ推論のワークフロー","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/tpt-medical-it/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://vintea01.github.io/tpt-medical-it/feed.xml" title="T/T" /><link rel="shortcut icon" type="image/x-icon" href="/tpt-medical-it/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>ベイズ勉強会 Part 1 離散分布のベイズ推論 | T/T</title>
+<title>ベイズ勉強会 Part 1 ベイズ推論のワークフロー | T/T</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="ベイズ勉強会 Part 1 離散分布のベイズ推論" />
+<meta property="og:title" content="ベイズ勉強会 Part 1 ベイズ推論のワークフロー" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="離散分布のベイズ推論を学ぶ" />
-<meta property="og:description" content="離散分布のベイズ推論を学ぶ" />
+<meta name="description" content="ベイズ推論の一連の流れを整理する。" />
+<meta property="og:description" content="ベイズ推論の一連の流れを整理する。" />
 <link rel="canonical" href="https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html" />
 <meta property="og:url" content="https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html" />
 <meta property="og:site_name" content="T/T" />
@@ -32,7 +32,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-27T00:00:00-05:00" />
 <script type="application/ld+json">
-{"datePublished":"2020-03-27T00:00:00-05:00","dateModified":"2020-03-27T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html"},"description":"離散分布のベイズ推論を学ぶ","image":"https://vintea01.github.io/tpt-medical-it/images/chart-preview.png","@type":"BlogPosting","url":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html","headline":"ベイズ勉強会 Part 1 離散分布のベイズ推論","@context":"https://schema.org"}</script>
+{"datePublished":"2020-03-27T00:00:00-05:00","dateModified":"2020-03-27T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html"},"description":"ベイズ推論の一連の流れを整理する。","image":"https://vintea01.github.io/tpt-medical-it/images/chart-preview.png","@type":"BlogPosting","url":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html","headline":"ベイズ勉強会 Part 1 ベイズ推論のワークフロー","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -103,7 +103,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">ベイズ勉強会 Part 1 離散分布のベイズ推論</h1><p class="page-description">離散分布のベイズ推論を学ぶ</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-03-27T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">ベイズ勉強会 Part 1 ベイズ推論のワークフロー</h1><p class="page-description">ベイズ推論の一連の流れを整理する。</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-03-27T00:00:00-05:00" itemprop="datePublished">
         Mar 27, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -127,7 +127,17 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h1"><a href="#概論:-ベイズ推論のワークフロー">概論: ベイズ推論のワークフロー </a></li>
+<li class="toc-entry toc-h1"><a href="#概論:-ベイズ推論のワークフロー">概論: ベイズ推論のワークフロー </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#予測分布">予測分布 </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#同時分布の記述">同時分布の記述 </a></li>
+<li class="toc-entry toc-h3"><a href="#事後分布の推論">事後分布の推論 </a></li>
+<li class="toc-entry toc-h3"><a href="#予測分布の算出">予測分布の算出 </a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul><!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
@@ -147,14 +157,72 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<script src="mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="概論:-ベイズ推論のワークフロー">
 <a class="anchor" href="#%E6%A6%82%E8%AB%96:-%E3%83%99%E3%82%A4%E3%82%BA%E6%8E%A8%E8%AB%96%E3%81%AE%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%95%E3%83%AD%E3%83%BC" aria-hidden="true"><span class="octicon octicon-link"></span></a>概論: ベイズ推論のワークフロー<a class="anchor-link" href="#%E6%A6%82%E8%AB%96:-%E3%83%99%E3%82%A4%E3%82%BA%E6%8E%A8%E8%AB%96%E3%81%AE%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%95%E3%83%AD%E3%83%BC"> </a>
 </h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash flash-warn">
+    <svg class="octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
+    <strong>Important: </strong>&gt; ベイズ推論の共通するワークフロー
+</div>&gt; 1. 観測データ$\mathcal{D}$と観測されていない未知の変数$\mathbf{X}$の同時分布$p(\mathcal{D}, \mathbf{X})$を構築
+<blockquote>
 <ol>
-<li>観測データ$\mathcal{D}$と観測されていない未知の変数$\mathbf{X}$の同時分布$p(\mathcal{D}, \mathbf{X})$を構築</li>
 <li>事後分布$p(\mathbf{X}|\mathcal{D}) = \frac{p(\mathcal{D}, \mathbf{X})}{p(\mathcal{D})}$を求める。</li>
 </ol>
+</blockquote>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>今回はさらに事後分布を用いて予測分布を計算するところまでを見る。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="予測分布">
+<a class="anchor" href="#%E4%BA%88%E6%B8%AC%E5%88%86%E5%B8%83" aria-hidden="true"><span class="octicon octicon-link"></span></a>予測分布<a class="anchor-link" href="#%E4%BA%88%E6%B8%AC%E5%88%86%E5%B8%83"> </a>
+</h2>
+<p>観測されたデータ$\mathcal{D}$に対して、パラメタ$\theta$を持つ確率分布でモデルを組み、新しいデータ$x_*$を予測したい。$\mathcal{D}$と$x_*$が独立に生成されるとすると、以下のような予測分布を用いることができる。</p>
+<p>
+$$p(x_*|\mathcal{D}) = \int p(x_*|\theta)p(\theta|\mathcal{D}) d\theta$$
+</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\mathcal{D}$, $\theta$, $x_*$の関係をDAGで表すと次のようになる。</p>
+<p><img src="/tpt-medical-it/images/copied_from_nb/dag/dag1.png" alt=""></p>
+<p>この時、$\mathcal{D}$と$x_*$はパラメタ$\theta$が与えられた条件の下での条件付き独立である。</p>
+<h3 id="同時分布の記述">
+<a class="anchor" href="#%E5%90%8C%E6%99%82%E5%88%86%E5%B8%83%E3%81%AE%E8%A8%98%E8%BF%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>同時分布の記述<a class="anchor-link" href="#%E5%90%8C%E6%99%82%E5%88%86%E5%B8%83%E3%81%AE%E8%A8%98%E8%BF%B0"> </a>
+</h3>
+<p>$\mathcal{D}$と$x_*$がパラメタ$\theta$が与えられた条件の下での条件付き独立であることから同時分布は以下のようになる。</p>
+$$
+p(\mathcal{D}, x_*, \theta) = p(\mathcal{D}|\theta)p(x_*|\theta)p(\theta)
+$$
 </div>
 </div>
 </div>
@@ -164,8 +232,27 @@ window.onload = wrap_img;
 <p></p>
 <div class="flash">
     <svg class="octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
-    <strong>Note: </strong>観測された変数と未知の変数に分けることで様々なタスクに同様のアプローチで対応できる
+    <strong>Note: </strong>$p(\theta)$は2個必要なのではないかと思うかもしれない。サイコロの目によって動きが決まる駒が2つあり、同時に動かす状況を考えよう。コマの動きを決めるのにサイコロを振る回数は1回である。
 </div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="事後分布の推論">
+<a class="anchor" href="#%E4%BA%8B%E5%BE%8C%E5%88%86%E5%B8%83%E3%81%AE%E6%8E%A8%E8%AB%96" aria-hidden="true"><span class="octicon octicon-link"></span></a>事後分布の推論<a class="anchor-link" href="#%E4%BA%8B%E5%BE%8C%E5%88%86%E5%B8%83%E3%81%AE%E6%8E%A8%E8%AB%96"> </a>
+</h3>
+<p>データ$\mathcal{D}$だけが手元にある時、残りの変数の事後分布は
+$$
+\begin{eqnarray}
+    p(x_*, \theta|\mathcal{D}) &amp;=&amp; \frac{p(\mathcal{D}, x_*, \theta)}{p(\mathcal{D})} \\
+    &amp;=&amp; \frac{p(\mathcal{D}|\theta)p(x_*|\theta)p(\theta)}{p(\mathcal{D})} \\
+    &amp;=&amp; p(x_*|\theta)p(\theta|\mathcal{D})
+\end{eqnarray}
+$$
+となる。</p>
 
 </div>
 </div>
@@ -176,8 +263,23 @@ window.onload = wrap_img;
 <p></p>
 <div class="flash">
     <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
-    <strong>Note: </strong>未知のパラメータ$\theta$を推論した時の予測分布$$p(x_*|\mathcal{D}) = \int p(x_*|\theta)p(\theta|\mathcal{D}) d\theta$$
+    <strong>Note: </strong>$p(\theta|\mathcal{D}) = \frac{p(\mathcal{D}|\theta)p(\theta)}{p(\mathcal{D})}$(ベイズの定理)を使った。
 </div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="予測分布の算出">
+<a class="anchor" href="#%E4%BA%88%E6%B8%AC%E5%88%86%E5%B8%83%E3%81%AE%E7%AE%97%E5%87%BA" aria-hidden="true"><span class="octicon octicon-link"></span></a>予測分布の算出<a class="anchor-link" href="#%E4%BA%88%E6%B8%AC%E5%88%86%E5%B8%83%E3%81%AE%E7%AE%97%E5%87%BA"> </a>
+</h3>
+<p>$\mathcal{D}$が決まった時の$x_*$の確率分布、すなわち予測分布$p(x_*|\mathcal{D}$は$\theta$を積分除去することで得られる。</p>
+<p>
+$$p(x_*|\mathcal{D}) = \int p(x_*|\theta)p(\theta|\mathcal{D}) d\theta$$
+</p>
+<p>以上がベイズ推論の予測までを含めた一連の流れである。次回、離散確率分布について具体的にやってみる。</p>
 
 </div>
 </div>

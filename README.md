@@ -6,7 +6,7 @@
 
 https://Vintea01.github.io/tpt-medical-it/
 
-# My Blog
+# T/Tウェブサイト 
 
 
 _powered by [fastpages](https://github.com/fastai/fastpages)_

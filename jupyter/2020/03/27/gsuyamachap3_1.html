@@ -12,11 +12,11 @@
 <link rel="canonical" href="https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html" />
 <meta property="og:url" content="https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html" />
 <meta property="og:site_name" content="T/T" />
-<meta property="og:image" content="https://vintea01.github.io/tpt-medical-it/images/chart-preview.png" />
+<meta property="og:image" content="https://vintea01.github.io/tpt-medical-it/dag/dag1.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-27T00:00:00-05:00" />
 <script type="application/ld+json">
-{"datePublished":"2020-03-27T00:00:00-05:00","dateModified":"2020-03-27T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html"},"description":"ベイズ推論の一連の流れを整理する。","image":"https://vintea01.github.io/tpt-medical-it/images/chart-preview.png","@type":"BlogPosting","url":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html","headline":"ベイズ勉強会 Part 1 ベイズ推論のワークフロー","@context":"https://schema.org"}</script>
+{"datePublished":"2020-03-27T00:00:00-05:00","dateModified":"2020-03-27T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html"},"description":"ベイズ推論の一連の流れを整理する。","image":"https://vintea01.github.io/tpt-medical-it/dag/dag1.png","@type":"BlogPosting","url":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html","headline":"ベイズ勉強会 Part 1 ベイズ推論のワークフロー","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/tpt-medical-it/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://vintea01.github.io/tpt-medical-it/feed.xml" title="T/T" /><link rel="shortcut icon" type="image/x-icon" href="/tpt-medical-it/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>ベイズ勉強会 Part 1 ベイズ推論のワークフロー | T/T</title>
@@ -28,11 +28,11 @@
 <link rel="canonical" href="https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html" />
 <meta property="og:url" content="https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html" />
 <meta property="og:site_name" content="T/T" />
-<meta property="og:image" content="https://vintea01.github.io/tpt-medical-it/images/chart-preview.png" />
+<meta property="og:image" content="https://vintea01.github.io/tpt-medical-it/dag/dag1.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-27T00:00:00-05:00" />
 <script type="application/ld+json">
-{"datePublished":"2020-03-27T00:00:00-05:00","dateModified":"2020-03-27T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html"},"description":"ベイズ推論の一連の流れを整理する。","image":"https://vintea01.github.io/tpt-medical-it/images/chart-preview.png","@type":"BlogPosting","url":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html","headline":"ベイズ勉強会 Part 1 ベイズ推論のワークフロー","@context":"https://schema.org"}</script>
+{"datePublished":"2020-03-27T00:00:00-05:00","dateModified":"2020-03-27T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html"},"description":"ベイズ推論の一連の流れを整理する。","image":"https://vintea01.github.io/tpt-medical-it/dag/dag1.png","@type":"BlogPosting","url":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/27/gsuyamachap3_1.html","headline":"ベイズ勉強会 Part 1 ベイズ推論のワークフロー","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -177,13 +177,11 @@ window.onload = wrap_img;
 <p></p>
 <div class="flash flash-warn">
     <svg class="octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
-    <strong>Important: </strong>&gt; ベイズ推論の共通するワークフロー
-</div>&gt; 1. 観測データ$\mathcal{D}$と観測されていない未知の変数$\mathbf{X}$の同時分布$p(\mathcal{D}, \mathbf{X})$を構築
-<blockquote>
+    <strong>Important: </strong>ベイズ推論の共通するワークフロー
+</div>1. 観測データ$\mathcal{D}$と観測されていない未知の変数$\mathbf{X}$の同時分布$p(\mathcal{D}, \mathbf{X})$を構築
 <ol>
 <li>事後分布$p(\mathbf{X}|\mathcal{D}) = \frac{p(\mathcal{D}, \mathbf{X})}{p(\mathcal{D})}$を求める。</li>
 </ol>
-</blockquote>
 
 </div>
 </div>

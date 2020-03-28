@@ -9,14 +9,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="ベルヌーイ分布のベイズ推論を実践する" />
 <meta property="og:description" content="ベルヌーイ分布のベイズ推論を実践する" />
-<link rel="canonical" href="https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/29/bayes_part2.html" />
-<meta property="og:url" content="https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/29/bayes_part2.html" />
+<link rel="canonical" href="https://vintea01.github.io/tpt-medical-it/bayes/2020/03/29/bayes_part2.html" />
+<meta property="og:url" content="https://vintea01.github.io/tpt-medical-it/bayes/2020/03/29/bayes_part2.html" />
 <meta property="og:site_name" content="T/T" />
 <meta property="og:image" content="https://vintea01.github.io/tpt-medical-it/images/dag1.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-29T00:00:00-05:00" />
 <script type="application/ld+json">
-{"datePublished":"2020-03-29T00:00:00-05:00","dateModified":"2020-03-29T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/29/bayes_part2.html"},"description":"ベルヌーイ分布のベイズ推論を実践する","image":"https://vintea01.github.io/tpt-medical-it/images/dag1.png","@type":"BlogPosting","url":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/29/bayes_part2.html","headline":"ベイズ勉強会 Part 2 ベルヌーイ分布のベイズ推論","@context":"https://schema.org"}</script>
+{"datePublished":"2020-03-29T00:00:00-05:00","dateModified":"2020-03-29T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://vintea01.github.io/tpt-medical-it/bayes/2020/03/29/bayes_part2.html"},"description":"ベルヌーイ分布のベイズ推論を実践する","image":"https://vintea01.github.io/tpt-medical-it/images/dag1.png","@type":"BlogPosting","url":"https://vintea01.github.io/tpt-medical-it/bayes/2020/03/29/bayes_part2.html","headline":"ベイズ勉強会 Part 2 ベルヌーイ分布のベイズ推論","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/tpt-medical-it/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://vintea01.github.io/tpt-medical-it/feed.xml" title="T/T" /><link rel="shortcut icon" type="image/x-icon" href="/tpt-medical-it/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>ベイズ勉強会 Part 2 ベルヌーイ分布のベイズ推論 | T/T</title>
@@ -25,14 +25,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="ベルヌーイ分布のベイズ推論を実践する" />
 <meta property="og:description" content="ベルヌーイ分布のベイズ推論を実践する" />
-<link rel="canonical" href="https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/29/bayes_part2.html" />
-<meta property="og:url" content="https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/29/bayes_part2.html" />
+<link rel="canonical" href="https://vintea01.github.io/tpt-medical-it/bayes/2020/03/29/bayes_part2.html" />
+<meta property="og:url" content="https://vintea01.github.io/tpt-medical-it/bayes/2020/03/29/bayes_part2.html" />
 <meta property="og:site_name" content="T/T" />
 <meta property="og:image" content="https://vintea01.github.io/tpt-medical-it/images/dag1.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-29T00:00:00-05:00" />
 <script type="application/ld+json">
-{"datePublished":"2020-03-29T00:00:00-05:00","dateModified":"2020-03-29T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/29/bayes_part2.html"},"description":"ベルヌーイ分布のベイズ推論を実践する","image":"https://vintea01.github.io/tpt-medical-it/images/dag1.png","@type":"BlogPosting","url":"https://vintea01.github.io/tpt-medical-it/jupyter/2020/03/29/bayes_part2.html","headline":"ベイズ勉強会 Part 2 ベルヌーイ分布のベイズ推論","@context":"https://schema.org"}</script>
+{"datePublished":"2020-03-29T00:00:00-05:00","dateModified":"2020-03-29T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://vintea01.github.io/tpt-medical-it/bayes/2020/03/29/bayes_part2.html"},"description":"ベルヌーイ分布のベイズ推論を実践する","image":"https://vintea01.github.io/tpt-medical-it/images/dag1.png","@type":"BlogPosting","url":"https://vintea01.github.io/tpt-medical-it/bayes/2020/03/29/bayes_part2.html","headline":"ベイズ勉強会 Part 2 ベルヌーイ分布のベイズ推論","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -117,7 +117,7 @@ window.onload = wrap_img;
     
       <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
       
-        <a class="category-tags-link" href="/tpt-medical-it/categories/#jupyter">jupyter</a>
+        <a class="category-tags-link" href="/tpt-medical-it/categories/#bayes">bayes</a>
         
       
       </p>
@@ -228,8 +228,17 @@ $$<p>と書ける。</p>
 <p></p>
 <div class="flash flash-warn">
     <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
-    <strong>Important: </strong>ベータ分布の確率密度関数$$\begin{eqnarray} Beta(\mu|a, b) = C_B(a,b) \mu^{a-1} (1-\mu)^{b-1},　ただし, C_B (a,b) = \frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}, \mu \in (0, 1), \{a, b\} \in \mathbb{R^+}を満たす.\end{eqnarray}$$
+    <strong>Important: </strong>ベータ分布の確率密度関数
 </div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote>$$Beta(\mu|a, b) = C_B(a,b) \mu^{a-1} (1-\mu)^{b-1}$$$$ただし, C_B (a,b) = \frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}, \mu \in (0, 1), \{a, b\} \in \mathbb{R^+}を満たす.$$
+</blockquote>
 
 </div>
 </div>
@@ -248,22 +257,21 @@ $$<p>と書ける。</p>
 <p></p>
 <div class="flash">
     <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
-    <strong>Note: </strong>$C_B(a,b)$は正規化されることを保証する項である。$C_B(a,b)$中の$\Gamma(・)$はガンマ関数である。ガンマ関数は自然数に定義される階乗を一般化したものであり、正の実数$x \in \mathbb{R^+}$に対して、
-</div>$$
-\Gamma(x) = \int t^{x-1} e^{-t} dt
-$$
-と定義される。重要な性質として
-$$
-\begin{eqnarray}
-    \Gamma(x+1) = x\Gamma(x)
-    \Gamma(1) = 1
-\end{eqnarray}
-$$
-を満たし、自然数nに対しては
-$$
-\Gamma(n+1) = n!
-$$
-が成り立つ。
+    <strong>Note: </strong>ベータ分布の係数とガンマ関数
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote>
+<p>$C_B(a,b)$は正規化されることを保証する係数である。$C_B(a,b)$中の$\Gamma(・)$はガンマ関数である。ガンマ関数は自然数に定義される階乗を一般化したものであり、正の実数$x \in \mathbb{R^+}$に対して、</p>
+$$\Gamma(x) = \int t^{x-1} e^{-t} dt$$<p>と定義される。重要な性質として</p>
+$$\begin{eqnarray} \Gamma(x+1) &amp;=&amp; x\Gamma(x) \\ \Gamma(1) &amp;=&amp; 1 \end{eqnarray}$$<p>を満たし、自然数nに対しては</p>
+$$\Gamma(n+1) = n!$$<p>が成り立つ。</p>
+</blockquote>
 
 </div>
 </div>
@@ -475,7 +483,7 @@ $$<p>と予測分布はベルヌーイ分布の形で書ける。</p>
         theme="github-light"
         crossorigin="anonymous"
         async>
-</script><a class="u-url" href="/tpt-medical-it/jupyter/2020/03/29/bayes_part2.html" hidden></a>
+</script><a class="u-url" href="/tpt-medical-it/bayes/2020/03/29/bayes_part2.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">

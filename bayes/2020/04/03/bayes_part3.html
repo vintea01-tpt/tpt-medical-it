@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>ベイズ勉強会 Part 3 1次元ガウス分布のベイズ推論 | T/T</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="ベイズ勉強会 Part 3 1次元ガウス分布のベイズ推論" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="1次元ガウス分布のベイズ推論を実践する" />
+<meta property="og:description" content="1次元ガウス分布のベイズ推論を実践する" />
+<link rel="canonical" href="https://vintea01.github.io/tpt-medical-it/bayes/2020/04/03/bayes_part3.html" />
+<meta property="og:url" content="https://vintea01.github.io/tpt-medical-it/bayes/2020/04/03/bayes_part3.html" />
+<meta property="og:site_name" content="T/T" />
+<meta property="og:image" content="https://vintea01.github.io/tpt-medical-it/images/dag1.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-04-03T00:00:00-05:00" />
+<script type="application/ld+json">
+{"datePublished":"2020-04-03T00:00:00-05:00","dateModified":"2020-04-03T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://vintea01.github.io/tpt-medical-it/bayes/2020/04/03/bayes_part3.html"},"description":"1次元ガウス分布のベイズ推論を実践する","image":"https://vintea01.github.io/tpt-medical-it/images/dag1.png","@type":"BlogPosting","url":"https://vintea01.github.io/tpt-medical-it/bayes/2020/04/03/bayes_part3.html","headline":"ベイズ勉強会 Part 3 1次元ガウス分布のベイズ推論","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/tpt-medical-it/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://vintea01.github.io/tpt-medical-it/feed.xml" title="T/T" /><link rel="shortcut icon" type="image/x-icon" href="/tpt-medical-it/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>ベイズ勉強会 Part 3 1次元ガウス分布のベイズ推論 | T/T</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="ベイズ勉強会 Part 3 1次元ガウス分布のベイズ推論" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="1次元ガウス分布のベイズ推論を実践する" />
+<meta property="og:description" content="1次元ガウス分布のベイズ推論を実践する" />
+<link rel="canonical" href="https://vintea01.github.io/tpt-medical-it/bayes/2020/04/03/bayes_part3.html" />
+<meta property="og:url" content="https://vintea01.github.io/tpt-medical-it/bayes/2020/04/03/bayes_part3.html" />
+<meta property="og:site_name" content="T/T" />
+<meta property="og:image" content="https://vintea01.github.io/tpt-medical-it/images/dag1.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-04-03T00:00:00-05:00" />
+<script type="application/ld+json">
+{"datePublished":"2020-04-03T00:00:00-05:00","dateModified":"2020-04-03T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://vintea01.github.io/tpt-medical-it/bayes/2020/04/03/bayes_part3.html"},"description":"1次元ガウス分布のベイズ推論を実践する","image":"https://vintea01.github.io/tpt-medical-it/images/dag1.png","@type":"BlogPosting","url":"https://vintea01.github.io/tpt-medical-it/bayes/2020/04/03/bayes_part3.html","headline":"ベイズ勉強会 Part 3 1次元ガウス分布のベイズ推論","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://vintea01.github.io/tpt-medical-it/feed.xml" title="T/T" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/tpt-medical-it/">T/T</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/tpt-medical-it/about/">About Me</a><a class="page-link" href="/tpt-medical-it/search/">Search</a><a class="page-link" href="/tpt-medical-it/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">ベイズ勉強会 Part 3 1次元ガウス分布のベイズ推論</h1><p class="page-description">1次元ガウス分布のベイズ推論を実践する</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-04-03T00:00:00-05:00" itemprop="datePublished">
+        Apr 3, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      2 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/tpt-medical-it/categories/#bayes">bayes</a>
+        
+      
+      </p>
+    
+
+    
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#1次元ガウス分布">1次元ガウス分布 </a></li>
+<li class="toc-entry toc-h1"><a href="#平均が未知、精度が既知の場合">平均が未知、精度が既知の場合 </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#同時分布の構築">同時分布の構築 </a></li>
+<li class="toc-entry toc-h2"><a href="#事後分布の推論">事後分布の推論 </a></li>
+<li class="toc-entry toc-h2"><a href="#予測分布の算出">予測分布の算出 </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#平均が既知、精度が未知の場合">平均が既知、精度が未知の場合 </a></li>
+<li class="toc-entry toc-h1"><a href="#平均と精度がともに未知の場合">平均と精度がともに未知の場合 </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-04-03-bayes_part3.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>参考図書 <sup id="fnref-1" class="footnote-ref"><a href="#fn-1">1</a></sup></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="1次元ガウス分布">
+<a class="anchor" href="#1%E6%AC%A1%E5%85%83%E3%82%AC%E3%82%A6%E3%82%B9%E5%88%86%E5%B8%83" aria-hidden="true"><span class="octicon octicon-link"></span></a>1次元ガウス分布<a class="anchor-link" href="#1%E6%AC%A1%E5%85%83%E3%82%AC%E3%82%A6%E3%82%B9%E5%88%86%E5%B8%83"> </a>
+</h1>
+<p>1次元のガウス分布(以下本ページでは単に「ガウス分布」と呼ぶ)は、次の確率密度関数で表される$x \in \mathbb{R}$を生成する確率分布である。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash flash-warn">
+    <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
+    <strong>Important: </strong>1次元ガウス分布の確率密度関数$$\mathcal{N}(x|\mu,\sigma^2) = \frac{1}{\sqrt{2 \pi \sigma^2}} exp\{-\frac{(x-\mu)^2}{2\sigma^2}\}$$
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>パラメータは$\mu \in \mathbb{R}, \sigma^2 \in \mathbb{R^+}$の2つで、それぞれ平均と分散である。精度パラメータ$\lambda = \sigma^{-2}$を用いて書くこともある。精度で書くと以下のようになる。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash flash-warn">
+    <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
+    <strong>Important: </strong>精度で表した1次元ガウス分布の確率密度関数$$\mathcal{N}(x|\mu,\lambda^{-1}) = \frac{1}{\sqrt{2 \pi}} \lambda^{\frac{1}{2}}exp\{-\frac{1}{2}(x-\mu)^2 \lambda\}$$
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>以下、観測されたデータ$\mathcal{D}=\{x_1,\dots,x_N\}$の各点$x_n$と未知の観測$x_*$は同じ1次元ガウス分布から独立に生成されたと仮定してベイズ推論を行う。</p>
+<h1 id="平均が未知、精度が既知の場合">
+<a class="anchor" href="#%E5%B9%B3%E5%9D%87%E3%81%8C%E6%9C%AA%E7%9F%A5%E3%80%81%E7%B2%BE%E5%BA%A6%E3%81%8C%E6%97%A2%E7%9F%A5%E3%81%AE%E5%A0%B4%E5%90%88" aria-hidden="true"><span class="octicon octicon-link"></span></a>平均が未知、精度が既知の場合<a class="anchor-link" href="#%E5%B9%B3%E5%9D%87%E3%81%8C%E6%9C%AA%E7%9F%A5%E3%80%81%E7%B2%BE%E5%BA%A6%E3%81%8C%E6%97%A2%E7%9F%A5%E3%81%AE%E5%A0%B4%E5%90%88"> </a>
+</h1>
+<p>ガウス分布の2つのパラメータのうち、精度パラメータ$\lambda$が既知である状況でベイズ推論を行う。</p>
+<h2 id="同時分布の構築">
+<a class="anchor" href="#%E5%90%8C%E6%99%82%E5%88%86%E5%B8%83%E3%81%AE%E6%A7%8B%E7%AF%89" aria-hidden="true"><span class="octicon octicon-link"></span></a>同時分布の構築<a class="anchor-link" href="#%E5%90%8C%E6%99%82%E5%88%86%E5%B8%83%E3%81%AE%E6%A7%8B%E7%AF%89"> </a>
+</h2>
+<p>平均$\mu$だけが未知という条件で、尤度関数をガウス分布にした場合、そのパラメータ$\mu$の事前分布はどうすればよいだろうか。$\mu$の条件は$\mu \in \mathbb{R}$であることのみであり、実数を1つ出力する分布を事前分布とすればベイズ推論ができそうだ。このような分布は様々だが、1次元ガウス分布を用いることで事後分布も1次元ガウス分布となることが知られている。つまり尤度関数が1次元ガウス分布の場合の共役事前分布は1次元ガウス分布である。これを用いて同時分布を構築すると以下のようになる。</p>
+$$
+\begin{eqnarray}
+    p(\mathcal{D},x_*,\mu) &amp;=&amp; p(\mathcal{D}|\mu)p(x_*|\mu)p(\mu) \\
+    p(\mathcal{D}|\mu) &amp;=&amp; \Pi_{n=1}^{N} \mathcal{N}(x_n|\mu, \lambda^{-1}) \\
+    p(x_*|\mu) &amp;=&amp; \mathcal{N}(x_*|\mu, \lambda^{-1}) \\
+    p(\mu) &amp;=&amp; \mathcal{N}(\mu|m, \lambda_{\mu}^{-1})
+\end{eqnarray}
+$$<p>$p(\mu)$の$m \in \mathbb{R}, \lambda_{\mu} \in \mathbb{R^+}$は固定されたハイパーパラメータである。</p>
+<h2 id="事後分布の推論">
+<a class="anchor" href="#%E4%BA%8B%E5%BE%8C%E5%88%86%E5%B8%83%E3%81%AE%E6%8E%A8%E8%AB%96" aria-hidden="true"><span class="octicon octicon-link"></span></a>事後分布の推論<a class="anchor-link" href="#%E4%BA%8B%E5%BE%8C%E5%88%86%E5%B8%83%E3%81%AE%E6%8E%A8%E8%AB%96"> </a>
+</h2>
+<p>事後分布$p(\mu|\mathcal{D})$を求める。ベイズの定理から次のように書ける。分母は形状には関わらないので省く。</p>
+$$
+\begin{eqnarray}
+    p(\mu|\mathcal{D}) &amp;\propto&amp; p(\mathcal{D}|\mu) p(\mu) \\
+    &amp;=&amp; \{\Pi_{n=1}^{N} p(x_n|\mu)\}p(\mu) \\
+    &amp;=&amp; \{\Pi_{n=1}^{N} \mathcal{N}(x_n|\mu, \lambda^{-1})\} \mathcal{N}(\mu|m,\lambda_{\mu}^{-1})
+\end{eqnarray}
+$$<p>対数をとると、</p>
+$$
+\begin{eqnarray}
+    p(\mu|\mathcal{D}) &amp;=&amp; \Sigma_{n=1}^{N} \ln \mathcal{N}(x_n|\mu,\lambda^{-1}) + \ln \mathcal{N}(\mu|m,\lambda_{\mu}^{-1}) + const. \\
+    &amp;=&amp; \Sigma_{n=1}^{N} \{-\frac{1}{2}(x_n-\mu)^2 \lambda\} + \{-\frac{1}{2}(\mu-m)^2 \lambda_{\mu}\} + const. \\
+    &amp;=&amp; -\frac{1}{2}\left[\Sigma_{n=1}^{N}\{(x_n^2 -2x_n\mu + \mu^2)\lambda\} + (\mu^2 - 2\mu m + m^2)\lambda_{\mu}\right] + const. \\
+    &amp;=&amp; -\frac{1}{2}\{(N\lambda + \lambda_{\mu})\mu^2 - 2(\Sigma_{n=1}^{N} x_n \lambda + m \lambda_{\mu})\mu\} + const.
+\end{eqnarray}
+$$<p>最後の変形では$\mu$に関わらない値は$const.$に吸収させている。これを平方完成するとガウス分布の形になっていることがわかるがここでは結果から逆算的に求める。事後分布が次のようなガウス分布で書けるとする。</p>
+$$
+p(\mu|\mathcal{D}) = \mathcal{N}(\mu|\hat{m},\hat{\lambda_{\mu}}^{-1})
+$$<p>対数をとると</p>
+$$
+\begin{eqnarray}
+    \ln p(\mu|\mathcal{D}) &amp;=&amp; -\frac{1}{2}(\mu-\hat{m})^2 \hat{\lambda_{\mu}} \\
+    &amp;=&amp; -\frac{1}{2}\{\hat{\lambda_{\mu}} \mu^2 - 2\hat{m} \hat{\lambda_{\mu}} \mu\} + const.
+\end{eqnarray}
+$$<p>となるので、事後分布のパラメータ$\hat{m},\hat{\lambda_{\mu}}$は次のように求まる。</p>
+$$
+\begin{eqnarray}
+    \hat{\lambda_{\mu}} &amp;=&amp; N \lambda + \lambda_{\mu} \\
+    \hat{m} &amp;=&amp; \frac{\lambda \Sigma_{n=1}^{N} x_n + \lambda_{\mu}m}{\hat{\lambda_{\mu}}}
+\end{eqnarray}
+$$<p>以上で事後分布の推論が完了した。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
+    <strong>Note: </strong>更新された精度パラメータは、ハイパーパラメータに$N\lambda$だけ加えたものでありデータ数$N$が大きくなる程精度が上がる、すなわち事後分布のばらつきが小さくなりかつハイパーパラメータの影響が小さくなることを示している。平均パラメータはハイパーパラメータ$m$と$\Sigma{n=1}^{N}x_n$の重み付き和の形になっておりこれもデータ数が増えるほどハイパーパラメータの影響を受けにくくなることがわかる。
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="予測分布の算出">
+<a class="anchor" href="#%E4%BA%88%E6%B8%AC%E5%88%86%E5%B8%83%E3%81%AE%E7%AE%97%E5%87%BA" aria-hidden="true"><span class="octicon octicon-link"></span></a>予測分布の算出<a class="anchor-link" href="#%E4%BA%88%E6%B8%AC%E5%88%86%E5%B8%83%E3%81%AE%E7%AE%97%E5%87%BA"> </a>
+</h2>
+<p>モデル全体の事後分布をパラメータ$\mu$で周辺化することで未知の観測$x_*$に対する予測分布が得られる。ハット記号を付けるのが面倒なので、学習していない事前分布から予測分布を算出し、後で更新されたパラメータを代入してみることにする。</p>
+$$
+\begin{eqnarray}
+    p(x_*) &amp;=&amp; \int p(x_*|\mu) p(\mu) d\mu \\
+    &amp;=&amp; \int \mathcal{N}(x_*|\mu,\lambda^{-1})\mathcal{N}(\mu|m,\lambda_{\mu}^{-1}) d\mu
+\end{eqnarray}
+$$<p>これを直接計算するのは大変なので、ベイズの定理と対数をうまく使ってみる。ベイズの定理から、</p>
+$$
+p(\mu|x_*) = \frac{p(x_*|\mu)p(\mu)}{p(x_*)}
+$$<p>$p(x_*)$を左辺に置いて対数をとると、</p>
+$$
+\ln p(x_*) = \ln p(x_*|\mu) - \ln p(\mu|x_*) + const.
+$$<p>$\ln p(\mu)$は$x_*$には関係ないので$const.$とした。$p(\mu|x_*)$は$p(\mu|\mathcal{D})$に$\mathcal{D}=x_*$とすれば求まる。</p>
+$$
+\begin{eqnarray}
+    p(\mu|x_*) &amp;=&amp; \mathcal{N}(\mu|m(x_*), (\lambda + \lambda_{\mu})^{-1}) \\
+    ただし　m(x_*) &amp;=&amp; \frac{\lambda x_* + \lambda_{\mu}m}{\lambda + \lambda_{\mu}}
+\end{eqnarray}
+$$<p>これと$p(x_*|\mu) = \mathcal{N}(\mu, \lambda^{-1})$を代入すると</p>
+$$
+\begin{eqnarray}
+    \ln p(x_*) &amp;=&amp; \ln p(x_*|\mu) - \ln p(\mu|x_*) + const. \\
+    &amp;=&amp; -\frac{1}{2} \{ \lambda (x_* - \mu)^2 - (\lambda + \lambda_{\mu})(\mu - m(x_*))^2 \} + const. \\
+    &amp;=&amp; -\frac{1}{2} \{ \lambda x_*^2 - 2 \lambda \mu x_* - \frac{\lambda^2 x_*^2 + 2 \lambda \lambda_{\mu} m x_*}{\lambda + \lambda_{\mu}} + 2 \lambda \mu x_* \} + const. \\
+    &amp;=&amp; -\frac{1}{2} \{ \frac{\lambda^2 x_*^2 + \lambda \lambda_{\mu} x_*^2 - \lambda^2 x_*^2 - 2 \lambda \lambda_{\mu} m x_*}{\lambda + \lambda_{\mu}}\} + const. \\
+    &amp;=&amp; -\frac{1}{2} \{ \frac{\lambda \lambda_{\mu}}{\lambda + \lambda_{\mu}} x_*^2 - \frac{2m\lambda\lambda_{\mu}}{\lambda + \lambda_{\mu}} x_* \} + const.
+\end{eqnarray}
+$$<p>$x_*$の2次関数の形にできたので事後分布と同じく逆算的に計算すると、予測分布$p(x_*)$は</p>
+$$
+\begin{eqnarray}
+    p(x_*) &amp;=&amp; \mathcal{N} (x_* | \mu_*, \lambda_{*}^{-1}) \\
+    ただし　\lambda_* &amp;=&amp; \frac{\lambda \lambda_{\mu}}{\lambda + \lambda_{\mu}} \\
+    \mu_* &amp;=&amp; m
+\end{eqnarray}
+$$<p>となる。これに$\hat{m}, \hat{\lambda_{\mu}}$を代入することで学習した後の予測分布$p(x_*|\mathcal{D})$は</p>
+$$
+\begin{eqnarray}
+    p(x_*) &amp;=&amp; \mathcal{N} (x_* | \mu_*, \lambda_{*}^{-1}) \\
+    ただし　\lambda_* &amp;=&amp; \frac{\lambda (N\lambda + \lambda_{\mu})}{\lambda + (N\lambda + \lambda_{\mu})} \\
+    \mu_* &amp;=&amp; \frac{\lambda \Sigma_{n=1}^{N} x_n + \lambda_{\mu}m}{N\lambda + \lambda_{\mu}}
+\end{eqnarray}
+$$<p>と求まる。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
+    <strong>Note: </strong>精度から見た結果の意味
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote>
+<p>精度について逆数をとると意味がわかりやすい。</p>
+$$\lambda_*^{-1} = \lambda^{-1} + \hat{\lambda_{\mu}}^{-1}$$<p>精度の逆数は分散なので、この式は「予測分布の分散は観測分布の分散と事後分布の分散の和である」という意味になる。</p>
+<p>今回は観測分布の分散が実際の分散に等しいことを仮定しているので、データ数が増え事後分布の分散が小さくなれば予測分布は実際の分布の分散とほぼ一致する。</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="平均が既知、精度が未知の場合">
+<a class="anchor" href="#%E5%B9%B3%E5%9D%87%E3%81%8C%E6%97%A2%E7%9F%A5%E3%80%81%E7%B2%BE%E5%BA%A6%E3%81%8C%E6%9C%AA%E7%9F%A5%E3%81%AE%E5%A0%B4%E5%90%88" aria-hidden="true"><span class="octicon octicon-link"></span></a>平均が既知、精度が未知の場合<a class="anchor-link" href="#%E5%B9%B3%E5%9D%87%E3%81%8C%E6%97%A2%E7%9F%A5%E3%80%81%E7%B2%BE%E5%BA%A6%E3%81%8C%E6%9C%AA%E7%9F%A5%E3%81%AE%E5%A0%B4%E5%90%88"> </a>
+</h1>
+<p>執筆中</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="平均と精度がともに未知の場合">
+<a class="anchor" href="#%E5%B9%B3%E5%9D%87%E3%81%A8%E7%B2%BE%E5%BA%A6%E3%81%8C%E3%81%A8%E3%82%82%E3%81%AB%E6%9C%AA%E7%9F%A5%E3%81%AE%E5%A0%B4%E5%90%88" aria-hidden="true"><span class="octicon octicon-link"></span></a>平均と精度がともに未知の場合<a class="anchor-link" href="#%E5%B9%B3%E5%9D%87%E3%81%A8%E7%B2%BE%E5%BA%A6%E3%81%8C%E3%81%A8%E3%82%82%E3%81%AB%E6%9C%AA%E7%9F%A5%E3%81%AE%E5%A0%B4%E5%90%88"> </a>
+</h1>
+<p>執筆中</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="footnotes"><p id="fn-1">1. <a href="https://www.kspub.co.jp/book/detail/1538320.html">『ベイズ推論による機械学習入門』(須山敦志、講談社)</a><a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="Vintea01/tpt-medical-it"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/tpt-medical-it/bayes/2020/04/03/bayes_part3.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/tpt-medical-it/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/tpt-medical-it/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/tpt-medical-it/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A gang of medical students playing with Information Technologies.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/Vintea01" title="Vintea01"><svg class="svg-icon grey"><use xlink:href="/tpt-medical-it/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -110,7 +110,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      2 min read
+      3 min read
     
 </span></p>
 
@@ -131,12 +131,18 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h1"><a href="#1次元ガウス分布">1次元ガウス分布 </a></li>
 <li class="toc-entry toc-h1"><a href="#平均が未知、精度が既知の場合">平均が未知、精度が既知の場合 </a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#同時分布の構築">同時分布の構築 </a></li>
+<li class="toc-entry toc-h2"><a href="#モデルの構築">モデルの構築 </a></li>
 <li class="toc-entry toc-h2"><a href="#事後分布の推論">事後分布の推論 </a></li>
 <li class="toc-entry toc-h2"><a href="#予測分布の算出">予測分布の算出 </a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#平均が既知、精度が未知の場合">平均が既知、精度が未知の場合 </a></li>
+<li class="toc-entry toc-h1"><a href="#平均が既知、精度が未知の場合">平均が既知、精度が未知の場合 </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#モデルの構築">モデルの構築 </a></li>
+<li class="toc-entry toc-h2"><a href="#事後分布の推論">事後分布の推論 </a></li>
+<li class="toc-entry toc-h2"><a href="#予測分布の算出">予測分布の算出 </a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h1"><a href="#平均と精度がともに未知の場合">平均と精度がともに未知の場合 </a></li>
 </ul><!--
 #################################################
@@ -213,8 +219,8 @@ window.onload = wrap_img;
 <a class="anchor" href="#%E5%B9%B3%E5%9D%87%E3%81%8C%E6%9C%AA%E7%9F%A5%E3%80%81%E7%B2%BE%E5%BA%A6%E3%81%8C%E6%97%A2%E7%9F%A5%E3%81%AE%E5%A0%B4%E5%90%88" aria-hidden="true"><span class="octicon octicon-link"></span></a>平均が未知、精度が既知の場合<a class="anchor-link" href="#%E5%B9%B3%E5%9D%87%E3%81%8C%E6%9C%AA%E7%9F%A5%E3%80%81%E7%B2%BE%E5%BA%A6%E3%81%8C%E6%97%A2%E7%9F%A5%E3%81%AE%E5%A0%B4%E5%90%88"> </a>
 </h1>
 <p>ガウス分布の2つのパラメータのうち、精度パラメータ$\lambda$が既知である状況でベイズ推論を行う。</p>
-<h2 id="同時分布の構築">
-<a class="anchor" href="#%E5%90%8C%E6%99%82%E5%88%86%E5%B8%83%E3%81%AE%E6%A7%8B%E7%AF%89" aria-hidden="true"><span class="octicon octicon-link"></span></a>同時分布の構築<a class="anchor-link" href="#%E5%90%8C%E6%99%82%E5%88%86%E5%B8%83%E3%81%AE%E6%A7%8B%E7%AF%89"> </a>
+<h2 id="モデルの構築">
+<a class="anchor" href="#%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%A7%8B%E7%AF%89" aria-hidden="true"><span class="octicon octicon-link"></span></a>モデルの構築<a class="anchor-link" href="#%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%A7%8B%E7%AF%89"> </a>
 </h2>
 <p>平均$\mu$だけが未知という条件で、尤度関数をガウス分布にした場合、そのパラメータ$\mu$の事前分布はどうすればよいだろうか。$\mu$の条件は$\mu \in \mathbb{R}$であることのみであり、実数を1つ出力する分布を事前分布とすればベイズ推論ができそうだ。このような分布は様々だが、1次元ガウス分布を用いることで事後分布も1次元ガウス分布となることが知られている。つまり尤度関数が1次元ガウス分布の場合の共役事前分布は1次元ガウス分布である。これを用いて同時分布を構築すると以下のようになる。</p>
 $$
@@ -343,9 +349,11 @@ $$<p>と求まる。</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <blockquote>
+<blockquote>
 <p>精度について逆数をとると意味がわかりやすい。</p>
 $$\lambda_*^{-1} = \lambda^{-1} + \hat{\lambda_{\mu}}^{-1}$$<p>精度の逆数は分散なので、この式は「予測分布の分散は観測分布の分散と事後分布の分散の和である」という意味になる。</p>
 <p>今回は観測分布の分散が実際の分散に等しいことを仮定しているので、データ数が増え事後分布の分散が小さくなれば予測分布は実際の分布の分散とほぼ一致する。</p>
+</blockquote>
 </blockquote>
 
 </div>
@@ -357,8 +365,153 @@ $$\lambda_*^{-1} = \lambda^{-1} + \hat{\lambda_{\mu}}^{-1}$$<p>精度の逆数�
 <h1 id="平均が既知、精度が未知の場合">
 <a class="anchor" href="#%E5%B9%B3%E5%9D%87%E3%81%8C%E6%97%A2%E7%9F%A5%E3%80%81%E7%B2%BE%E5%BA%A6%E3%81%8C%E6%9C%AA%E7%9F%A5%E3%81%AE%E5%A0%B4%E5%90%88" aria-hidden="true"><span class="octicon octicon-link"></span></a>平均が既知、精度が未知の場合<a class="anchor-link" href="#%E5%B9%B3%E5%9D%87%E3%81%8C%E6%97%A2%E7%9F%A5%E3%80%81%E7%B2%BE%E5%BA%A6%E3%81%8C%E6%9C%AA%E7%9F%A5%E3%81%AE%E5%A0%B4%E5%90%88"> </a>
 </h1>
-<p>執筆中</p>
+<p>今度は、平均パラメータ$\mu$が既知で、精度パラメータ$\lambda$が未知の場合でベイズ推論を行う。</p>
+<h2 id="モデルの構築">
+<a class="anchor" href="#%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%A7%8B%E7%AF%89" aria-hidden="true"><span class="octicon octicon-link"></span></a>モデルの構築<a class="anchor-link" href="#%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%A7%8B%E7%AF%89"> </a>
+</h2>
+<p>精度パラメータ$lambda$は正の実数である必要がある。正の実数を出力する確率分布にはガンマ分布があり、平均既知精度未知の場合の1次元ガウス分布の共役事前分布として知られている。事前分布にガンマ分布を採用すると次のようにモデル構築することになる。</p>
+$$
+\begin{eqnarray}
+    p(\mathcal{D},x_*,\lambda) &amp;=&amp; p(\mathcal{D}|\lambda)p(x_*|\lambda)p(\lambda) \\
+    p(\mathcal{D}|\lambda) &amp;=&amp; \Pi_{n=1}^{N} \mathcal{N}(x_n|\mu, \lambda^{-1}) \\
+    p(x_*|\lambda) &amp;=&amp; \mathcal{N}(x_*|\mu, \lambda^{-1}) \\
+    p(\lambda) &amp;=&amp; Gam(\lambda|a, b)
+\end{eqnarray}
+$$<p>このモデルのハイパーパラメータは$a,b$である。$\mu$は既知の値という設定だが、$\mu$をハイパーパラメータとして推論していると考えることもできる。</p>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash flash-warn">
+    <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
+    <strong>Important: </strong>ガンマ分布
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote>
+<blockquote>
+<p>ガンマ分布は$a, b \in \mathbb{R^+}$をパラメータに持ち、正の実数を生成する確率分布である。ガンマ分布の確率密度関数は次の通り。</p>
+$$Gam(\lambda|a,b) = C_G(a,b)\lambda^{a-1}e^{-b\lambda}$$<p>$C_G(a,b)$は正規化係数であり、</p>
+$$C_G(a,b) = \frac{b^a}{\Gamma(a)}$$
+</blockquote>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="事後分布の推論">
+<a class="anchor" href="#%E4%BA%8B%E5%BE%8C%E5%88%86%E5%B8%83%E3%81%AE%E6%8E%A8%E8%AB%96" aria-hidden="true"><span class="octicon octicon-link"></span></a>事後分布の推論<a class="anchor-link" href="#%E4%BA%8B%E5%BE%8C%E5%88%86%E5%B8%83%E3%81%AE%E6%8E%A8%E8%AB%96"> </a>
+</h2>
+<p>事後分布$p(\lambda|\mathcal{D})$を推論する。ベイズの定理から</p>
+$$
+\begin{eqnarray}
+    p(\lambda|\mathcal{D}) &amp;\propto&amp; p(\mathcal{D}|\lambda)p(\lambda) \\
+    &amp;=&amp; \{ \Pi_{n=1}^{N} p(x_n|\lambda) \} p(\lambda) \\
+    &amp;=&amp; \{ \Pi_{n=1}^{N} \mathcal{N}(x_n|\mu, \lambda^{-1}) \} Gam(\lambda|a,b)
+\end{eqnarray}
+$$<p>対数をとる。</p>
+$$
+\begin{eqnarray}
+    \ln p(\lambda|\mathcal{D}) &amp;=&amp; \Sigma_{n=1}^{N} \ln \mathcal{N}(x_n|\mu,\lambda^{-1}) + \ln Gam(\lambda|a,b) + const. \\
+    &amp;=&amp; \Sigma_{n=1}^{N}\{\frac{1}{2} \ln \lambda - \frac{(x_n-\mu)^2 \lambda}{2}\} + (a-1)\ln \lambda -b\lambda + const. \\
+    &amp;=&amp; (\frac{N}{2}+a-1)\ln \lambda - \{\frac{1}{2}\Sigma_{n=1}^{N}(x_n-\mu)^2 + b\}\lambda + const.
+\end{eqnarray}
+$$<p>対数を戻せばこれはガンマ分布となることがわかる。</p>
+$$
+\begin{eqnarray}
+    p(\lambda|\mathcal{D}) &amp;=&amp; Gam(\lambda|\hat{a},\hat{b}) \\
+    ただし　\hat{a} &amp;=&amp; \frac{N}{2} + a \\
+    \hat{b} &amp;=&amp; \frac{1}{2} \Sigma_{n=1}^{N} (x_n-\mu)^2 + b
+\end{eqnarray}
+$$<h2 id="予測分布の算出">
+<a class="anchor" href="#%E4%BA%88%E6%B8%AC%E5%88%86%E5%B8%83%E3%81%AE%E7%AE%97%E5%87%BA" aria-hidden="true"><span class="octicon octicon-link"></span></a>予測分布の算出<a class="anchor-link" href="#%E4%BA%88%E6%B8%AC%E5%88%86%E5%B8%83%E3%81%AE%E7%AE%97%E5%87%BA"> </a>
+</h2>
+<p>事後分布の形状が事前分布と同じなので、学習前の予測分布$p(x_*)$を計算すれば、学習後の$\hat{a},\hat{b}$を代入するだけで$p(x_*|\mathcal{D})$がわかる。</p>
+$$
+p(x_*) = \int p(x_*|\lambda)p(\lambda) d\lambda
+$$<p>を直接計算せずにベイズの定理と対数計算で簡単に計算してみる。</p>
+$$
+p(\lambda|x_*) = \frac{p(x_*|\lambda)p(\lambda)}{p(x_*)}
+$$<p>対数をとり、$p(\lambda)$を定数にまとめれば</p>
+$$
+\ln p(x_*) = \ln p(x_*|\lambda) - \ln p(\lambda|x_*) + const.
+$$<p>$\ln p(\lambda|x_*)$は事後分布の形に合わせれば</p>
+$$
+\begin{eqnarray}
+    p(\lambda|x_*) &amp;=&amp; Gam(\lambda|\frac{1}{2}+a,b(x_*)) \\
+    ただし　b(x_*) &amp;=&amp; \frac{1}{2}(x_*-\mu)^2 + b
+\end{eqnarray}
+$$<p>と書ける。これを代入して</p>
+$$
+\begin{eqnarray}
+    \ln p(x_*) &amp;=&amp; \ln \mathcal{N}(x_*|\mu,\lambda^{-1}) - \ln Gam(\lambda|\frac{1}{2}+a,b(x_*)) + cosnt. \\
+    &amp;=&amp; \frac{1}{2} \ln \lambda - \frac{(x_*-\mu)^2 \lambda}{2} - (a-\frac{1}{2})\ln \lambda + \{\frac{1}{2}(x_*-\mu)^2 + b \} \lambda - \ln C_G(a+\frac{1}{2}, \frac{1}{2}(x_*-\mu)^2 + b) + const. \\
+    &amp;=&amp; - (a+\frac{1}{2})\ln \{\frac{1}{2}(x_*-\mu)^2 + b\} + \Gamma(a+\frac{1}{2}) + const. \\
+    &amp;=&amp; - \frac{2a+1}{2} \ln \{ 1 + \frac{1}{2b}(x_*-\mu)^2 \} + const.
+\end{eqnarray}
+$$<p>となる。途中、$x_*$を含まない項は$const.$に吸収させている。また、$\lambda$に関わる項は消えている。この結果は1次元のStudentのt分布に対数をとったものと同じ形になっている。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash flash-warn">
+    <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
+    <strong>Important: </strong>1次元のStudentのt分布
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote>
+<blockquote>
+<p>1次元のStudentのt分布は次の確率密度関数で表される。</p>
+$$St(x|\mu_s,\lambda_s,\nu_s) = \frac{\Gamma(\frac{\nu_s + 1}{2})}{\Gamma(\frac{\nu_s}{2})}(\frac{\lambda_s}{\pi \nu_s})^{\frac{1}{2}}\{ 1 + \frac{\lambda_s}{\nu_s} (x-\mu_s)^2 \}^{-\frac{\nu_s+1}{2}}$$<p>対数をとり$x$に関わらない部分をconst.にまとめると</p>
+$$\ln St(x|\mu_s,\lambda_s,\nu_s) = -\frac{\nu_s+1}{2} \ln \{ 1 + \frac{\lambda_s}{\nu_s} (x-\mu_s)^2 \} + const.$$
+</blockquote>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>対数t分布との対応を見れば、予測分布は次のように書けることがわかる。</p>
+$$
+\begin{eqnarray}
+    p(x_*) &amp;=&amp; St(x_*|\mu_s,\lambda_s,\nu_s) \\
+    ただし　\mu_s &amp;=&amp; \mu \\
+    \lambda_s &amp;=&amp; \frac{a}{b} \\
+    \nu_s &amp;=&amp; 2a
+\end{eqnarray}
+$$<p>学習により更新された$\hat{a},\hat{b}$を代入すると次のようになる。</p>
+$$
+\begin{eqnarray}
+    p(x_*|\mathcal{D}) &amp;=&amp; St(x_*|\mu_s,\lambda_s,\nu_s) \\
+    ただし　\mu_s &amp;=&amp; \mu \\
+    \lambda_s &amp;=&amp; \frac{N+2a}{\Sigma_{n=1}^{N} (x_n-\mu)^2 + 2b} \\
+    \nu_s &amp;=&amp; N + 2a
+\end{eqnarray}
+$$
 </div>
 </div>
 </div>

@@ -110,7 +110,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      3 min read
     
 </span></p>
 
@@ -352,7 +352,112 @@ $$<p>と事後分布のハイパーパラメータが求まる。</p>
 <h2 id="予測分布の導出">
 <a class="anchor" href="#%E4%BA%88%E6%B8%AC%E5%88%86%E5%B8%83%E3%81%AE%E5%B0%8E%E5%87%BA" aria-hidden="true"><span class="octicon octicon-link"></span></a>予測分布の導出<a class="anchor-link" href="#%E4%BA%88%E6%B8%AC%E5%88%86%E5%B8%83%E3%81%AE%E5%B0%8E%E5%87%BA"> </a>
 </h2>
-<p>執筆中</p>
+<p>簡単のために学習前の事前分布を用いて予測分布を導出し、更新されたハイパーパラメータを代入することで学習後の予測分布を計算する。1次元の時と同様、ベイズの定理と対数化を利用し積分計算を避ける。</p>
+<p>
+$$\ln p(\bm{x}_*) = \ln p(\bm{x}_*|\bm{\mu}) - \ln p(\bm{\mu}|\bm{x}_*) + const.$$
+</p>
+<p>$\ln p(\bm{\mu}|\bm{x}_*)$は$\bm{x}_*$を学習した後の事後分布と見なせるので、</p>
+$$
+\begin{eqnarray}
+    p(\bm{\mu}|\bm{x}_*) &amp;=&amp; \mathcal{N}(\bm{\mu}|\bm{m}(\bm{x}_*), (\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})^{-1}) \\
+    ただし　\bm{m}(\bm{x}_*) &amp;=&amp; (\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})^{-1} (\bm{\Lambda}\bm{x}_* + \bm{\Lambda}_{\bm{\mu}}\bm{m})
+\end{eqnarray}
+$$<p>したがって、</p>
+$$
+\begin{eqnarray}
+    \ln p(\bm{x}_*) &amp;=&amp; \ln p(\bm{x}_*|\bm{\mu}) - \ln p(\bm{\mu}|\bm{x}_*) + const. \\
+    &amp;=&amp; -\frac{(\bm{x}_*-\bm{\mu})^\mathrm{T}\bm{\Lambda}(\bm{x}_*-\bm{\mu})}{2} + \frac{(\bm{\mu}-\bm{m}(\bm{x}_*))^\mathrm{T}(\bm{\Lambda}+\bm{\Lambda}_{\mu})(\bm{\mu}-\bm{m}(\bm{x}_*))}{2} + const. \\
+    &amp;=&amp; -\frac{1}{2}\{ \bm{x}_*^{\mathrm{T}}\bm{\Lambda}\bm{x}_* - \bm{x}_*^{\mathrm{T}}\bm{\Lambda}\bm{\mu} - \bm{\mu}^\mathrm{T}\bm{\Lambda}\bm{x}_* - \bm{m}(\bm{x}_*)^\mathrm{T} (\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}}) \bm{m}(\bm{x}_*) + \bm{m}(\bm{x}_*)^\mathrm{T}(\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})\bm{\mu} + \bm{\mu}^\mathrm{T}(\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})\bm{m}(\bm{x}_*) \} + const. \\
+    &amp;=&amp; -\frac{1}{2}\{ \bm{x}_*^{\mathrm{T}}\bm{\Lambda}\bm{x}_* - 2 \bm{x}_*^{\mathrm{T}}\bm{\Lambda}\bm{\mu} - \bm{m}(\bm{x}_*)^\mathrm{T} (\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}}) \bm{m}(\bm{x}_*) + 2 \bm{\mu}^\mathrm{T}(\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})\bm{m}(\bm{x}_*)\} + const. \\
+    &amp;=&amp; -\frac{1}{2}\{ \bm{x}_*^{\mathrm{T}}\bm{\Lambda}\bm{x}_* - 2 \bm{x}_*^{\mathrm{T}}\bm{\Lambda}\bm{\mu} - \bm{m}(\bm{x}_*)^\mathrm{T} (\bm{\Lambda}\bm{x}_* + \bm{\Lambda}_{\bm{\mu}}\bm{m}) + 2\bm{\mu}^\mathrm{T}\bm{\Lambda}\bm{x}_*\} + const. \\
+    &amp;=&amp; -\frac{1}{2}\{ \bm{x}_*^{\mathrm{T}}\bm{\Lambda}\bm{x}_* - (\bm{\Lambda}\bm{x}_* + \bm{\Lambda}_{\bm{\mu}}\bm{m})^\mathrm{T} \bm{m}(\bm{x}_*) \} + const.　(\bm{m}(\bm{x}_*)^\mathrm{T} (\bm{\Lambda}\bm{x}_* + \bm{\Lambda}_{\bm{\mu}}\bm{m})はスカラーなので転置しても変わらない) \\
+    &amp;=&amp; -\frac{1}{2}\{ \bm{x}_*^{\mathrm{T}}\bm{\Lambda}\bm{x}_* - (\bm{\Lambda}\bm{x}_* + \bm{\Lambda}_{\bm{\mu}}\bm{m})^\mathrm{T} (\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})^{-1} (\bm{\Lambda}\bm{x}_* + \bm{\Lambda}_{\bm{\mu}}\bm{m}) \} + const. \\
+    &amp;=&amp; -\frac{1}{2}\{ \bm{x}_*^{\mathrm{T}}\bm{\Lambda}\bm{x}_* - (\bm{\Lambda}\bm{x}_*)^\mathrm{T}(\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})^{-1}\bm{\Lambda}\bm{x}_* - (\bm{\Lambda}\bm{x}_*)^\mathrm{T}(\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})^{-1}\bm{\Lambda}_{\bm{\mu}}\bm{m} - (\bm{\Lambda}_{\bm{\mu}}\bm{m})^\mathrm{T}(\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})^{-1}\bm{\Lambda}\bm{x}_*\} + const. \\
+    &amp;=&amp; -\frac{1}{2}\{ \bm{x}_*^{\mathrm{T}}\bm{\Lambda}\bm{x}_* - \bm{x}_*^\mathrm{T}\bm{\Lambda}(\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})^{-1}\bm{\Lambda}\bm{x}_* - 2\bm{x}_*^\mathrm{T}\bm{\Lambda}(\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})^{-1}\bm{\Lambda}_{\bm{\mu}}\bm{m} \} + const. \\
+    &amp;=&amp; -\frac{1}{2}\{ \bm{x}_*^{\mathrm{T}} (\bm{\Lambda}-\bm{\Lambda}(\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})^{-1}\bm{\Lambda}) \bm{x}_* - 2\bm{x}_*^\mathrm{T}\bm{\Lambda}(\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})^{-1}\bm{\Lambda}_{\bm{\mu}}\bm{m} \} + const.
+\end{eqnarray}
+$$<p>ここで</p>
+$$
+p(\bm{x}_*) = \mathcal{N}(\bm{x}_*|\bm{\mu}_*,\bm{\Lambda}_*^{-1})
+$$<p>と書けるとすると</p>
+$$
+\ln p(\bm{x}_*) = -\frac{1}{2} \{\bm{x}_*^{\mathrm{T}} \bm{\Lambda}_{*} \bm{x}_* -2\bm{x}_*^{\mathrm{T}} \bm{\Lambda}_{*} \bm{\mu}_*\} + const.
+$$<p>であるから、対応関係から</p>
+$$
+\begin{eqnarray}
+    \bm{\Lambda}_* &amp;=&amp; \bm{\Lambda}-\bm{\Lambda}(\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})^{-1}\bm{\Lambda} \\
+    \bm{\mu}_* &amp;=&amp; \bm{\Lambda}_*^{-1} \bm{\Lambda}(\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})^{-1}\bm{\Lambda}_{\bm{\mu}}\bm{m}
+\end{eqnarray}
+$$<p>ウッドベリーの公式を使うことで更に簡潔な形にできる。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash flash-success">
+    <svg class="octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z"></path></svg>
+    <strong>Tip: </strong>ウッドベリーの公式 $$(\bm{A}+\bm{U}\bm{B}\bm{V})^{-1} = \bm{A}^{-1} - \bm{A}^{-1}\bm{U}(\bm{B}^{-1}+\bm{V}\bm{A}^{-1}\bm{U})^{-1}\bm{V}\bm{A}^{-1}$$
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash flash-success">
+    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z"></path></svg>
+    <strong>Tip: </strong>ウッドベリーの公式($\bm{A},\bm{B}$の次元が等しく, $\bm{U},\bm{V}$が単位行列の場合) $$(\bm{A}+\bm{B})^{-1} = \bm{A}^{-1} - \bm{A}^{-1}(\bm{A}^{-1} + \bm{B}^{-1})^{-1} \bm{A}^{-1}$$
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\bm{\Lambda}_*$について、$\bm{A}=\bm{\Lambda}^{-1}, \bm{B}=\bm{\Lambda}_{\bm{\mu}}^{-1}$とおくと、</p>
+$$
+\begin{eqnarray}
+    \bm{\Lambda}_* &amp;=&amp; \bm{\Lambda}-\bm{\Lambda}(\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})^{-1}\bm{\Lambda} \\
+    &amp;=&amp; \bm{A}^{-1} - \bm{A}^{-1}(\bm{A}^{-1} + \bm{B}^{-1})^{-1} \bm{A}^{-1} \\
+    &amp;=&amp; (\bm{A}+\bm{B})^{-1} \\
+    &amp;=&amp; (\bm{\Lambda}^{-1} + \bm{\Lambda}_{\mu}^{-1})^{-1}
+\end{eqnarray}
+$$<p>$\bm{\mu}_*$は、$\bm{\Lambda}_* = \bm{\Lambda}-\bm{\Lambda}(\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})^{-1}\bm{\Lambda}$より</p>
+$$
+\begin{eqnarray}
+    \bm{\Lambda}(\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})^{-1}\bm{\Lambda} &amp;=&amp; \bm{\Lambda} - \bm{\Lambda}_* \\
+    \bm{\Lambda}(\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})^{-1} &amp;=&amp; (\bm{\Lambda} - \bm{\Lambda}_*)\bm{\Lambda}^{-1}
+\end{eqnarray}
+$$<p>だから</p>
+$$
+\begin{eqnarray}
+    \bm{\mu}_* &amp;=&amp; \bm{\Lambda}_*^{-1} \bm{\Lambda}(\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}})^{-1}\bm{\Lambda}_{\bm{\mu}}\bm{m} \\
+    &amp;=&amp; \bm{\Lambda}_*^{-1} (\bm{\Lambda} - \bm{\Lambda}_*)\bm{\Lambda}^{-1}\bm{\Lambda}_{\bm{\mu}}\bm{m} \\
+    &amp;=&amp; \{ \bm{\Lambda}_*^{-1}\bm{\Lambda}\bm{\Lambda}^{-1}\bm{\Lambda}_{\bm{\mu}} - \bm{\Lambda}_*^{-1}\bm{\Lambda}_* \bm{\Lambda}^{-1}\bm{\Lambda}_{\bm{\mu}} \}\bm{m} \\
+    &amp;=&amp; \{ \bm{\Lambda}_*^{-1}\bm{\Lambda}_{\bm{\mu}} -  \bm{\Lambda}^{-1}\bm{\Lambda}_{\bm{\mu}} \}\bm{m} \\
+    &amp;=&amp; \{ (\bm{\Lambda}^{-1} + \bm{\Lambda}_{\mu}^{-1})\bm{\Lambda}_{\bm{\mu}} -  \bm{\Lambda}^{-1}\bm{\Lambda}_{\bm{\mu}}\}\bm{m} \\
+    &amp;=&amp; \bm{I}_D \bm{m} = \bm{m}
+\end{eqnarray}
+$$<p>まとめると、</p>
+$$
+\begin{eqnarray}
+    \bm{\Lambda}_* &amp;=&amp; (\bm{\Lambda}^{-1} + \bm{\Lambda}_{\mu}^{-1})^{-1} \\
+    \bm{\mu}_* &amp;=&amp; \bm{m}
+\end{eqnarray}
+$$<p>これらに、更新されたハイパーパラメータ$\hat{\bm{m}},\hat{\bm{\Lambda}}_{\bm{\mu}}$を代入して学習後の予測分布$p(\bm{x}_*|\bm{X})$が求まる。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="精度行列未知">
 <a class="anchor" href="#%E7%B2%BE%E5%BA%A6%E8%A1%8C%E5%88%97%E6%9C%AA%E7%9F%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>精度行列未知<a class="anchor-link" href="#%E7%B2%BE%E5%BA%A6%E8%A1%8C%E5%88%97%E6%9C%AA%E7%9F%A5"> </a>
 </h1>
@@ -361,14 +466,6 @@ $$<p>と事後分布のハイパーパラメータが求まる。</p>
 <a class="anchor" href="#%E5%B9%B3%E5%9D%87%E3%83%BB%E7%B2%BE%E5%BA%A6%E8%A1%8C%E5%88%97%E6%9C%AA%E7%9F%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>平均・精度行列未知<a class="anchor-link" href="#%E5%B9%B3%E5%9D%87%E3%83%BB%E7%B2%BE%E5%BA%A6%E8%A1%8C%E5%88%97%E6%9C%AA%E7%9F%A5"> </a>
 </h1>
 <p>執筆中</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>$\bm{\mu}^{\mathrm{T}} \hat{\bm{\Lambda}}_{\bm{\mu}} \bm{\mu} - \hat{\bm{m}}^{\mathrm{T}} \hat{\bm{\Lambda}}_{\bm{\mu}} \bm{\mu} - \bm{\mu}^{\mathrm{T}} \hat{\bm{\Lambda}}_{\bm{\mu}} \hat{\bm{m}}$</p>
 
 </div>
 </div>

@@ -129,7 +129,13 @@ window.onload = wrap_img;
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
 <li class="toc-entry toc-h1"><a href="#多次元ガウス分布">多次元ガウス分布 </a></li>
-<li class="toc-entry toc-h1"><a href="#平均未知">平均未知 </a></li>
+<li class="toc-entry toc-h1"><a href="#平均未知">平均未知 </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#モデルの構築">モデルの構築 </a></li>
+<li class="toc-entry toc-h2"><a href="#事後分布の推論">事後分布の推論 </a></li>
+<li class="toc-entry toc-h2"><a href="#予測分布の導出">予測分布の導出 </a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h1"><a href="#精度行列未知">精度行列未知 </a></li>
 <li class="toc-entry toc-h1"><a href="#平均・精度行列未知">平均・精度行列未知 </a></li>
 </ul><!--
@@ -207,6 +213,8 @@ window.onload = wrap_img;
 <p>固有値が全て正の実正方行列を正定値行列と呼ぶ。実正方行列$\bm{A}$が正定値行列である必要十分条件は任意の非ゼロベクトル$\bm{x}$に関して、</p>
 $$\bm{x}^\mathrm{T}\bm{A}\bm{x} &gt; 0$$<p>が成り立つこと。正定値行列の逆行列も正定値行列である。また全ての固有値が正であることから、</p>
 $$|\bm{A}| &gt; 0$$<p>が成り立つ。</p>
+<p>また、対称行列であるので</p>
+$$\bm{A}^{\mathrm{T}} = \bm{A}$$<p>が成り立つ。</p>
 </blockquote>
 </blockquote>
 
@@ -259,7 +267,7 @@ $$|\bm{A}| &gt; 0$$<p>が成り立つ。</p>
 <p></p>
 <div class="flash flash-warn">
     <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
-    <strong>Important: </strong>多次元ガウス分布の対数表示(精度行列で表した場合) $$\ln \mathcal{N}(\bm{x}|\bm{\mu},\bm{\Lambda}^{-1}=-\frac{1}{2}\{(\bm{x}-\bm{\mu})^\mathrm{T}\bm{\Lambda}(\bm{x}-\bm{\mu}) - \ln |\bm{\Lambda}| + D\ln 2\pi\}$$
+    <strong>Important: </strong>多次元ガウス分布の対数表示(精度行列で表した場合) $$\ln \mathcal{N}(\bm{x}|\bm{\mu},\bm{\Lambda}^{-1})=-\frac{1}{2}\{(\bm{x}-\bm{\mu})^\mathrm{T}\bm{\Lambda}(\bm{x}-\bm{\mu}) - \ln |\bm{\Lambda}| + D\ln 2\pi\}$$
 </div>
 
 </div>
@@ -272,6 +280,78 @@ $$|\bm{A}| &gt; 0$$<p>が成り立つ。</p>
 <h1 id="平均未知">
 <a class="anchor" href="#%E5%B9%B3%E5%9D%87%E6%9C%AA%E7%9F%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>平均未知<a class="anchor-link" href="#%E5%B9%B3%E5%9D%87%E6%9C%AA%E7%9F%A5"> </a>
 </h1>
+<p>D次元の確率変数$\bm{x} \in \mathbb{R}^D$の平均パラメータ$\bm{\mu} \in \mathbb{R}^D$のみが未知で、精度行列$\bm{\Lambda} \in \mathbb{R}^{D \times D}$は既に与えられている、またはハイパーパラメータとして、ベイズ推論を行ってみる。N個のデータ$\bm{X} = \{\bm{x}_1,\dots,\bm{x}_N\}$が観測されていて、予測する未知の観測を$\bm{x}_*$とおく。</p>
+<h2 id="モデルの構築">
+<a class="anchor" href="#%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%A7%8B%E7%AF%89" aria-hidden="true"><span class="octicon octicon-link"></span></a>モデルの構築<a class="anchor-link" href="#%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%A7%8B%E7%AF%89"> </a>
+</h2>
+<p>平均のみが未知の時は、ガウス分布を事前分布とすることで共役性が満たされることがわかっている。$\bm{m} \in \mathbb{R}^D, \bm{\Lambda}_{\mu} \in \mathbb{R}^{D \times D}$をハイパーパラメータとして同時分布は次のようになる。</p>
+$$
+\begin{eqnarray}
+    p(\bm{X},\bm{x}_*,\bm{\mu}) &amp;=&amp; p(\bm{X}|\bm{\mu})p(\bm{x}_*|\bm{\mu})p(\bm{\mu}) \\
+    p(\bm{X}|\bm{\mu}) &amp;=&amp; \Pi_{n=1}^{N} \mathcal{N}(\bm{x}_n|\bm{\mu},\bm{\Lambda}^{-1}) \\
+    p(\bm{x}_*|\bm{\mu}) &amp;=&amp; \mathcal{N}(\bm{x}_*|\bm{\mu},\bm{\Lambda}^{-1}) \\
+    p(\bm{\mu}) &amp;=&amp; \mathcal{N}(\bm{\mu}|\bm{m},\bm{\Lambda}_{\mu}^{-1})
+\end{eqnarray}
+$$<h2 id="事後分布の推論">
+<a class="anchor" href="#%E4%BA%8B%E5%BE%8C%E5%88%86%E5%B8%83%E3%81%AE%E6%8E%A8%E8%AB%96" aria-hidden="true"><span class="octicon octicon-link"></span></a>事後分布の推論<a class="anchor-link" href="#%E4%BA%8B%E5%BE%8C%E5%88%86%E5%B8%83%E3%81%AE%E6%8E%A8%E8%AB%96"> </a>
+</h2>
+<p>ベイズの定理を用いて事後分布$p(\bm{\mu}|\bm{X})$は次のようになる。</p>
+$$
+\begin{eqnarray}
+    p(\bm{\mu}|\bm{X}) &amp;\propto&amp; p(\bm{X}|\bm{\mu})p(\bm{\mu}) \\
+    &amp;=&amp; \{ \Pi_{n=1}^{N} p(\bm{x}_n|\bm{\mu})\}p(\bm{\mu}) \\
+    &amp;=&amp; \Pi_{n=1}^{N} \{\mathcal{N}(\bm{x}_n|\bm{\mu},\bm{\Lambda}^{-1})\} \mathcal{N}(\bm{\mu}|\bm{m},\bm{\Lambda}_{\mu}^{-1})
+\end{eqnarray}
+$$<p>対数をとると</p>
+$$
+\begin{eqnarray}
+    \ln p(\bm{\mu}|\bm{X}) &amp;=&amp; \Sigma_{n=1}^{N} \ln \mathcal{N}(\bm{x}_n|\bm{\mu},\bm{\Lambda}^{-1}) + \ln \mathcal{N}(\bm{\mu}|\bm{m},\bm{\Lambda}_{\mu}^{-1}) + const. \\
+    &amp;=&amp; -\frac{1}{2} \Sigma_{n=1}^{N} (\bm{x}_n-\bm{\mu})^\mathrm{T}\bm{\Lambda}(\bm{x}_n-\bm{\mu}) - \frac{1}{2}(\bm{\mu}-\bm{m})^\mathrm{T}\bm{\Lambda}_{\mu}(\bm{\mu}-\bm{m}) + const. \\
+    &amp;=&amp; -\frac{1}{2} \Sigma_{n=1}^{N} (\bm{x}_n^{\mathrm{T}}-\bm{\mu}^{\mathrm{T}})\bm{\Lambda}(\bm{x}_n-\bm{\mu}) - \frac{1}{2}(\bm{\mu}^{\mathrm{T}}-\bm{m}^{\mathrm{T}}) \bm{\Lambda}_{\mu}(\bm{\mu}-\bm{m}) + const. \\
+    &amp;=&amp; \frac{1}{2}\Sigma_{n=1}^{N}\{ \bm{x}_n^{\mathrm{T}}\bm{\Lambda}\bm{\mu}\} + \frac{1}{2} \bm{\mu}^{\mathrm{T}} \bm{\Lambda}\Sigma_{n=1}^{N} \bm{x}_n - \frac{N}{2} \bm{\mu}^{\mathrm{T}}\bm{\Lambda}\bm{\mu} - \frac{1}{2} \bm{\mu}^{\mathrm{T}}\bm{\Lambda}_{\mu}\bm{\mu} + \frac{1}{2}\bm{\mu}^{\mathrm{T}}\bm{\Lambda}_{\mu}\bm{m} + \frac{1}{2}\bm{m}^{\mathrm{T}}\bm{\Lambda}_{\mu}\bm{\mu} + const.
+\end{eqnarray}
+$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>ここで、$\bm{x}_n^{\mathrm{T}}\bm{\Lambda}\bm{\mu}$は行数と列数について(1×D)×(D×D)×(D×1)=(1×1)よりスカラーなので次が成り立つ。</p>
+$$
+\begin{eqnarray}
+    \bm{x}_n^{\mathrm{T}}\bm{\Lambda}\bm{\mu} &amp;=&amp; (\bm{x}_n^{\mathrm{T}}\bm{\Lambda}\bm{\mu})^{\mathrm{T}}　(スカラーを転置しても同じ) \\
+    &amp;=&amp; \bm{\mu}^{\mathrm{T}} \bm{\Lambda}^{\mathrm{T}} \bm{x}_n　(これは公式通り) \\
+    &amp;=&amp; \bm{\mu}^{\mathrm{T}} \bm{\Lambda} \bm{x}_n　(\bm{\Lambda}は対称行列)
+\end{eqnarray}
+$$<p>$\bm{m}^{\mathrm{T}}\bm{\Lambda}_{\mu} \bm{\mu}$についても同様であり、</p>
+$$
+\begin{eqnarray}
+    \ln p(\bm{\mu}|\bm{X}) &amp;=&amp; \frac{1}{2}\Sigma_{n=1}^{N}\{ \bm{x}_n^{\mathrm{T}}\bm{\Lambda}\bm{\mu}\} + \frac{1}{2} \bm{\mu}^{\mathrm{T}} \bm{\Lambda}\Sigma_{n=1}^{N} \bm{x}_n - \frac{N}{2} \bm{\mu}^{\mathrm{T}}\bm{\Lambda}\bm{\mu} - \frac{1}{2} \bm{\mu}^{\mathrm{T}}\bm{\Lambda}_{\mu}\bm{\mu} + \frac{1}{2}\bm{\mu}^{\mathrm{T}}\bm{\Lambda}_{\mu}\bm{m} + \frac{1}{2}\bm{m}^{\mathrm{T}}\bm{\Lambda}_{\mu}\bm{\mu} + const. \\
+    &amp;=&amp; \frac{1}{2}\bm{\mu}^{\mathrm{T}} \bm{\Lambda}\Sigma_{n=1}^{N} \bm{x}_n + \frac{1}{2}\bm{\mu}^{\mathrm{T}} \bm{\Lambda}\Sigma_{n=1}^{N} \bm{x}_n - \frac{N}{2} \bm{\mu}^{\mathrm{T}}\bm{\Lambda}\bm{\mu} - \frac{1}{2} \bm{\mu}^{\mathrm{T}}\bm{\Lambda}_{\mu}\bm{\mu} + \frac{1}{2}\bm{\mu}^{\mathrm{T}}\bm{\Lambda}_{\mu}\bm{m} + + \frac{1}{2}\bm{\mu}^{\mathrm{T}}\bm{\Lambda}_{\mu}\bm{m} + const. \\
+    &amp;=&amp; - \frac{1}{2}\{ \bm{\mu}^{\mathrm{T}} (N \bm{\Lambda}+\bm{\Lambda}_{\mu})\bm{\mu} - 2 \bm{\mu}^{\mathrm{T}}(\bm{\Lambda} \Sigma_{n=1}^{N} \bm{x}_n + \bm{\Lambda}_{\mu} \bm{m})\} + const.
+\end{eqnarray}
+$$<p>$\bm{\mu}$に関する上に凸の二次関数となり、ガウス分布であることがわかる。1次元と同様に逆算的に計算していく。</p>
+<p>
+$$p(\bm{\mu}|\bm{X}) = \mathcal{N}(\bm{\mu}|\hat{\bm{m}},\hat{\bm{\Lambda}}_{\bm{\mu}}^{-1})$$
+</p>
+<p>とおき、対数をとって$\bm{\mu}$について整理すると</p>
+$$
+\begin{eqnarray}
+    \ln p(\bm{\mu}|\bm{X}) &amp;=&amp; -\frac{1}{2}\{(\bm{\mu}-\hat{\bm{m}})^\mathrm{T} \hat{\bm{\Lambda}}_{\bm{\mu}} (\bm{\mu}-\hat{\bm{m}}) \} + const. \\
+    &amp;=&amp; -\frac{1}{2} \{\bm{\mu}^{\mathrm{T}} \hat{\bm{\Lambda}}_{\bm{\mu}} \bm{\mu} - \hat{\bm{m}}^{\mathrm{T}} \hat{\bm{\Lambda}}_{\bm{\mu}} \bm{\mu} - \bm{\mu}^{\mathrm{T}} \hat{\bm{\Lambda}}_{\bm{\mu}} \hat{\bm{m}}\} + const. \\
+    &amp;=&amp; -\frac{1}{2} \{\bm{\mu}^{\mathrm{T}} \hat{\bm{\Lambda}}_{\bm{\mu}} \bm{\mu}-2\bm{\mu}^{\mathrm{T}} \hat{\bm{\Lambda}}_{\bm{\mu}} \hat{\bm{m}}\} + const.
+\end{eqnarray}
+$$<p>対応関係を見れば</p>
+$$
+\begin{eqnarray}
+    \hat{\bm{\Lambda}}_{\bm{\mu}} = N\bm{\Lambda}+\bm{\Lambda}_{\bm{\mu}} \\
+    \hat{\bm{m}} = \hat{\bm{\Lambda}}_{\bm{\mu}}^{-1}(\bm{\Lambda} \Sigma_{n=1}^{N} \bm{x}_n + \bm{\Lambda}_{\mu} \bm{m})
+\end{eqnarray}
+$$<p>と事後分布のハイパーパラメータが求まる。</p>
+<h2 id="予測分布の導出">
+<a class="anchor" href="#%E4%BA%88%E6%B8%AC%E5%88%86%E5%B8%83%E3%81%AE%E5%B0%8E%E5%87%BA" aria-hidden="true"><span class="octicon octicon-link"></span></a>予測分布の導出<a class="anchor-link" href="#%E4%BA%88%E6%B8%AC%E5%88%86%E5%B8%83%E3%81%AE%E5%B0%8E%E5%87%BA"> </a>
+</h2>
 <p>執筆中</p>
 <h1 id="精度行列未知">
 <a class="anchor" href="#%E7%B2%BE%E5%BA%A6%E8%A1%8C%E5%88%97%E6%9C%AA%E7%9F%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>精度行列未知<a class="anchor-link" href="#%E7%B2%BE%E5%BA%A6%E8%A1%8C%E5%88%97%E6%9C%AA%E7%9F%A5"> </a>
@@ -281,6 +361,14 @@ $$|\bm{A}| &gt; 0$$<p>が成り立つ。</p>
 <a class="anchor" href="#%E5%B9%B3%E5%9D%87%E3%83%BB%E7%B2%BE%E5%BA%A6%E8%A1%8C%E5%88%97%E6%9C%AA%E7%9F%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>平均・精度行列未知<a class="anchor-link" href="#%E5%B9%B3%E5%9D%87%E3%83%BB%E7%B2%BE%E5%BA%A6%E8%A1%8C%E5%88%97%E6%9C%AA%E7%9F%A5"> </a>
 </h1>
 <p>執筆中</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>$\bm{\mu}^{\mathrm{T}} \hat{\bm{\Lambda}}_{\bm{\mu}} \bm{\mu} - \hat{\bm{m}}^{\mathrm{T}} \hat{\bm{\Lambda}}_{\bm{\mu}} \bm{\mu} - \bm{\mu}^{\mathrm{T}} \hat{\bm{\Lambda}}_{\bm{\mu}} \hat{\bm{m}}$</p>
 
 </div>
 </div>

@@ -39,7 +39,7 @@ baseurl: "/tpt-medical-it" # the subpath of your site, e.g. "/blog".
 # Github and twitter are optional:
 minima:
   social_links:
-    #   twitter: @vintea_01
+    twitter: tpt_ochanomizu
     github: Vintea01
 
 # Set this to true to get LaTeX math equation support
@@ -68,7 +68,7 @@ include:
 
 # This specifies what badges are turned on by default for notebook posts.
 default_badges:
-  github: false
+  github: true
   binder: false
   colab: false
 

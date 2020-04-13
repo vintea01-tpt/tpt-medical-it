@@ -110,7 +110,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      7 min read
+      10 min read
     
 </span></p>
 
@@ -154,6 +154,17 @@ window.onload = wrap_img;
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#予測分布の導出">予測分布の導出 </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Juliaで実装">Juliaで実装 </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#解析解">解析解 </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#平均未知">平均未知 </a></li>
+<li class="toc-entry toc-h3"><a href="#精度未知">精度未知 </a></li>
+<li class="toc-entry toc-h3"><a href="#平均・精度未知">平均・精度未知 </a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul><!--
@@ -796,6 +807,354 @@ $$
     \nu_s &amp;=&amp; N + 2a
 \end{eqnarray}
 $$<p>疲れましたね。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Juliaで実装">
+<a class="anchor" href="#Julia%E3%81%A7%E5%AE%9F%E8%A3%85" aria-hidden="true"><span class="octicon octicon-link"></span></a>Juliaで実装<a class="anchor-link" href="#Julia%E3%81%A7%E5%AE%9F%E8%A3%85"> </a>
+</h1>
+<h2 id="解析解">
+<a class="anchor" href="#%E8%A7%A3%E6%9E%90%E8%A7%A3" aria-hidden="true"><span class="octicon octicon-link"></span></a>解析解<a class="anchor-link" href="#%E8%A7%A3%E6%9E%90%E8%A7%A3"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># パッケージのimport</span>
+
+<span class="c1"># 乱数生成のためのパッケージ</span>
+<span class="n">using</span> <span class="n">Random</span>
+
+<span class="c1"># グラフ描画用のパッケージ</span>
+<span class="n">using</span> <span class="n">Plots</span>
+
+<span class="c1"># 確率分布の関数を呼び出すパッケージ</span>
+<span class="n">using</span> <span class="n">Distributions</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 真の分布のパラメータ</span>
+<span class="n">mu_true</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">sigma_true</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># 0~100までの数列</span>
+<span class="n">Ns</span> <span class="o">=</span> <span class="mi">0</span><span class="p">:</span><span class="mi">100</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 100個のデータ</span>
+<span class="n">Random</span><span class="o">.</span><span class="n">seed</span><span class="o">!(</span><span class="m">12</span><span class="o">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="n">mu_true</span><span class="p">,</span> <span class="n">sigma_true</span><span class="p">),</span> <span class="n">last</span><span class="p">(</span><span class="n">Ns</span><span class="p">))</span>
+
+<span class="c1"># 最初の5個</span>
+<span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>5-element Array{Float64,1}:
+  3.908514313490514
+ -3.6092237496539887
+  8.018578394019395
+  3.9410124050184745
+ 15.066579706268774</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="平均未知">
+<a class="anchor" href="#%E5%B9%B3%E5%9D%87%E6%9C%AA%E7%9F%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>平均未知<a class="anchor-link" href="#%E5%B9%B3%E5%9D%87%E6%9C%AA%E7%9F%A5"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#hide_output</span>
+
+<span class="c1"># 精度は既知</span>
+<span class="k">lambda</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">sigma_true</span><span class="o">^</span><span class="mi">2</span>
+
+<span class="c1"># 事前分布のハイパーパラメータ</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">lambda_mu</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># アニメーションをつけるためにStatsPlotsパッケージをimport</span>
+<span class="n">using</span> <span class="n">StatsPlots</span>
+
+<span class="c1"># ベイズ推論の進行過程をアニメーションに</span>
+<span class="n">animation</span> <span class="o">=</span> <span class="nd">@gif</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">Ns</span><span class="p">)</span>
+
+    <span class="c1"># データ点の和を計算</span>
+    <span class="n">sum_x</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    
+    <span class="c1"># ハイパーパラメータを更新</span>
+    <span class="n">lambda_mu_hat</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="k">lambda</span> <span class="o">+</span> <span class="n">lambda_mu</span>
+    <span class="n">m_hat</span> <span class="o">=</span> <span class="p">(</span><span class="k">lambda</span> <span class="o">*</span> <span class="n">sum_x</span> <span class="o">+</span> <span class="n">lambda_mu</span> <span class="o">*</span> <span class="n">m</span><span class="p">)</span><span class="o">/</span><span class="n">lambda_mu_hat</span>
+    
+    <span class="c1"># 事後確率分布</span>
+    <span class="n">updated_belief</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="n">m_hat</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">lambda_mu_hat</span><span class="p">))</span>
+    
+    <span class="c1"># 予測分布のパラメータ</span>
+    <span class="n">m_pred</span> <span class="o">=</span> <span class="n">m_hat</span>
+    <span class="n">lambda_pred</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span> <span class="n">lambda_mu_hat</span> <span class="o">/</span> <span class="p">(</span><span class="k">lambda</span> <span class="o">+</span> <span class="n">lambda_mu_hat</span><span class="p">)</span>
+    
+    <span class="c1"># 予測分布</span>
+    <span class="n">predict</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="n">m_pred</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">lambda_pred</span><span class="p">))</span>
+
+    <span class="c1"># 描画用の関数</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">updated_belief</span><span class="p">,</span> 
+        <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">250</span><span class="p">),</span> 
+        <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">"mu"</span><span class="p">,</span> 
+        <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span> 
+        <span class="n">legend</span> <span class="o">=</span> <span class="n">nothing</span><span class="p">,</span>
+        <span class="n">xlim</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu_true</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">sigma_true</span><span class="p">,</span><span class="n">mu_true</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">sigma_true</span><span class="p">),</span>
+        <span class="n">fill</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">α</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">vline</span><span class="o">!(</span>p1, <span class="o">[</span>mu_true<span class="o">])</span>
+    
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">predict</span><span class="p">,</span> 
+        <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">250</span><span class="p">),</span> 
+        <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">"x"</span><span class="p">,</span> 
+        <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span> 
+        <span class="n">legend</span> <span class="o">=</span> <span class="n">nothing</span><span class="p">,</span>
+        <span class="n">xlim</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu_true</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">sigma_true</span><span class="p">,</span><span class="n">mu_true</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">sigma_true</span><span class="p">),</span>
+        <span class="n">fill</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">α</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">!(</span>p2, Normal<span class="o">(</span>mu_true, sigma_true<span class="o">)</span>,fill<span class="o">=</span><span class="m">0</span>, <span class="nv">α</span><span class="o">=</span><span class="m">0</span>.2<span class="o">)</span>
+    
+    <span class="n">plot</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">title</span> <span class="o">=</span> <span class="s2">"$N observations"</span><span class="p">)</span>
+<span class="n">end</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="/tpt-medical-it/images/copied_from_nb/animations/gauss1_m.gif" alt=""></p>
+<h3 id="精度未知">
+<a class="anchor" href="#%E7%B2%BE%E5%BA%A6%E6%9C%AA%E7%9F%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>精度未知<a class="anchor-link" href="#%E7%B2%BE%E5%BA%A6%E6%9C%AA%E7%9F%A5"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#hide_output</span>
+
+<span class="c1"># 平均は既知</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="n">mu_true</span>
+
+<span class="c1"># 事前分布のハイパーパラメータ</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># ベイズ推論の進行過程をアニメーションに</span>
+<span class="n">animation</span> <span class="o">=</span> <span class="nd">@gif</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">Ns</span><span class="p">)</span>
+
+    <span class="c1"># ハイパーパラメータを更新</span>
+    <span class="n">a_hat</span> <span class="o">=</span> <span class="n">i</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="n">a</span>
+    <span class="n">b_hat</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">.-</span> <span class="n">mu</span><span class="p">)</span><span class="o">.^</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="n">b</span>
+    
+    <span class="c1"># 事後確率分布</span>
+    <span class="n">updated_belief</span> <span class="o">=</span> <span class="n">Gamma</span><span class="p">(</span><span class="n">a_hat</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">b_hat</span><span class="p">)</span>
+    
+    <span class="c1"># 予測分布のパラメータ</span>
+    <span class="n">mu_s</span> <span class="o">=</span> <span class="n">mu</span>
+    <span class="n">lambda_s</span> <span class="o">=</span> <span class="n">a_hat</span><span class="o">/</span><span class="n">b_hat</span>
+    <span class="n">nu_s</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">a_hat</span>
+    
+    <span class="c1"># 予測分布</span>
+    <span class="n">predict</span> <span class="o">=</span> <span class="n">LocationScale</span><span class="p">(</span><span class="n">mu_s</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">lambda_s</span><span class="p">),</span> <span class="n">TDist</span><span class="p">(</span><span class="n">nu_s</span><span class="p">))</span>
+    
+    <span class="c1"># 描画用の関数</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">updated_belief</span><span class="p">,</span> 
+        <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">250</span><span class="p">),</span> 
+        <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">"lambda"</span><span class="p">,</span> 
+        <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span> 
+        <span class="n">legend</span> <span class="o">=</span> <span class="n">nothing</span><span class="p">,</span>
+        <span class="n">xlim</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">/</span><span class="n">sigma_true</span><span class="o">^</span><span class="mi">2</span><span class="p">),</span>
+        <span class="n">fill</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">α</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">vline</span><span class="o">!(</span>p1, <span class="o">[</span><span class="m">1</span>/sigma_true^2<span class="o">])</span>
+    
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">predict</span><span class="p">,</span> 
+        <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">250</span><span class="p">),</span>
+        <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">"x"</span><span class="p">,</span> 
+        <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span> 
+        <span class="n">legend</span> <span class="o">=</span> <span class="n">nothing</span><span class="p">,</span>
+        <span class="n">xlim</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu_true</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">sigma_true</span><span class="p">,</span><span class="n">mu_true</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">sigma_true</span><span class="p">),</span>
+        <span class="n">fill</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">α</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">!(</span>p2, Normal<span class="o">(</span>mu_true, sigma_true<span class="o">)</span>,fill<span class="o">=</span><span class="m">0</span>, <span class="nv">α</span><span class="o">=</span><span class="m">0</span>.2<span class="o">)</span>
+    
+    <span class="n">plot</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">title</span> <span class="o">=</span> <span class="s2">"$N observations"</span><span class="p">)</span>
+<span class="n">end</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="/tpt-medical-it/images/copied_from_nb/animations/gauss1_l.gif" alt=""></p>
+<h3 id="平均・精度未知">
+<a class="anchor" href="#%E5%B9%B3%E5%9D%87%E3%83%BB%E7%B2%BE%E5%BA%A6%E6%9C%AA%E7%9F%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>平均・精度未知<a class="anchor-link" href="#%E5%B9%B3%E5%9D%87%E3%83%BB%E7%B2%BE%E5%BA%A6%E6%9C%AA%E7%9F%A5"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#hide_output</span>
+
+<span class="c1"># 事前分布のハイパーパラメータ</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># ベイズ推論の進行過程をアニメーションに</span>
+<span class="n">animation</span> <span class="o">=</span> <span class="nd">@gif</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">Ns</span><span class="p">)</span>
+
+    <span class="c1"># ハイパーパラメータを更新</span>
+    <span class="n">beta_hat</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">beta</span>
+    <span class="n">m_hat</span> <span class="o">=</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="n">beta</span><span class="o">*</span><span class="n">m</span><span class="p">)</span><span class="o">/</span><span class="n">beta_hat</span>
+    <span class="n">a_hat</span> <span class="o">=</span> <span class="n">i</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="n">a</span>
+    <span class="n">b_hat</span> <span class="o">=</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.^</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">beta</span><span class="o">*</span><span class="n">m</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">beta_hat</span><span class="o">*</span><span class="n">m_hat</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="n">b</span>
+    
+    <span class="c1"># 事後確率分布</span>
+    <span class="n">updated_gamma</span> <span class="o">=</span> <span class="n">Gamma</span><span class="p">(</span><span class="n">a_hat</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">b_hat</span><span class="p">)</span>
+    <span class="n">updated_belief</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="n">m_hat</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">beta_hat</span><span class="o">*</span><span class="n">rand</span><span class="p">(</span><span class="n">updated_gamma</span><span class="p">))))</span>
+    
+    <span class="c1"># 予測分布のパラメータ</span>
+    <span class="n">mu_s</span> <span class="o">=</span> <span class="n">m_hat</span>
+    <span class="n">lambda_s</span> <span class="o">=</span> <span class="n">beta_hat</span><span class="o">*</span><span class="n">a_hat</span><span class="o">/</span><span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="n">beta_hat</span><span class="p">)</span><span class="o">*</span><span class="n">b_hat</span><span class="p">)</span>
+    <span class="n">nu_s</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">a_hat</span>
+    
+    <span class="c1"># 予測分布</span>
+    <span class="n">predict</span> <span class="o">=</span> <span class="n">LocationScale</span><span class="p">(</span><span class="n">mu_s</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">lambda_s</span><span class="p">),</span> <span class="n">TDist</span><span class="p">(</span><span class="n">nu_s</span><span class="p">))</span>
+
+    <span class="c1"># 描画用の関数</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">updated_belief</span><span class="p">,</span> 
+        <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">250</span><span class="p">),</span> 
+        <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">"mu"</span><span class="p">,</span> 
+        <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span> 
+        <span class="n">legend</span> <span class="o">=</span> <span class="n">nothing</span><span class="p">,</span>
+        <span class="n">xlim</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu_true</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">sigma_true</span><span class="p">,</span><span class="n">mu_true</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">sigma_true</span><span class="p">),</span>
+        <span class="n">fill</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">α</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">vline</span><span class="o">!(</span>p1, <span class="o">[</span>mu_true<span class="o">])</span>
+    
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">updated_gamma</span><span class="p">,</span> 
+        <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">250</span><span class="p">),</span>
+        <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">"lambda"</span><span class="p">,</span> 
+        <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span> 
+        <span class="n">legend</span> <span class="o">=</span> <span class="n">nothing</span><span class="p">,</span>
+        <span class="n">xlim</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">/</span><span class="n">sigma_true</span><span class="o">^</span><span class="mi">2</span><span class="p">),</span>
+        <span class="n">fill</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">α</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">vline</span><span class="o">!(</span>p2, <span class="o">[</span><span class="m">1</span>/sigma_true^2<span class="o">])</span>
+    
+    <span class="n">p3</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">predict</span><span class="p">,</span> 
+        <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">250</span><span class="p">),</span>
+        <span class="n">xlabel</span> <span class="o">=</span> <span class="s2">"x"</span><span class="p">,</span> 
+        <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span> 
+        <span class="n">legend</span> <span class="o">=</span> <span class="n">nothing</span><span class="p">,</span>
+        <span class="n">xlim</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu_true</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">sigma_true</span><span class="p">,</span><span class="n">mu_true</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">sigma_true</span><span class="p">),</span>
+        <span class="n">fill</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">α</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">!(</span>p3, Normal<span class="o">(</span>mu_true, sigma_true<span class="o">)</span>,fill<span class="o">=</span><span class="m">0</span>, <span class="nv">α</span><span class="o">=</span><span class="m">0</span>.2<span class="o">)</span>
+    
+    <span class="n">plot</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span><span class="n">layout</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">title</span> <span class="o">=</span> <span class="s2">"$N observations"</span><span class="p">)</span>
+<span class="n">end</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="/tpt-medical-it/images/copied_from_nb/animations/gauss1_ml.gif" alt=""></p>
 
 </div>
 </div>

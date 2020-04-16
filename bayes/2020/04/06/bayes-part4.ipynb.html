@@ -110,7 +110,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      7 min read
+      10 min read
     
 </span></p>
 
@@ -139,6 +139,8 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h1"><a href="#精度行列未知">精度行列未知 </a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#モデルの構築">モデルの構築 </a></li>
+<li class="toc-entry toc-h2"><a href="#事後分布の推論">事後分布の推論 </a></li>
+<li class="toc-entry toc-h2"><a href="#予測分布の導出">予測分布の導出 </a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#平均・精度行列未知">平均・精度行列未知 </a></li>
@@ -520,6 +522,18 @@ $$<p>これらに、更新されたハイパーパラメータ$\hat,\hat_$を代
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash flash-success">
+    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z"></path></svg>
+    <strong>Tip: </strong>トレースについて成り立つ等式 $$\begin{eqnarray} Tr({\bf A}) &amp;=&amp; Tr({\bf A}^\mathrm{T}) \\ Tr({\bf A} + {\bf B}) &amp;=&amp; Tr({\bf A}) + Tr({\bf B}) \\ Tr({\bf AB}) &amp;=&amp; Tr({\bf BA}) \end{eqnarray}$$
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>さて、このウィシャート分布を用いてモデルを構築すると次のようになる。</p>
 $$
 \begin{eqnarray}
@@ -528,7 +542,110 @@ $$
     p({\bf X}|{\bf \Lambda}) &amp;=&amp; \Pi_{n=1}^{N} \mathcal{N}({\bf x}_n |{\bf \mu}, {\bf \Lambda}^{-1}) \\
     p({\bf \Lambda}) &amp;=&amp; \mathcal{W}({\bf \Lambda}|\nu, {\bf W})
 \end{eqnarray}
-$$<p>以下執筆中</p>
+$$<h2 id="事後分布の推論">
+<a class="anchor" href="#%E4%BA%8B%E5%BE%8C%E5%88%86%E5%B8%83%E3%81%AE%E6%8E%A8%E8%AB%96" aria-hidden="true"><span class="octicon octicon-link"></span></a>事後分布の推論<a class="anchor-link" href="#%E4%BA%8B%E5%BE%8C%E5%88%86%E5%B8%83%E3%81%AE%E6%8E%A8%E8%AB%96"> </a>
+</h2>
+<p>データ${\bf X}$を観測した後の事後分布は</p>
+$$
+p({\bf \Lambda}|{\bf X}) \propto p({\bf X}|{\bf \Lambda}) p({\bf \Lambda})
+$$<p>ゆえ対数化すると</p>
+$$
+\begin{eqnarray}
+    \ln p({\bf \Lambda}|{\bf X}) &amp;=&amp; \Sigma_{n=1}^{N} \ln \mathcal{N} ({\bf x}_n|{\bf \mu}, {\bf \Lambda}^{-1}) + \ln \mathcal{W}({\bf \Lambda} |\nu, {\bf W}) + const. \\
+    &amp;=&amp; - \frac{1}{2} \{ \Sigma_{n=1}^{N} ({\bf x}_n-{\bf \mu})^\mathrm{T} {\bf \Lambda}({\bf x}_n-{\bf \mu}) -  N \ln |{\bf \Lambda}| \} + \frac{\nu-D-1}{2} \ln |{\bf \Lambda}| - \frac{1}{2} Tr({\bf W}^{-1} {\bf \Lambda}) + const. \\
+    &amp;=&amp; \frac{N+\nu-D-1}{2} \ln |{\bf \Lambda}| - \frac{1}{2} \Sigma_{n=1}^{N} Tr \{ ({\bf x}_n-{\bf \mu})^\mathrm{T} {\bf \Lambda}({\bf x}_n-{\bf \mu}) \} - \frac{1}{2} Tr({\bf W}^{-1} {\bf \Lambda}) + const.　(スカラーのトレースをとっても同じ) \\
+    &amp;=&amp; \frac{N+\nu-D-1}{2} \ln |{\bf \Lambda}| - \frac{1}{2} \Sigma_{n=1}^{N} Tr \{ ({\bf x}_n-{\bf \mu})({\bf x}_n-{\bf \mu})^\mathrm{T} {\bf \Lambda} \} - \frac{1}{2} Tr({\bf W}^{-1} {\bf \Lambda}) + const.　(トレース内では対角成分が同じであれば順番を入れ替えても問題ない) \\
+    &amp;=&amp; \frac{N+\nu-D-1}{2} \ln |{\bf \Lambda}| - \frac{1}{2} Tr \left[ \{ \Sigma_{n=1}^{N} ({\bf x}_n-{\bf \mu})({\bf x}_n-{\bf \mu})^\mathrm{T} + {\bf W}^{-1} \} {\bf \Lambda} \right] + const.　(トレースの和は和のトレース)
+\end{eqnarray}
+$$<p>ウィシャート分布との対応を見れば、</p>
+$$
+\begin{eqnarray}
+    p({\bf \Lambda}|{\bf X}) &amp;=&amp; \mathcal{W}({\bf \Lambda}|\hat{\nu}, \hat{\bf W}) \\
+    ただし　\hat{\bf W}^{-1} &amp;=&amp; \Sigma_{n=1}^{N} ({\bf x}_n - {\bf \mu})({\bf x}_n - {\bf \mu})^\mathrm{T} + {\bf W}^{-1} \\
+    \hat{\nu} &amp;=&amp; N + \nu
+\end{eqnarray}
+$$<p>となる。</p>
+<h2 id="予測分布の導出">
+<a class="anchor" href="#%E4%BA%88%E6%B8%AC%E5%88%86%E5%B8%83%E3%81%AE%E5%B0%8E%E5%87%BA" aria-hidden="true"><span class="octicon octicon-link"></span></a>予測分布の導出<a class="anchor-link" href="#%E4%BA%88%E6%B8%AC%E5%88%86%E5%B8%83%E3%81%AE%E5%B0%8E%E5%87%BA"> </a>
+</h2>
+<p>事前分布と事後分布の形が同じなので、表記がシンプルになるよう学習前のハイパーパラメータで予測分布を計算し、後で代入する。</p>
+<p>積分計算を避け、ベイズの定理と対数を利用する。学習前の予測分布$p({\bf x}_*)$は、</p>
+$$
+\ln p({\bf x}_*) = \ln p({\bf x}_*|{\bf \Lambda}) - \ln p({\bf \Lambda}|{\bf x}_*) + const.
+$$<p>と表せる。事後分布の結果を流用して</p>
+$$
+\begin{eqnarray}
+    p({\bf \Lambda}|{\bf x}_*) &amp;=&amp; \mathcal{W}({\bf \Lambda}|1+\nu , {\bf W}({\bf x}_*)) \\
+    ただし　{\bf W} ({\bf x}_*)^{-1} &amp;=&amp; ({\bf x}_* - {\bf \mu})({\bf x}_* - {\bf \mu})^\mathrm{T} + {\bf W}^{-1}
+\end{eqnarray}
+$$<p>よって</p>
+$$
+\begin{eqnarray}
+    \ln p({\bf x}_*) &amp;=&amp; \ln p({\bf x}_*|{\bf \Lambda}) - \ln p({\bf \Lambda}|{\bf x}_*) + const. \\
+    &amp;=&amp; -\frac{1}{2} \left[ ({\bf x}_* -{\bf \mu})^\mathrm{T} {\bf \Lambda} ({\bf x}_* -{\bf \mu}) - Tr \{ {\bf W}({\bf x}_*)^{-1}{\bf \Lambda} \} - (\nu + 1) \ln |{\bf W} ({\bf x}_*)| \right] + const.
+\end{eqnarray}
+$$<p>行列式、トレースの性質を使いながら計算を進める。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash flash-success">
+    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z"></path></svg>
+    <strong>Tip: </strong>行列式の性質 $$\begin{eqnarray} |c{\bf A}| &amp;=&amp; c^N |{\bf A}| \\ |{\bf A}^\mathrm{T}| &amp;=&amp; |{\bf A}| \\ |{\bf A}{\bf B}| &amp;=&amp; |{\bf A}| |{\bf B}| \\ |{\bf A}^{-1}| &amp;=&amp; |{\bf A}|^{-1} \\ |{\bf I}_N + {\bf C} {\bf D}^\mathrm{T} | &amp;=&amp; |{\bf I}_M + {\bf C}^\mathrm{T} {\bf D}|　(この{\bf C}と{\bf D}はN \times M行列) \end{eqnarray}$$
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$
+\begin{eqnarray}
+    \ln p({\bf x}_*) &amp;=&amp; -\frac{1}{2} \left[ Tr \{ ({\bf x}_* -{\bf \mu})^\mathrm{T} {\bf \Lambda} ({\bf x}_* -{\bf \mu})) \} - Tr \{ ({\bf x}_* - {\bf \mu})({\bf x}_* - {\bf \mu})^\mathrm{T} {\bf \Lambda}) \} + (\nu + 1) \ln |{\bf W} ({\bf x}_*)^{-1}| \right] + const. \\
+    &amp;=&amp; - \frac{1+\nu}{2} \ln |({\bf x}_* - {\bf \mu})({\bf x}_* - {\bf \mu})^\mathrm{T} + {\bf W}^{-1}| + const. \\
+    &amp;=&amp; - \frac{1+\nu}{2} \ln |{\bf W}^{-1} \{ {\bf W} ({\bf x}_* - {\bf \mu})({\bf x}_* - {\bf \mu})^\mathrm{T} + {\bf I}_D \}| + const. \\
+    &amp;=&amp; - \frac{1+\nu}{2} \ln |{\bf W}^{-1}| |{\bf I}_D + {\bf W} ({\bf x}_* - {\bf \mu})({\bf x}_* - {\bf \mu})^\mathrm{T}| + const. \\
+    &amp;=&amp; - \frac{1+\nu}{2} \ln |{\bf I}_D + {\bf W} ({\bf x}_* - {\bf \mu})({\bf x}_* - {\bf \mu})^\mathrm{T} | + const. \\
+    &amp;=&amp; - \frac{1+\nu}{2} \ln |{\bf I}_1 + \{ {\bf W} ({\bf x}_* - {\bf \mu}) \}^\mathrm{T} ({\bf x}_* - {\bf \mu}) | + const.　(D \times 1行列になっている) \\
+    &amp;=&amp; - \frac{1+\nu}{2} \ln \{ 1 + ({\bf x}_* - {\bf \mu})^\mathrm{T} {\bf W} ({\bf x}_* - {\bf \mu}) \} + const.
+\end{eqnarray}
+$$<p>これは多次元のStudentのt分布になっている。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash flash-warn">
+    <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
+    <strong>Important: </strong>多次元のStudentのt分布: $$St({\bf x} | {\bf \mu}_s , {\bf \Lambda}_s , \nu_s) = \frac{\Gamma(\frac{\nu_s + D}{2})}{\Gamma(\frac{\nu_s}{2})} \frac{|{\bf \Lambda}_s|^{\frac{1}{2}}}{(\pi \nu_s)^{\frac{D}{2}}} \left\{ 1 + \frac{1}{\nu_s} ({\bf x} - {\bf \mu}_s)^\mathrm{T} {\bf \Lambda}_s ({\bf x} - {\bf \mu}_s) \right\}^{- \frac{\nu_s + D}{2}}$$
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>これを対数化して${\bf x}$に関わる項だけ抜き出すと、</p>
+$$
+\ln St({\bf x} | {\bf \mu}_s , {\bf \Lambda}_s , \nu_s) = - \frac{\nu_s + D}{2} \ln \left\{ 1 + \frac{1}{\nu_s} ({\bf x} - {\bf \mu}_s)^\mathrm{T} {\bf \Lambda}_s ({\bf x} - {\bf \mu}_s) \right\} + const.
+$$<p>対応を見ると学習前の予測分布$p({\bf x}_*)$は次のように表せる。</p>
+$$
+\begin{eqnarray}
+    p({\bf x}_*) &amp;=&amp; St({\bf x} | {\bf \mu}_s , {\bf \Lambda}_s , \nu_s) \\
+    ただし　{\bf \mu}_s &amp;=&amp; {\bf \mu} \\
+    {\bf \Lambda}_s &amp;=&amp; (1-D+\nu){\bf W} \\
+    \nu_s &amp;=&amp; 1-D+\nu
+\end{eqnarray}
+$$<p>学習後の予測分布$p({\bf x}_* | {\bf X})$はこれに更新されたハイパーパラメータを代入することで求まる。</p>
 
 </div>
 </div>

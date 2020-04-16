@@ -185,7 +185,7 @@ window.onload = wrap_img;
 <p></p>
 <div class="flash flash-warn">
     <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
-    <strong>Important: </strong>多次元ガウス分布の確率密度関数 $$\frac{1}{\sqrt{(2\pi)^D |{\bf \Sigma}}|}\exp{\{-\frac{1}{2}({\bf x}-{\bf \mu})^\mathrm{T} {\bf \Sigma}^{-1} ({\bf x}-{\bf \mu})\}}$$
+    <strong>Important: </strong>多次元ガウス分布の確率密度関数 $$\frac{1}{\sqrt{(2\pi)^D |{\bf \Sigma} }|}\exp{\{-\frac{1}{2}({\bf x}-{\bf \mu})^\mathrm{T} {\bf \Sigma}^{-1} ({\bf x}-{\bf \mu})\} }$$
 </div>
 
 </div>
@@ -220,7 +220,7 @@ window.onload = wrap_img;
 $${\bf x}^\mathrm{T} {\bf A}{\bf x} &gt; 0$$<p>が成り立つこと。正定値行列の逆行列も正定値行列である。また全ての固有値が正であることから、</p>
 $$|{\bf A}| &gt; 0$$<p>が成り立つ。</p>
 <p>また、対称行列であるので</p>
-$${\bf A}^{\mathrm{T}} = {\bf A}$$<p>が成り立つ。</p>
+$${\bf A}^{\mathrm{T} } = {\bf A}$$<p>が成り立つ。</p>
 </blockquote>
 </blockquote>
 
@@ -261,7 +261,7 @@ $${\bf A}^{\mathrm{T}} = {\bf A}$$<p>が成り立つ。</p>
 <p></p>
 <div class="flash flash-warn">
     <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
-    <strong>Important: </strong>多次元ガウス分布を精度行列で表した場合 $$\frac{1}{\sqrt{(2\pi)^D}}|{\bf \Lambda}|^{\frac{1}{2}}\exp{\{-\frac{1}{2}({\bf x}-{\bf \mu})^\mathrm{T} {\bf \Lambda} ({\bf x}-{\bf \mu})\}}$$
+    <strong>Important: </strong>多次元ガウス分布を精度行列で表した場合 $$\frac{1}{\sqrt{(2\pi)^D} }|{\bf \Lambda}|^{\frac{1}{2} }\exp{\{-\frac{1}{2}({\bf x}-{\bf \mu})^\mathrm{T} {\bf \Lambda} ({\bf x}-{\bf \mu})\} }$$
 </div>
 
 </div>
@@ -313,8 +313,8 @@ $$
 \begin{eqnarray}
     \ln p({\bf \mu}|{\bf X}) &amp;=&amp; \Sigma_{n=1}^{N} \ln \mathcal{N}({\bf x}_n|{\bf \mu},{\bf \Lambda}^{-1}) + \ln \mathcal{N}({\bf \mu}|{\bf m},{\bf \Lambda}_{\mu}^{-1}) + const. \\
     &amp;=&amp; -\frac{1}{2} \Sigma_{n=1}^{N} ({\bf x}_n-{\bf \mu})^\mathrm{T} {\bf \Lambda}({\bf x}_n-{\bf \mu}) - \frac{1}{2}({\bf \mu}-{\bf m})^\mathrm{T}{\bf \Lambda}_{\mu}({\bf \mu}-{\bf m}) + const. \\
-    &amp;=&amp; -\frac{1}{2} \Sigma_{n=1}^{N} ({\bf x}_n^{\mathrm{T}}-{\bf \mu}^{\mathrm{T}}){\bf \Lambda}({\bf x}_n-{\bf \mu}) - \frac{1}{2}({\bf \mu}^{\mathrm{T}}-{\bf m}^{\mathrm{T}}) {\bf \Lambda}_{\mu}({\bf \mu}-{\bf m}) + const. \\
-    &amp;=&amp; \frac{1}{2}\Sigma_{n=1}^{N}\{ {\bf x}_n^{\mathrm{T}}{\bf \Lambda}{\bf \mu}\} + \frac{1}{2} {\bf \mu}^{\mathrm{T}} {\bf \Lambda}\Sigma_{n=1}^{N} {\bf x}_n - \frac{N}{2} {\bf \mu}^{\mathrm{T}}{\bf \Lambda}{\bf \mu} - \frac{1}{2} {\bf \mu}^{\mathrm{T}}{\bf \Lambda}_{\mu}{\bf \mu} + \frac{1}{2}{\bf \mu}^{\mathrm{T}}{\bf \Lambda}_{\mu}{\bf m} + \frac{1}{2}{\bf m}^{\mathrm{T}}{\bf \Lambda}_{\mu}{\bf \mu} + const.
+    &amp;=&amp; -\frac{1}{2} \Sigma_{n=1}^{N} ({\bf x}_n^{\mathrm{T} }-{\bf \mu}^{\mathrm{T} }){\bf \Lambda}({\bf x}_n-{\bf \mu}) - \frac{1}{2}({\bf \mu}^{\mathrm{T} }-{\bf m}^{\mathrm{T} }) {\bf \Lambda}_{\mu}({\bf \mu}-{\bf m}) + const. \\
+    &amp;=&amp; \frac{1}{2}\Sigma_{n=1}^{N}\{ {\bf x}_n^{\mathrm{T} }{\bf \Lambda}{\bf \mu}\} + \frac{1}{2} {\bf \mu}^{\mathrm{T} } {\bf \Lambda}\Sigma_{n=1}^{N} {\bf x}_n - \frac{N}{2} {\bf \mu}^{\mathrm{T} }{\bf \Lambda}{\bf \mu} - \frac{1}{2} {\bf \mu}^{\mathrm{T} }{\bf \Lambda}_{\mu}{\bf \mu} + \frac{1}{2}{\bf \mu}^{\mathrm{T} }{\bf \Lambda}_{\mu}{\bf m} + \frac{1}{2}{\bf m}^{\mathrm{T} }{\bf \Lambda}_{\mu}{\bf \mu} + const.
 \end{eqnarray}
 $$
 </div>
@@ -323,30 +323,30 @@ $$
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>ここで、${\bf x}_n^{\mathrm{T}}{\bf \Lambda}{\bf \mu}$は行数と列数について(1×D)×(D×D)×(D×1)=(1×1)よりスカラーなので次が成り立つ。</p>
+<p>ここで、${\bf x}_n^{\mathrm{T} }{\bf \Lambda}{\bf \mu}$は行数と列数について(1×D)×(D×D)×(D×1)=(1×1)よりスカラーなので次が成り立つ。</p>
 $$
 \begin{eqnarray}
-    {\bf x}_n^{\mathrm{T}}{\bf \Lambda}{\bf \mu} &amp;=&amp; ({\bf x}_n^{\mathrm{T}}{\bf \Lambda}{\bf \mu})^{\mathrm{T}}　(スカラーを転置しても同じ) \\
-    &amp;=&amp; {\bf \mu}^{\mathrm{T}} {\bf \Lambda}^{\mathrm{T}} {\bf x}_n　(これは公式通り) \\
-    &amp;=&amp; {\bf \mu}^{\mathrm{T}} {\bf \Lambda} {\bf x}_n　({\bf \Lambda}は対称行列)
+    {\bf x}_n^{\mathrm{T} }{\bf \Lambda}{\bf \mu} &amp;=&amp; ({\bf x}_n^{\mathrm{T} }{\bf \Lambda}{\bf \mu})^{\mathrm{T} }　(スカラーを転置しても同じ) \\
+    &amp;=&amp; {\bf \mu}^{\mathrm{T} } {\bf \Lambda}^{\mathrm{T} } {\bf x}_n　(これは公式通り) \\
+    &amp;=&amp; {\bf \mu}^{\mathrm{T} } {\bf \Lambda} {\bf x}_n　({\bf \Lambda}は対称行列)
 \end{eqnarray}
-$$<p>${\bf m}^{\mathrm{T}}{\bf \Lambda}_{\mu} {\bf \mu}$についても同様であり、</p>
+$$<p>${\bf m}^{\mathrm{T} }{\bf \Lambda}_{\mu} {\bf \mu}$についても同様であり、</p>
 $$
 \begin{eqnarray}
-    \ln p({\bf \mu}|{\bf X}) &amp;=&amp; \frac{1}{2}\Sigma_{n=1}^{N}\{ {\bf x}_n^{\mathrm{T}}{\bf \Lambda}{\bf \mu}\} + \frac{1}{2} {\bf \mu}^{\mathrm{T}} {\bf \Lambda}\Sigma_{n=1}^{N} {\bf x}_n - \frac{N}{2} {\bf \mu}^{\mathrm{T}}{\bf \Lambda}{\bf \mu} - \frac{1}{2} {\bf \mu}^{\mathrm{T}}{\bf \Lambda}_{\mu}{\bf \mu} + \frac{1}{2}{\bf \mu}^{\mathrm{T}}{\bf \Lambda}_{\mu}{\bf m} + \frac{1}{2}{\bf m}^{\mathrm{T}}{\bf \Lambda}_{\mu}{\bf \mu} + const. \\
-    &amp;=&amp; \frac{1}{2}{\bf \mu}^{\mathrm{T}} {\bf \Lambda}\Sigma_{n=1}^{N} {\bf x}_n + \frac{1}{2}{\bf \mu}^{\mathrm{T}} {\bf \Lambda}\Sigma_{n=1}^{N} {\bf x}_n - \frac{N}{2} {\bf \mu}^{\mathrm{T}}{\bf \Lambda}{\bf \mu} - \frac{1}{2} {\bf \mu}^{\mathrm{T}}{\bf \Lambda}_{\mu}{\bf \mu} + \frac{1}{2}{\bf \mu}^{\mathrm{T}}{\bf \Lambda}_{\mu}{\bf m} + + \frac{1}{2}{\bf \mu}^{\mathrm{T}}{\bf \Lambda}_{\mu}{\bf m} + const. \\
-    &amp;=&amp; - \frac{1}{2}\{ {\bf \mu}^{\mathrm{T}} (N {\bf \Lambda}+{\bf \Lambda}_{\mu}){\bf \mu} - 2 {\bf \mu}^{\mathrm{T}}({\bf \Lambda} \Sigma_{n=1}^{N} {\bf x}_n + {\bf \Lambda}_{\mu} {\bf m})\} + const.
+    \ln p({\bf \mu}|{\bf X}) &amp;=&amp; \frac{1}{2}\Sigma_{n=1}^{N}\{ {\bf x}_n^{\mathrm{T} }{\bf \Lambda}{\bf \mu}\} + \frac{1}{2} {\bf \mu}^{\mathrm{T} } {\bf \Lambda}\Sigma_{n=1}^{N} {\bf x}_n - \frac{N}{2} {\bf \mu}^{\mathrm{T} }{\bf \Lambda}{\bf \mu} - \frac{1}{2} {\bf \mu}^{\mathrm{T} }{\bf \Lambda}_{\mu}{\bf \mu} + \frac{1}{2}{\bf \mu}^{\mathrm{T} }{\bf \Lambda}_{\mu}{\bf m} + \frac{1}{2}{\bf m}^{\mathrm{T} }{\bf \Lambda}_{\mu}{\bf \mu} + const. \\
+    &amp;=&amp; \frac{1}{2}{\bf \mu}^{\mathrm{T} } {\bf \Lambda}\Sigma_{n=1}^{N} {\bf x}_n + \frac{1}{2}{\bf \mu}^{\mathrm{T} } {\bf \Lambda}\Sigma_{n=1}^{N} {\bf x}_n - \frac{N}{2} {\bf \mu}^{\mathrm{T} }{\bf \Lambda}{\bf \mu} - \frac{1}{2} {\bf \mu}^{\mathrm{T} }{\bf \Lambda}_{\mu}{\bf \mu} + \frac{1}{2}{\bf \mu}^{\mathrm{T} }{\bf \Lambda}_{\mu}{\bf m} + + \frac{1}{2}{\bf \mu}^{\mathrm{T} }{\bf \Lambda}_{\mu}{\bf m} + const. \\
+    &amp;=&amp; - \frac{1}{2}\{ {\bf \mu}^{\mathrm{T} } (N {\bf \Lambda}+{\bf \Lambda}_{\mu}){\bf \mu} - 2 {\bf \mu}^{\mathrm{T} }({\bf \Lambda} \Sigma_{n=1}^{N} {\bf x}_n + {\bf \Lambda}_{\mu} {\bf m})\} + const.
 \end{eqnarray}
 $$<p>${\bf \mu}$に関する上に凸の二次関数となり、ガウス分布であることがわかる。1次元と同様に逆算的に計算していく。</p>
 <p>
-$$p({\bf \mu}|{\bf X}) = \mathcal{N}({\bf \mu}|\hat{{\bf m}},\hat{{\bf \Lambda}}_{{\bf \mu}}^{-1})$$
+$$p({\bf \mu}|{\bf X}) = \mathcal{N}({\bf \mu}|\hat{\bf m},\hat{\bf \Lambda}_{\bf \mu}^{-1})$$
 </p>
 <p>とおき、対数をとって${\bf \mu}$について整理すると</p>
 $$
 \begin{eqnarray}
     \ln p({\bf \mu}|{\bf X}) &amp;=&amp; -\frac{1}{2}\{({\bf \mu}-\hat{\bf m})^\mathrm{T} \hat{\bf \Lambda}_{\bf \mu} ({\bf \mu}-\hat{\bf m}) \} + const. \\
-    &amp;=&amp; -\frac{1}{2} \{ {\bf \mu}^{\mathrm{T}} \hat{\bf \Lambda}_{\bf \mu} {\bf \mu} - \hat{\bf m}^{\mathrm{T}} \hat{\bf \Lambda}_{\bf \mu} {\bf \mu} - {\bf \mu}^{\mathrm{T}} \hat{\bf \Lambda}_{\bf \mu} \hat{\bf m} \} + const. \\
-    &amp;=&amp; -\frac{1}{2} \{ {\bf \mu}^{\mathrm{T}} \hat{\bf \Lambda}_{\bf \mu} {\bf \mu}-2{\bf \mu}^{\mathrm{T}} \hat{\bf \Lambda}_{\bf \mu} \hat{\bf m} \} + const.
+    &amp;=&amp; -\frac{1}{2} \{ {\bf \mu}^{\mathrm{T} } \hat{\bf \Lambda}_{\bf \mu} {\bf \mu} - \hat{\bf m}^{\mathrm{T} } \hat{\bf \Lambda}_{\bf \mu} {\bf \mu} - {\bf \mu}^{\mathrm{T} } \hat{\bf \Lambda}_{\bf \mu} \hat{\bf m} \} + const. \\
+    &amp;=&amp; -\frac{1}{2} \{ {\bf \mu}^{\mathrm{T} } \hat{\bf \Lambda}_{\bf \mu} {\bf \mu}-2{\bf \mu}^{\mathrm{T} } \hat{\bf \Lambda}_{\bf \mu} \hat{\bf m} \} + const.
 \end{eqnarray}
 $$<p>対応関係を見れば</p>
 $$
@@ -365,34 +365,34 @@ $$\ln p({\bf x}_*) = \ln p({\bf x}_*|{\bf \mu}) - \ln p({\bf \mu}|{\bf x}_*) + c
 <p>$\ln p({\bf \mu}|{\bf x}_*)$は${\bf x}_*$を学習した後の事後分布と見なせるので、</p>
 $$
 \begin{eqnarray}
-    p({\bf \mu}|{\bf x}_*) &amp;=&amp; \mathcal{N}({\bf \mu}|{\bf m}({\bf x}_*), ({\bf \Lambda}+{\bf \Lambda}_)^{-1}) \\
-    ただし　{\bf m}({\bf x}_*) &amp;=&amp; ({\bf \Lambda}+{\bf \Lambda}_)^{-1} ({\bf \Lambda}{\bf x}_* + {\bf \Lambda}_{\bf m})
+    p({\bf \mu}|{\bf x}_*) &amp;=&amp; \mathcal{N}({\bf \mu}|{\bf m}({\bf x}_*), ({\bf \Lambda}+{\bf \Lambda}_{\bf \mu})^{-1}) \\
+    ただし　{\bf m}({\bf x}_*) &amp;=&amp; ({\bf \Lambda}+{\bf \Lambda}_{\bf \mu})^{-1} ({\bf \Lambda}{\bf x}_* + {\bf \Lambda}_{\bf \mu} {\bf m})
 \end{eqnarray}
 $$<p>したがって、</p>
 $$
 \begin{eqnarray}
     \ln p({\bf x}_*) &amp;=&amp; \ln p({\bf x}_*|{\bf \mu}) - \ln p({\bf \mu}|{\bf x}_*) + const. \\
     &amp;=&amp; -\frac{({\bf x}_*-{\bf \mu})^\mathrm{T}{\bf \Lambda}({\bf x}_*-{\bf \mu})}{2} + \frac{({\bf \mu}-{\bf m}({\bf x}_*))^\mathrm{T}({\bf \Lambda}+{\bf \Lambda}_{\mu})({\bf \mu}-{\bf m}({\bf x}_*))}{2} + const. \\
-    &amp;=&amp; -\frac{1}{2}\{ {\bf x}_*^{\mathrm{T}}{\bf \Lambda}{\bf x}_* - {\bf x}_*^{\mathrm{T}}{\bf \Lambda}{\bf \mu} - {\bf \mu}^\mathrm{T}{\bf \Lambda}{\bf x}_* - {\bf m}({\bf x}_*)^\mathrm{T} ({\bf \Lambda}+{\bf \Lambda}_) {\bf m}({\bf x}_*) + {\bf m}({\bf x}_*)^\mathrm{T}({\bf \Lambda}+{\bf \Lambda}_){\bf \mu} + {\bf \mu}^\mathrm{T}({\bf \Lambda}+{\bf \Lambda}_){\bf m}({\bf x}_*) \} + const. \\
-    &amp;=&amp; -\frac{1}{2}\{ {\bf x}_*^{\mathrm{T}}{\bf \Lambda}{\bf x}_* - 2 {\bf x}_*^{\mathrm{T}}{\bf \Lambda}{\bf \mu} - {\bf m}({\bf x}_*)^\mathrm{T} ({\bf \Lambda}+{\bf \Lambda}_) {\bf m}({\bf x}_*) + 2 {\bf \mu}^\mathrm{T}({\bf \Lambda}+{\bf \Lambda}_){\bf m}({\bf x}_*)\} + const. \\
-    &amp;=&amp; -\frac{1}{2}\{ {\bf x}_*^{\mathrm{T}}{\bf \Lambda}{\bf x}_* - 2 {\bf x}_*^{\mathrm{T}}{\bf \Lambda}{\bf \mu} - {\bf m}({\bf x}_*)^\mathrm{T} ({\bf \Lambda}{\bf x}_* + {\bf \Lambda}_{\bf m}) + 2{\bf \mu}^\mathrm{T}{\bf \Lambda}{\bf x}_*\} + const. \\
-    &amp;=&amp; -\frac{1}{2}\{ {\bf x}_*^{\mathrm{T}}{\bf \Lambda}{\bf x}_* - ({\bf \Lambda}{\bf x}_* + {\bf \Lambda}_{\bf m})^\mathrm{T} {\bf m}({\bf x}_*) \} + const.　({\bf m}({\bf x}_*)^\mathrm{T} ({\bf \Lambda}{\bf x}_* + {\bf \Lambda}_{\bf m})はスカラーなので転置しても変わらない) \\
-    &amp;=&amp; -\frac{1}{2}\{ {\bf x}_*^{\mathrm{T}}{\bf \Lambda}{\bf x}_* - ({\bf \Lambda}{\bf x}_* + {\bf \Lambda}_{\bf m})^\mathrm{T} ({\bf \Lambda}+{\bf \Lambda}_)^{-1} ({\bf \Lambda}{\bf x}_* + {\bf \Lambda}_{\bf m}) \} + const. \\
-    &amp;=&amp; -\frac{1}{2}\{ {\bf x}_*^{\mathrm{T}}{\bf \Lambda}{\bf x}_* - ({\bf \Lambda}{\bf x}_*)^\mathrm{T}({\bf \Lambda}+{\bf \Lambda}_)^{-1}{\bf \Lambda}{\bf x}_* - ({\bf \Lambda}{\bf x}_*)^\mathrm{T}({\bf \Lambda}+{\bf \Lambda}_)^{-1}{\bf \Lambda}_{\bf m} - ({\bf \Lambda}_{\bf m})^\mathrm{T}({\bf \Lambda}+{\bf \Lambda}_)^{-1}{\bf \Lambda}{\bf x}_*\} + const. \\
-    &amp;=&amp; -\frac{1}{2}\{ {\bf x}_*^{\mathrm{T}}{\bf \Lambda}{\bf x}_* - {\bf x}_*^\mathrm{T}{\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_)^{-1}{\bf \Lambda}{\bf x}_* - 2{\bf x}_*^\mathrm{T}{\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_)^{-1}{\bf \Lambda}_{\bf m} \} + const. \\
-    &amp;=&amp; -\frac{1}{2}\{ {\bf x}_*^{\mathrm{T}} ({\bf \Lambda}-{\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_)^{-1}{\bf \Lambda}) {\bf x}_* - 2{\bf x}_*^\mathrm{T}{\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_)^{-1}{\bf \Lambda}_{\bf m} \} + const.
+    &amp;=&amp; -\frac{1}{2}\{ {\bf x}_*^{\mathrm{T} }{\bf \Lambda}{\bf x}_* - {\bf x}_*^{\mathrm{T} }{\bf \Lambda}{\bf \mu} - {\bf \mu}^\mathrm{T}{\bf \Lambda}{\bf x}_* - {\bf m}({\bf x}_*)^\mathrm{T} ({\bf \Lambda}+{\bf \Lambda}_{\bf \mu}) {\bf m}({\bf x}_*) + {\bf m}({\bf x}_*)^\mathrm{T}({\bf \Lambda}+{\bf \Lambda}_{\bf \mu}){\bf \mu} + {\bf \mu}^\mathrm{T}({\bf \Lambda}+{\bf \Lambda}_{\bf \mu}){\bf m}({\bf x}_*) \} + const. \\
+    &amp;=&amp; -\frac{1}{2}\{ {\bf x}_*^{\mathrm{T} }{\bf \Lambda}{\bf x}_* - 2 {\bf x}_*^{\mathrm{T} }{\bf \Lambda}{\bf \mu} - {\bf m}({\bf x}_*)^\mathrm{T} ({\bf \Lambda}+{\bf \Lambda}_{\bf \mu}) {\bf m}({\bf x}_*) + 2 {\bf \mu}^\mathrm{T}({\bf \Lambda}+{\bf \Lambda}_{\bf \mu}){\bf m}({\bf x}_*)\} + const. \\
+    &amp;=&amp; -\frac{1}{2}\{ {\bf x}_*^{\mathrm{T} }{\bf \Lambda}{\bf x}_* - 2 {\bf x}_*^{\mathrm{T} }{\bf \Lambda}{\bf \mu} - {\bf m}({\bf x}_*)^\mathrm{T} ({\bf \Lambda}{\bf x}_* + {\bf \Lambda}_{\bf \mu}{\bf m}) + 2{\bf \mu}^\mathrm{T}{\bf \Lambda}{\bf x}_*\} + const. \\
+    &amp;=&amp; -\frac{1}{2}\{ {\bf x}_*^{\mathrm{T} }{\bf \Lambda}{\bf x}_* - ({\bf \Lambda}{\bf x}_* + {\bf \Lambda}_{\bf \mu}{\bf m})^\mathrm{T} {\bf m}({\bf x}_*) \} + const.　({\bf m}({\bf x}_*)^\mathrm{T} ({\bf \Lambda}{\bf x}_* + {\bf \Lambda}_{\bf \mu}{\bf m})はスカラーなので転置しても変わらない) \\
+    &amp;=&amp; -\frac{1}{2}\{ {\bf x}_*^{\mathrm{T} }{\bf \Lambda}{\bf x}_* - ({\bf \Lambda}{\bf x}_* + {\bf \Lambda}_{\bf \mu}{\bf m})^\mathrm{T} ({\bf \Lambda}+{\bf \Lambda}_{\bf \mu})^{-1} ({\bf \Lambda}{\bf x}_* + {\bf \Lambda}_{\bf \mu}{\bf m}) \} + const. \\
+    &amp;=&amp; -\frac{1}{2}\{ {\bf x}_*^{\mathrm{T} }{\bf \Lambda}{\bf x}_* - ({\bf \Lambda}{\bf x}_*)^\mathrm{T}({\bf \Lambda}+{\bf \Lambda}_{\bf \mu})^{-1}{\bf \Lambda}{\bf x}_* - ({\bf \Lambda}{\bf x}_*)^\mathrm{T}({\bf \Lambda}+{\bf \Lambda}_{\bf \mu})^{-1}{\bf \Lambda}_{\bf \mu}{\bf m} - ({\bf \Lambda}_{\bf \mu}{\bf m})^\mathrm{T}({\bf \Lambda}+{\bf \Lambda}_{\bf \mu})^{-1}{\bf \Lambda}{\bf x}_*\} + const. \\
+    &amp;=&amp; -\frac{1}{2}\{ {\bf x}_*^{\mathrm{T} }{\bf \Lambda}{\bf x}_* - {\bf x}_*^\mathrm{T}{\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_{\bf \mu})^{-1}{\bf \Lambda}{\bf x}_* - 2{\bf x}_*^\mathrm{T}{\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_{\bf \mu})^{-1}{\bf \Lambda}_{\bf \mu}{\bf m} \} + const. \\
+    &amp;=&amp; -\frac{1}{2}\{ {\bf x}_*^{\mathrm{T} } ({\bf \Lambda}-{\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_{\bf \mu})^{-1}{\bf \Lambda}) {\bf x}_* - 2{\bf x}_*^\mathrm{T}{\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_{\bf \mu})^{-1}{\bf \Lambda}_{\bf \mu}{\bf m} \} + const.
 \end{eqnarray}
 $$<p>ここで</p>
 $$
 p({\bf x}_*) = \mathcal{N}({\bf x}_*|{\bf \mu}_*,{\bf \Lambda}_*^{-1})
 $$<p>と書けるとすると</p>
 $$
-\ln p({\bf x}_*) = -\frac{1}{2} \{ {\bf x}_*^{\mathrm{T}} {\bf \Lambda}_{*} {\bf x}_* -2{\bf x}_*^{\mathrm{T}} {\bf \Lambda}_{*} {\bf \mu}_*\} + const.
+\ln p({\bf x}_*) = -\frac{1}{2} \{ {\bf x}_*^{\mathrm{T} } {\bf \Lambda}_{*} {\bf x}_* -2{\bf x}_*^{\mathrm{T} } {\bf \Lambda}_{*} {\bf \mu}_*\} + const.
 $$<p>であるから、対応関係から</p>
 $$
 \begin{eqnarray}
-    {\bf \Lambda}_* &amp;=&amp; {\bf \Lambda}-{\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_)^{-1}{\bf \Lambda} \\
-    {\bf \mu}_* &amp;=&amp; {\bf \Lambda}_*^{-1} {\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_)^{-1}{\bf \Lambda}_{\bf m}
+    {\bf \Lambda}_* &amp;=&amp; {\bf \Lambda}-{\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_{\bf \mu})^{-1}{\bf \Lambda} \\
+    {\bf \mu}_* &amp;=&amp; {\bf \Lambda}_*^{-1} {\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_{\bf \mu})^{-1}{\bf \Lambda}_{\bf \mu}{\bf m}
 \end{eqnarray}
 $$<p>ウッドベリーの公式を使うことで更に簡潔な形にできる。</p>
 
@@ -426,28 +426,28 @@ $$<p>ウッドベリーの公式を使うことで更に簡潔な形にできる
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>${\bf \Lambda}_*$について、${\bf A}={\bf \Lambda}^{-1},{\bf B}={\bf \Lambda}_^{-1}$とおくと、</p>
+<p>${\bf \Lambda}_*$について、${\bf A}={\bf \Lambda}^{-1},{\bf B}={\bf \Lambda}_{\bf \mu}^{-1}$とおくと、</p>
 $$
 \begin{eqnarray}
-    {\bf \Lambda}_* &amp;=&amp; {\bf \Lambda}-{\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_)^{-1}{\bf \Lambda} \\
+    {\bf \Lambda}_* &amp;=&amp; {\bf \Lambda}-{\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_{\bf \mu})^{-1}{\bf \Lambda} \\
     &amp;=&amp; {\bf A}^{-1} - {\bf A}^{-1}({\bf A}^{-1} + {\bf B}^{-1})^{-1} {\bf A}^{-1} \\
     &amp;=&amp; ({\bf A}+{\bf B})^{-1} \\
     &amp;=&amp; ({\bf \Lambda}^{-1} + {\bf \Lambda}_{\mu}^{-1})^{-1}
 \end{eqnarray}
-$$<p>${\bf \mu}_*$は、${\bf \Lambda}_* = {\bf \Lambda}-{\bf \Lambda} ({\bf \Lambda}+{\bf \Lambda}_)^{-1} {\bf \Lambda}$より</p>
+$$<p>${\bf \mu}_*$は、${\bf \Lambda}_* = {\bf \Lambda}-{\bf \Lambda} ({\bf \Lambda}+{\bf \Lambda}_{\bf \mu})^{-1} {\bf \Lambda}$より</p>
 $$
 \begin{eqnarray}
-    {\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_)^{-1}{\bf \Lambda} &amp;=&amp; {\bf \Lambda} - {\bf \Lambda}_* \\
-    {\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_)^{-1} &amp;=&amp; ({\bf \Lambda} - {\bf \Lambda}_*){\bf \Lambda}^{-1}
+    {\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_{\bf \mu})^{-1}{\bf \Lambda} &amp;=&amp; {\bf \Lambda} - {\bf \Lambda}_* \\
+    {\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_{\bf \mu})^{-1} &amp;=&amp; ({\bf \Lambda} - {\bf \Lambda}_*){\bf \Lambda}^{-1}
 \end{eqnarray}
 $$<p>だから</p>
 $$
 \begin{eqnarray}
-    {\bf \mu}_* &amp;=&amp; {\bf \Lambda}_*^{-1} {\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_)^{-1}{\bf \Lambda}_{\bf m} \\
-    &amp;=&amp; {\bf \Lambda}_*^{-1} ({\bf \Lambda} - {\bf \Lambda}_*){\bf \Lambda}^{-1}{\bf \Lambda}_{\bf m} \\
-    &amp;=&amp; \{ {\bf \Lambda}_*^{-1}{\bf \Lambda}{\bf \Lambda}^{-1}{\bf \Lambda}_ - {\bf \Lambda}_*^{-1}{\bf \Lambda}_* {\bf \Lambda}^{-1}{\bf \Lambda}_ \}{\bf m} \\
-    &amp;=&amp; \{ {\bf \Lambda}_*^{-1}{\bf \Lambda}_ -  {\bf \Lambda}^{-1}{\bf \Lambda}_ \}{\bf m} \\
-    &amp;=&amp; \{ ({\bf \Lambda}^{-1} + {\bf \Lambda}_{\mu}^{-1}){\bf \Lambda}_ -  {\bf \Lambda}^{-1}{\bf \Lambda}_\}{\bf m} \\
+    {\bf \mu}_* &amp;=&amp; {\bf \Lambda}_*^{-1} {\bf \Lambda}({\bf \Lambda}+{\bf \Lambda}_{\bf \mu})^{-1}{\bf \Lambda}_{\bf \mu}{\bf m} \\
+    &amp;=&amp; {\bf \Lambda}_*^{-1} ({\bf \Lambda} - {\bf \Lambda}_*){\bf \Lambda}^{-1}{\bf \Lambda}_{\bf \mu}{\bf m} \\
+    &amp;=&amp; \{ {\bf \Lambda}_*^{-1}{\bf \Lambda}{\bf \Lambda}^{-1}{\bf \Lambda}_{\bf \mu} - {\bf \Lambda}_*^{-1}{\bf \Lambda}_* {\bf \Lambda}^{-1}{\bf \Lambda}_{\bf \mu} \}{\bf m} \\
+    &amp;=&amp; \{ {\bf \Lambda}_*^{-1}{\bf \Lambda}_{\bf \mu} -  {\bf \Lambda}^{-1}{\bf \Lambda}_{\bf \mu} \}{\bf m} \\
+    &amp;=&amp; \{ ({\bf \Lambda}^{-1} + {\bf \Lambda}_{\mu}^{-1}){\bf \Lambda}_{\bf \mu} -  {\bf \Lambda}^{-1}{\bf \Lambda}_{\bf \mu}\}{\bf m} \\
     &amp;=&amp; {\bf I}_D {\bf m} = {\bf m}
 \end{eqnarray}
 $$<p>まとめると、</p>
@@ -456,7 +456,7 @@ $$
     {\bf \Lambda}_* &amp;=&amp; ({\bf \Lambda}^{-1} + {\bf \Lambda}_{\mu}^{-1})^{-1} \\
     {\bf \mu}_* &amp;=&amp; {\bf m}
 \end{eqnarray}
-$$<p>これらに、更新されたハイパーパラメータ$\hat,\hat_$を代入して学習後の予測分布$p({\bf x}_*|{\bf X})$が求まる。</p>
+$$<p>これらに、更新されたハイパーパラメータ$\hat{\bf m},\hat{\bf \Lambda}_{\bf \mu}$を代入して学習後の予測分布$p({\bf x}_*|{\bf X})$が求まる。</p>
 
 </div>
 </div>
@@ -481,7 +481,7 @@ $$<p>これらに、更新されたハイパーパラメータ$\hat,\hat_$を代
 <p></p>
 <div class="flash flash-warn">
     <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
-    <strong>Important: </strong>ウィシャート分布の確率密度関数 $$\mathcal{W}({\bf \Lambda}|\nu,{\bf W}) = C_\mathcal{W} (\nu, {\bf W})|{\bf \Lambda}|^{\frac{\nu-D-1}{2}} exp\{ -\frac{1}{2} Tr({\bf W}^{-1} {\bf \Lambda})\}$$
+    <strong>Important: </strong>ウィシャート分布の確率密度関数 $$\mathcal{W}({\bf \Lambda}|\nu,{\bf W}) = C_\mathcal{W} (\nu, {\bf W})|{\bf \Lambda}|^{\frac{\nu-D-1}{2} } exp\{ -\frac{1}{2} Tr({\bf W}^{-1} {\bf \Lambda})\}$$
 </div>
 
 </div>
@@ -625,7 +625,7 @@ $$<p>これは多次元のStudentのt分布になっている。</p>
 <p></p>
 <div class="flash flash-warn">
     <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
-    <strong>Important: </strong>多次元のStudentのt分布: $$St({\bf x} | {\bf \mu}_s , {\bf \Lambda}_s , \nu_s) = \frac{\Gamma(\frac{\nu_s + D}{2})}{\Gamma(\frac{\nu_s}{2})} \frac{|{\bf \Lambda}_s|^{\frac{1}{2}}}{(\pi \nu_s)^{\frac{D}{2}}} \left\{ 1 + \frac{1}{\nu_s} ({\bf x} - {\bf \mu}_s)^\mathrm{T} {\bf \Lambda}_s ({\bf x} - {\bf \mu}_s) \right\}^{- \frac{\nu_s + D}{2}}$$
+    <strong>Important: </strong>多次元のStudentのt分布: $$St({\bf x} | {\bf \mu}_s , {\bf \Lambda}_s , \nu_s) = \frac{\Gamma(\frac{\nu_s + D}{2})}{\Gamma(\frac{\nu_s}{2})} \frac{|{\bf \Lambda}_s|^{\frac{1}{2} } } {(\pi \nu_s)^{\frac{D}{2} }} \left\{ 1 + \frac{1}{\nu_s} ({\bf x} - {\bf \mu}_s)^\mathrm{T} {\bf \Lambda}_s ({\bf x} - {\bf \mu}_s) \right\}^{- \frac{\nu_s + D}{2} }$$
 </div>
 
 </div>

@@ -110,7 +110,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      10 min read
+      11 min read
     
 </span></p>
 
@@ -344,15 +344,15 @@ $$p({\bf \mu}|{\bf X}) = \mathcal{N}({\bf \mu}|\hat{{\bf m}},\hat{{\bf \Lambda}}
 <p>とおき、対数をとって${\bf \mu}$について整理すると</p>
 $$
 \begin{eqnarray}
-    \ln p({\bf \mu}|{\bf X}) &amp;=&amp; -\frac{1}{2}\{({\bf \mu}-\hat)^\mathrm{T} \hat_ ({\bf \mu}-\hat) \} + const. \\
-    &amp;=&amp; -\frac{1}{2} \{ {\bf \mu}^{\mathrm{T}} \hat_ {\bf \mu} - \hat^{\mathrm{T}} \hat_ {\bf \mu} - {\bf \mu}^{\mathrm{T}} \hat_ \hat\} + const. \\
-    &amp;=&amp; -\frac{1}{2} \{ {\bf \mu}^{\mathrm{T}} \hat_ {\bf \mu}-2{\bf \mu}^{\mathrm{T}} \hat_ \hat\} + const.
+    \ln p({\bf \mu}|{\bf X}) &amp;=&amp; -\frac{1}{2}\{({\bf \mu}-\hat{\bf m})^\mathrm{T} \hat{\bf \Lambda}_{\bf \mu} ({\bf \mu}-\hat{\bf m}) \} + const. \\
+    &amp;=&amp; -\frac{1}{2} \{ {\bf \mu}^{\mathrm{T}} \hat{\bf \Lambda}_{\bf \mu} {\bf \mu} - \hat{\bf m}^{\mathrm{T}} \hat{\bf \Lambda}_{\bf \mu} {\bf \mu} - {\bf \mu}^{\mathrm{T}} \hat{\bf \Lambda}_{\bf \mu} \hat{\bf m} \} + const. \\
+    &amp;=&amp; -\frac{1}{2} \{ {\bf \mu}^{\mathrm{T}} \hat{\bf \Lambda}_{\bf \mu} {\bf \mu}-2{\bf \mu}^{\mathrm{T}} \hat{\bf \Lambda}_{\bf \mu} \hat{\bf m} \} + const.
 \end{eqnarray}
 $$<p>対応関係を見れば</p>
 $$
 \begin{eqnarray}
-    \hat_ = N{\bf \Lambda}+{\bf \Lambda}_ \\
-    \hat = \hat_^{-1}({\bf \Lambda} \Sigma_{n=1}^{N} {\bf x}_n + {\bf \Lambda}_{\mu} {\bf m})
+    \hat{\bf \Lambda}_{\bf \mu} = N{\bf \Lambda}+{\bf \Lambda}_{\bf \mu} \\
+    \hat{\bf m} = \hat{\bf \Lambda}_{\bf \mu}^{-1}({\bf \Lambda} \Sigma_{n=1}^{N} {\bf x}_n + {\bf \Lambda}_{\mu} {\bf m})
 \end{eqnarray}
 $$<p>と事後分布のハイパーパラメータが求まる。</p>
 <h2 id="予測分布の導出">

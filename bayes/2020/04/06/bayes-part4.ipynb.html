@@ -110,7 +110,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      12 min read
+      18 min read
     
 </span></p>
 
@@ -158,6 +158,14 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h1"><a href="#平均・精度行列未知">平均・精度行列未知 </a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#モデル構築">モデル構築 </a></li>
+<li class="toc-entry toc-h2"><a href="#事後分布の推論">事後分布の推論 </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#平均の事後分布">平均の事後分布 </a></li>
+<li class="toc-entry toc-h3"><a href="#精度の事後分布">精度の事後分布 </a></li>
+<li class="toc-entry toc-h3"><a href="#事後分布をまとめる">事後分布をまとめる </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#予測分布の導出">予測分布の導出 </a></li>
 </ul>
 </li>
 </ul><!--
@@ -702,6 +710,162 @@ $$
     p({\bf \mu}, {\bf \Lambda}) &amp;=&amp; NW({\bf \mu}, {\bf \Lambda}|{\bf m},\beta,\nu,{\bf W})
 \end{eqnarray}
 $$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="事後分布の推論">
+<a class="anchor" href="#%E4%BA%8B%E5%BE%8C%E5%88%86%E5%B8%83%E3%81%AE%E6%8E%A8%E8%AB%96" aria-hidden="true"><span class="octicon octicon-link"></span></a>事後分布の推論<a class="anchor-link" href="#%E4%BA%8B%E5%BE%8C%E5%88%86%E5%B8%83%E3%81%AE%E6%8E%A8%E8%AB%96"> </a>
+</h2>
+<p>データ${\bf X}$を観測した後の事後分布を求める。</p>
+$$
+\begin{eqnarray}
+    p({\bf \mu}, {\bf \Lambda}| {\bf X}) &amp;=&amp; \frac{p({\bf X}, {\bf \mu}, {\bf \Lambda})}{p({\bf X})} \\
+    &amp;=&amp; \frac{p({\bf \mu}|{\bf \Lambda}, {\bf X}) p({\bf \Lambda}|{\bf X}) p({\bf X}) }{p({\bf X})} \\
+    &amp;=&amp; p({\bf \mu}|{\bf \Lambda}, {\bf X}) p({\bf \Lambda}|{\bf X})
+\end{eqnarray}
+$$<p>1次元の場合と同様に、平均と精度の事後分布を別々に求めてみる。</p>
+<h3 id="平均の事後分布">
+<a class="anchor" href="#%E5%B9%B3%E5%9D%87%E3%81%AE%E4%BA%8B%E5%BE%8C%E5%88%86%E5%B8%83" aria-hidden="true"><span class="octicon octicon-link"></span></a>平均の事後分布<a class="anchor-link" href="#%E5%B9%B3%E5%9D%87%E3%81%AE%E4%BA%8B%E5%BE%8C%E5%88%86%E5%B8%83"> </a>
+</h3>
+<p>平均未知の場合の事後分布で精度行列を$\beta {\bf \Lambda}$とおくことにより求まる。</p>
+$$
+\begin{eqnarray}
+    p({\bf \mu}|{\bf \Lambda}, {\bf X}) &amp;=&amp; \mathcal{N}({\bf \mu}|\hat{\bf m}, (\hat{\beta} {\bf \Lambda})^{-1}) \\
+    ただし　\hat{\beta} &amp;=&amp; N + \beta \\
+    \hat{\bf m} &amp;=&amp; \frac{1}{\hat{\beta}}(\Sigma_{n=1}^{N} {\bf x}_n + \beta {\bf m})
+\end{eqnarray}
+$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
+    <strong>Note: </strong>この部分の式変形 $$\begin{eqnarray} {\bf \Lambda}_{\bf \mu} &amp;=&amp; \beta {\bf \Lambda},　 \hat{\bf \Lambda}_{\bf \mu} = \hat{\beta} {\bf \Lambda}　とおいて平均未知の式を見れば、 \\ \hat{\beta} {\bf \Lambda} &amp;=&amp; N {\bf \Lambda} + \beta {\bf \Lambda}　ゆえ \\ \hat{\beta} &amp;=&amp; N + \beta \\ \hat{\bf m} &amp;=&amp; \frac{1}{\hat{\beta} } \hat{\bf \Lambda}^{-1} ({\bf \Lambda} \Sigma_{n=1}^{N} {\bf x}_n + \beta {\bf \Lambda} {\bf m}) \\ &amp;=&amp; \frac{1}{\hat{\beta} }(\Sigma_{n=1}^{N} {\bf x}_n + \beta {\bf m}) \end{eqnarray}$$
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="精度の事後分布">
+<a class="anchor" href="#%E7%B2%BE%E5%BA%A6%E3%81%AE%E4%BA%8B%E5%BE%8C%E5%88%86%E5%B8%83" aria-hidden="true"><span class="octicon octicon-link"></span></a>精度の事後分布<a class="anchor-link" href="#%E7%B2%BE%E5%BA%A6%E3%81%AE%E4%BA%8B%E5%BE%8C%E5%88%86%E5%B8%83"> </a>
+</h3>
+<p>ベイズの定理より、</p>
+$$
+p({\bf \mu}, {\bf \Lambda}| {\bf X}) = \frac{p({\bf X}|{\bf \mu}, {\bf \Lambda})p({\bf \mu},{\bf \Lambda})}{p({\bf X})}
+$$<p>が成り立つので、</p>
+$$
+\begin{eqnarray}
+    p({\bf \mu}|{\bf \Lambda}, {\bf X}) p({\bf \Lambda}|{\bf X}) &amp;=&amp; \frac{p({\bf X}|{\bf \mu}, {\bf \Lambda})p({\bf \mu},{\bf \Lambda})}{p({\bf X})} \\
+    p({\bf \Lambda}|{\bf X}) &amp;=&amp; \frac{p({\bf X}|{\bf \mu}, {\bf \Lambda})p({\bf \mu},{\bf \Lambda})}{p({\bf X})p({\bf \mu}|{\bf \Lambda}, {\bf X})} \\
+    \ln p({\bf \Lambda}|{\bf X}) &amp;=&amp; \ln p({\bf X}|{\bf \mu}, {\bf \Lambda}) + \ln p({\bf \mu},{\bf \Lambda}) - \ln p({\bf \mu}|{\bf \Lambda}, {\bf X}) + const. \\
+    &amp;=&amp; \Sigma_{n=1}^{N} \ln \mathcal{N}({\bf x}_n|{\bf \mu}, {\bf \Lambda}^{-1}) + \ln NW({\bf \mu}, {\bf \Lambda}|{\bf m},\beta,\nu,{\bf W}) - \ln \mathcal{N}({\bf \mu}|\hat{\bf m}, (\hat{\beta} {\bf \Lambda})^{-1}) + const. \\
+    &amp;=&amp; \Sigma_{n=1}^{N} \ln \mathcal{N}({\bf x}_n|{\bf \mu}, {\bf \Lambda}^{-1}) + \ln \mathcal{N}({\bf \mu}|{\bf m}, (\beta {\bf \Lambda})^{-1}) + \ln \mathcal{W} ({\bf \Lambda}|\nu, {\bf W}) - \ln \mathcal{N}({\bf \mu}|\hat{\bf m}, (\hat{\beta} {\bf \Lambda})^{-1}) + const. \\
+    &amp;=&amp; - \frac{1}{2} \{ \Sigma_{n=1}^{N} ({\bf x}_n - {\bf \mu})^\mathrm{T} {\bf \Lambda} ({\bf x}_n - {\bf \mu}) - N \ln |{\bf \Lambda}| \} - \frac{\beta}{2} ({\bf \mu} - {\bf m})^\mathrm{T} {\bf \Lambda} ({\bf \mu} - {\bf m}) + \frac{1}{2} \ln |\beta {\bf \Lambda}| + \frac{\nu-D-1}{2} \ln |{\bf \Lambda}| - \frac{1}{2} Tr({\bf W}^\mathrm{T} {\bf \Lambda}) + \frac{\hat{\beta}}{2} ({\bf \mu} - \hat{\bf m})^\mathrm{T} {\bf \Lambda} ({\bf \mu} - \hat{\bf m}) - \frac{1}{2} \ln |\hat{\beta} {\bf \Lambda}| + const. \\
+    &amp;=&amp; - \frac{1}{2} \{ \Sigma_{n=1}^{N} ({\bf x}_n - {\bf \mu})^\mathrm{T} {\bf \Lambda} ({\bf x}_n - {\bf \mu}) - N \ln |{\bf \Lambda}| \} - \frac{\beta}{2} ({\bf \mu} - {\bf m})^\mathrm{T} {\bf \Lambda} ({\bf \mu} - {\bf m}) + \frac{1}{2} \ln |{\bf \Lambda}| + \frac{\nu-D-1}{2} \ln |{\bf \Lambda}| - \frac{1}{2} Tr({\bf W}^{-1} {\bf \Lambda}) + \frac{\hat{\beta}}{2} ({\bf \mu} - \hat{\bf m})^\mathrm{T} {\bf \Lambda} ({\bf \mu} - \hat{\bf m}) - \frac{1}{2} \ln |{\bf \Lambda}| + const.　(|\beta {\bf \Lambda}|=\beta^{D} |{\bf \Lambda}|だが対数を取っているのでconst.に吸収させている。) \\
+    &amp;=&amp; \frac{N+\nu-D-1}{2} \ln |{\bf \Lambda}| - \frac{1}{2} Tr \left[ \{ \Sigma_{n=1}^{N} {\bf x}_n {\bf x}_n^\mathrm{T} + \beta {\bf m} {\bf m}^\mathrm{T} - \hat{\beta} \hat{\bf m} \hat{\bf m}^\mathrm{T} + {\bf W}^{-1} \} {\bf \Lambda} \right] + const.　(スカラーはトレースを取ってまとめた)
+\end{eqnarray}
+$$<p>と整理できる。これをウィシャート分布の定義式と対応関係を取って</p>
+$$
+\begin{eqnarray}
+    p({\bf \Lambda}|{\bf X}) &amp;=&amp; \mathcal{W}({\bf \Lambda}|\hat{\nu},\hat{\bf W}) \\
+    ただし　\hat{\bf W}^{-1} &amp;=&amp; \Sigma_{n=1}^{N} {\bf x}_n {\bf x}_n^\mathrm{T} + \beta {\bf m} {\bf m}^\mathrm{T} - \hat{\beta} \hat{\bf m} \hat{\bf m}^\mathrm{T} + {\bf W}^{-1} \\
+    \hat{\nu} &amp;=&amp; N + \nu
+\end{eqnarray}
+$$<h3 id="事後分布をまとめる">
+<a class="anchor" href="#%E4%BA%8B%E5%BE%8C%E5%88%86%E5%B8%83%E3%82%92%E3%81%BE%E3%81%A8%E3%82%81%E3%82%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>事後分布をまとめる<a class="anchor-link" href="#%E4%BA%8B%E5%BE%8C%E5%88%86%E5%B8%83%E3%82%92%E3%81%BE%E3%81%A8%E3%82%81%E3%82%8B"> </a>
+</h3>
+<p>以上をまとめて事後分布は次のようになる。</p>
+$$
+\begin{eqnarray}
+    p({\bf \mu}, {\bf \Lambda}|{\bf X}) &amp;=&amp; NW({\bf \mu}, {\bf \Lambda}| \hat{\bf m}, \hat{\beta}, \hat{\nu}, \hat{\bf W}) \\
+    ただし　\hat{\beta} &amp;=&amp; N + \beta \\
+    \hat{\bf m} &amp;=&amp; \frac{1}{\hat{\beta}}(\Sigma_{n=1}^{N} {\bf x}_n + \beta {\bf m}) \\
+    ただし　\hat{\bf W}^{-1} &amp;=&amp; \Sigma_{n=1}^{N} {\bf x}_n {\bf x}_n^\mathrm{T} + \beta {\bf m} {\bf m}^\mathrm{T} - \hat{\beta} \hat{\bf m} \hat{\bf m}^\mathrm{T} + {\bf W}^{-1} \\
+    \hat{\nu} &amp;=&amp; N + \nu
+\end{eqnarray}
+$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="予測分布の導出">
+<a class="anchor" href="#%E4%BA%88%E6%B8%AC%E5%88%86%E5%B8%83%E3%81%AE%E5%B0%8E%E5%87%BA" aria-hidden="true"><span class="octicon octicon-link"></span></a>予測分布の導出<a class="anchor-link" href="#%E4%BA%88%E6%B8%AC%E5%88%86%E5%B8%83%E3%81%AE%E5%B0%8E%E5%87%BA"> </a>
+</h2>
+<p>今回も積分による導出を避けベイズの定理と対数で予測分布を導出する。また、記述がシンプルになるので事前分布を用いた予測分布を導出し後で更新されたハイパーパラメータを代入する。</p>
+<p>ベイズの定理により、予測分布$p({\bf x}_*)$は次のように表せる。</p>
+$$
+\ln p({\bf x}_*) = \ln p({\bf x}_*|{\bf \mu}, {\bf \Lambda}) - \ln p({\bf \mu}, {\bf \Lambda}|{\bf x}_*) + const.
+$$<p>$\ln p({\bf \mu}, {\bf \Lambda}|{\bf x}_*)$は事後分布の計算結果を流用して</p>
+$$
+\begin{eqnarray}
+    p({\bf \mu}, {\bf \Lambda}|{\bf x}_*) &amp;=&amp; \mathcal{N}({\bf \mu}|{\bf m}({\bf x}_*), ((1+\beta){\bf \Lambda})^{-1}) \mathcal{W} ({\bf \Lambda}|1+\nu,{\bf W}({\bf x}_*)) \\
+    ただし　{\bf m}({\bf x}_*) &amp;=&amp; \frac{ {\bf x}_* + \beta {\bf m} }{1+\beta} \\
+    {\bf W}({\bf x}_*)^{-1} &amp;=&amp; \frac{\beta}{1+\beta} ({\bf x}_* - {\bf m})({\bf x}_* - {\bf m})^\mathrm{T} + {\bf W}^{-1}
+\end{eqnarray}
+$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
+    <strong>Note: </strong>${\bf W}({\bf x}_*)$の導出。 $$\begin{eqnarray} \\ {\bf W}({\bf x}_*)^{-1} &amp;=&amp; {\bf x}_* {\bf x}_*^\mathrm{T} + \beta {\bf m}{\bf m}^\mathrm{T} - (1+\beta) {\bf m}({\bf x}_*) {\bf m}({\bf x}_*)^\mathrm{T} + {\bf W}^{-1} \\ &amp;=&amp; {\bf x}_* {\bf x}_*^\mathrm{T} + \beta {\bf m}{\bf m}^\mathrm{T} - \frac{1}{1+\beta} ({\bf x}_* + \beta {\bf m}) ({\bf x}_* + \beta {\bf m})^\mathrm{T} + {\bf W}^{-1} \\ &amp;=&amp; (1-\frac{1}{1+\beta}){\bf x}_* {\bf x}_*^\mathrm{T} - \frac{\beta}{1+\beta} {\bf x}_* {\bf m}^\mathrm{T} - \frac{\beta}{1+\beta} {\bf x}_*^\mathrm{T} {\bf m} + (\beta - \frac{\beta^2}{1+\beta}) {\bf m} {\bf m}^\mathrm{T} + {\bf W}^{-1} \\ &amp;=&amp; \frac{\beta}{1+\beta} ({\bf x}_* - {\bf m})({\bf x}_* - {\bf m})^\mathrm{T} + {\bf W}^{-1} \\ \end{eqnarray}$$
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>これを使って計算する。</p>
+$$
+\begin{eqnarray}
+    \ln p({\bf x}_*) &amp;=&amp; \ln p({\bf x}_*|{\bf \mu}, {\bf \Lambda}) - \ln p({\bf \mu}, {\bf \Lambda}|{\bf x}_*) + const. \\
+    &amp;=&amp; \ln \mathcal{N} ({\bf x}_*|{\bf \mu}, {\bf \Lambda}^{-1}) - \ln \mathcal{N}({\bf \mu}|{\bf m}({\bf x}_*), ((1+\beta){\bf \Lambda})^{-1}) - \ln \mathcal{W} ({\bf \Lambda}|1+\nu,{\bf W}({\bf x}_*)) + const. \\
+    &amp;=&amp; -\frac{1}{2} ({\bf x}_* - {\bf \mu})^\mathrm{T} {\bf \Lambda} ({\bf x}_* - {\bf \mu}) + \frac{1+\beta}{2} ({\bf \mu}-{\bf m}({\bf x}_*))^\mathrm{T} {\bf \Lambda} ({\bf \mu}-{\bf m}({\bf x}_*)) + \frac{1}{2} Tr({\bf W}({\bf x}_*)^{-1} {\bf \Lambda}) + \frac{1+\nu}{2} \ln |{\bf W}({\bf x}_*)| + cosnt. \\
+    &amp;=&amp; - \frac{1}{2} Tr \left[ \{ ({\bf x}_* - {\bf \mu})({\bf x}_* - {\bf \mu})^\mathrm{T} - (1+\beta) ({\bf \mu}-{\bf m}({\bf x}_*)) ({\bf \mu}-{\bf m}({\bf x}_*))^\mathrm{T} - {\bf W}({\bf x}_*)^{-1} \} {\bf \Lambda} \right] - \frac{1+\nu}{2} \ln |{\bf W}({\bf x}_*)^{-1}|
+\end{eqnarray}
+$$<p>トレースの計算。和のトレースはトレースの和であることを利用し、${\bf x}_*$に関わらない部分はconst.にまとめる。</p>
+$$
+\begin{eqnarray}
+    トレース部分 &amp;=&amp; Tr \left[ \{ ({\bf x}_* - {\bf \mu})({\bf x}_* - {\bf \mu})^\mathrm{T} - (1+\beta) ({\bf \mu}-{\bf m}({\bf x}_*)) ({\bf \mu}-{\bf m}({\bf x}_*))^\mathrm{T} - {\bf W}({\bf x}_*)^{-1} \} {\bf \Lambda} \right] \\
+    &amp;=&amp; Tr \left[ \{ {\bf x}_* {\bf x}_*^\mathrm{T} - {\bf \mu} {\bf x}_*^\mathrm{T} - {\bf x}_* {\bf \mu}^\mathrm{T} + (1+\beta) {\bf \mu} {\bf m}({\bf x}_*)^\mathrm{T} + (1+\beta) {\bf m}({\bf x}_*) {\bf \mu}^\mathrm{T} - (1+\beta) {\bf m}({\bf x}_*) {\bf m}({\bf x}_*)^\mathrm{T} - \frac{\beta}{1+\beta} {\bf x}_* {\bf x}_*^\mathrm{T} + \frac{\beta}{1+\beta} {\bf m} {\bf x}_*^\mathrm{T} + \frac{\beta}{1+\beta} {\bf x}_* {\bf m}^\mathrm{T}  \} {\bf \Lambda} \right] + cosnt. \\
+    &amp;=&amp; Tr \left[ \{ {\bf x}_* {\bf x}_*^\mathrm{T} - {\bf \mu} {\bf x}_*^\mathrm{T} - {\bf x}_* {\bf \mu}^\mathrm{T} + {\bf \mu} {\bf x}_*^\mathrm{T} + {\bf x}_* {\bf \mu}^\mathrm{T} - \frac{1}{1+\beta}({\bf x}_* + \beta {\bf m})({\bf x}_*^\mathrm{T} + \beta {\bf m}^\mathrm{T}) -  \frac{\beta}{1+\beta} {\bf x}_* {\bf x}_*^\mathrm{T} + \frac{\beta}{1+\beta} {\bf m} {\bf x}_*^\mathrm{T} + \frac{\beta}{1+\beta} {\bf x}_* {\bf m}^\mathrm{T} \} {\bf \Lambda} \right] + cosnt. \\
+    &amp;=&amp; const.
+\end{eqnarray}
+$$<p>結局${\bf x}_*$に関わる部分は消えてしまう。</p>
+$$
+\begin{eqnarray}
+    \ln p({\bf x}_*) &amp;=&amp; - \frac{1+\nu}{2} \ln |{\bf W}({\bf x}_*)^{-1}| + const. \\
+    &amp;=&amp; - \frac{1+\nu}{2} \ln |\frac{\beta}{1+\beta} ({\bf x}_* - {\bf m})({\bf x}_* - {\bf m})^\mathrm{T} + {\bf W}^{-1}| + const. \\
+    &amp;=&amp; - \frac{1+\nu}{2} \ln \{ 1 + \frac{\beta}{1+\beta} ({\bf x}_* - {\bf m})^\mathrm{T} {\bf W} ({\bf x}_* - {\bf m}) \} + const.　(精度未知の時と同様に式変形を行った。)
+\end{eqnarray}
+$$<p>これは多次元のStudentのt分布の対数表現である。対応をとって</p>
+$$
+\begin{eqnarray}
+    p({\bf x}_*) &amp;=&amp; St({\bf x}_* | {\bf \mu}_s, {\bf \Lambda}_s, \nu_s) \\
+    ただし　{\bf \mu}_s &amp;=&amp; {\bf m} \\
+    {\bf \Lambda}_s &amp;=&amp; \frac{(1-D+\nu)\beta}{1+\beta} {\bf W} \\
+    \nu_s &amp;=&amp; 1 - D + \nu
+\end{eqnarray}
+$$<p>となる。学習後の予測分布は更新されたハイパーパラメータを代入することで求まる。</p>
+
 </div>
 </div>
 </div>

@@ -889,11 +889,10 @@ $$<p>となる。学習後の予測分布は更新されたハイパーパラメ
 <span class="n">using</span> <span class="n">LinearAlgebra</span>
 
 <span class="c1"># グラフ描画用のパッケージ</span>
+<span class="n">ENV</span><span class="p">[</span><span class="s2">"GKS_ENCODING"</span><span class="p">]</span><span class="o">=</span><span class="s2">"utf8"</span> <span class="c1"># Plot内でunicode使うためのおまじない</span>
 <span class="n">using</span> <span class="n">Plots</span>
 <span class="n">using</span> <span class="n">Plots</span><span class="o">.</span><span class="n">PlotMeasures</span>
 <span class="n">using</span> <span class="n">StatsPlots</span>
-<span class="n">using</span> <span class="n">LaTeXStrings</span>
-<span class="n">using</span> <span class="n">Latexify</span>
 
 <span class="c1"># 確率分布の関数を呼び出すパッケージ</span>
 <span class="n">using</span> <span class="n">Distributions</span>
@@ -1022,7 +1021,7 @@ $$<p>となる。学習後の予測分布は更新されたハイパーパラメ
 <span class="n">W</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.</span> <span class="mf">0.</span> <span class="p">;</span><span class="mf">0.</span> <span class="mf">1.</span><span class="p">]</span>
 
 <span class="c1"># ベイズ推論の進行過程をアニメーションに</span>
-<span class="n">animation</span> <span class="o">=</span> <span class="nd">@gif</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="mi">100</span>
+<span class="n">animation</span> <span class="o">=</span> <span class="nd">@animate</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="mi">100</span>
 
     <span class="c1"># ハイパーパラメータを更新</span>
     <span class="n">beta_hat</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">beta</span>
@@ -1063,6 +1062,8 @@ $$<p>となる。学習後の予測分布は更新されたハイパーパラメ
     <span class="n">contour</span><span class="o">!(</span>p2, x1,x2,pdf_true.<span class="o">(</span>x1,x2<span class="err">'</span><span class="o">))</span>
     <span class="n">plot</span><span class="p">(</span><span class="n">p2</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"iter=$i"</span><span class="p">)</span>
 <span class="n">end</span><span class="p">;</span>
+
+<span class="n">gif</span><span class="p">(</span><span class="n">animation</span><span class="p">,</span> <span class="s2">"animations/mgauss_ml.gif"</span><span class="p">,</span> <span class="n">fps</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
 </pre></div>
 
     </div>

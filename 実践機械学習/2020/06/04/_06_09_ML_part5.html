@@ -126,7 +126,6 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h2"><a href="#0-Outline">0 Outline </a></li>
 <li class="toc-entry toc-h2"><a href="#1-決定木のアルゴリズム">1 決定木のアルゴリズム </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#1.1-情報利得の最大化">1.1 情報利得の最大化 </a></li>
@@ -160,39 +159,6 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="0-Outline">
-<a class="anchor" href="#0-Outline" aria-hidden="true"><span class="octicon octicon-link"></span></a>0 Outline<a class="anchor-link" href="#0-Outline"> </a>
-</h2>
-<ul>
-<li>
-<a href="#1">1. 決定木のアルゴリズム</a><ul>
-<li><a href="#1-1">1.1 情報利得の最大化 </a></li>
-<li>
-<a href="#1-2">1.2 不純度の指標</a><ul>
-<li><a href="#1-2-1">1.2.1 ジニ不純度</a></li>
-<li><a href="#1-2-2">1.2.2 エントロピー</a></li>
-<li><a href="#1-2-3">1.2.3 分類誤差</a></li>
-<li>
-<a href="#1-2-4">1.2.4 最小2乗和誤差</a> </li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<a href="#2">2. 決定木の実装</a><ul>
-<li><a href="#2-1">2.1 最適な特徴量と閾値を選択する</a></li>
-<li><a href="#2-2">2.2 再帰的にノード分割を行う</a></li>
-<li><a href="#2-3">2.3 All in one</a></li>
-</ul>
-</li>
-</ul>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -246,17 +212,17 @@ $$IG(Dp,f)=\frac{N_{left}}{N_p}\frac{N_{right}}{N_p}(\sum^c_{i=1}|p(i|D_{left})-
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="c1"># 一般的な２分探索を想定する</span>
+<span class="c1"># 一般的な２分岐を想定する</span>
 <span class="k">def</span> <span class="nf">IG</span><span class="p">(</span><span class="n">impurity_func</span><span class="p">,</span> <span class="n">target_p</span><span class="p">,</span> <span class="n">target_left</span><span class="p">,</span> <span class="n">target_right</span><span class="p">):</span>
     <span class="n">N_left</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_left</span><span class="p">)</span>
     <span class="n">N_right</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_right</span><span class="p">)</span>
@@ -327,14 +293,14 @@ $$I_G(t)=\sum^c_{i=1}p(i|t)(1-p(i|t))=1-\sum^c_{i=1}p(i|t)^2$$\
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="k">def</span> <span class="nf">gini</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
     <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -389,14 +355,14 @@ $$I(E)=\log \frac {1}{P(E)}=-\log P(E)$$
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="k">def</span> <span class="nf">entropy</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
     <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -429,14 +395,14 @@ $$I_E(t)=1-max(p(i|t))$$\
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="k">def</span> <span class="nf">error</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
     <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -478,14 +444,14 @@ $$B: (40,40)--&gt;(20,40)(20,0)$$
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="n">target_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">40</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">40</span><span class="p">)])</span>
 <span class="n">target_la</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">10</span><span class="p">)])</span>
 <span class="n">target_ra</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">30</span><span class="p">)])</span>
@@ -512,14 +478,14 @@ $$B: (40,40)--&gt;(20,40)(20,0)$$
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="n">IG_a</span> <span class="o">=</span> <span class="n">IG</span><span class="p">(</span><span class="n">gini</span><span class="p">,</span><span class="n">target_p</span><span class="p">,</span><span class="n">target_la</span><span class="p">,</span><span class="n">target_ra</span><span class="p">)</span>
 <span class="n">IG_b</span> <span class="o">=</span> <span class="n">IG</span><span class="p">(</span><span class="n">gini</span><span class="p">,</span><span class="n">target_p</span><span class="p">,</span><span class="n">target_lb</span><span class="p">,</span><span class="n">target_rb</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"A: </span><span class="si">{}</span><span class="s2">, B: </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">IG_a</span><span class="p">,</span><span class="n">IG_b</span><span class="p">))</span>
@@ -566,14 +532,14 @@ $$B: (40,40)--&gt;(20,40)(20,0)$$
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="n">IG_a</span> <span class="o">=</span> <span class="n">IG</span><span class="p">(</span><span class="n">entropy</span><span class="p">,</span><span class="n">target_p</span><span class="p">,</span><span class="n">target_la</span><span class="p">,</span><span class="n">target_ra</span><span class="p">)</span>
 <span class="n">IG_b</span> <span class="o">=</span> <span class="n">IG</span><span class="p">(</span><span class="n">entropy</span><span class="p">,</span><span class="n">target_p</span><span class="p">,</span><span class="n">target_lb</span><span class="p">,</span><span class="n">target_rb</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"A: </span><span class="si">{}</span><span class="s2">, B: </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">IG_a</span><span class="p">,</span><span class="n">IG_b</span><span class="p">))</span>
@@ -620,14 +586,14 @@ $$B: (40,40)--&gt;(20,40)(20,0)$$
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="n">IG_a</span> <span class="o">=</span> <span class="n">IG</span><span class="p">(</span><span class="n">error</span><span class="p">,</span><span class="n">target_p</span><span class="p">,</span><span class="n">target_la</span><span class="p">,</span><span class="n">target_ra</span><span class="p">)</span>
 <span class="n">IG_b</span> <span class="o">=</span> <span class="n">IG</span><span class="p">(</span><span class="n">error</span><span class="p">,</span><span class="n">target_p</span><span class="p">,</span><span class="n">target_lb</span><span class="p">,</span><span class="n">target_rb</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"A: </span><span class="si">{}</span><span class="s2">, B: </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">IG_a</span><span class="p">,</span><span class="n">IG_b</span><span class="p">))</span>
@@ -674,14 +640,14 @@ $$B: (40,40)--&gt;(20,40)(20,0)$$
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="n">IG_a</span> <span class="o">=</span> <span class="n">IG_twoing</span><span class="p">(</span><span class="n">target_la</span><span class="p">,</span><span class="n">target_ra</span><span class="p">)</span>
 <span class="n">IG_b</span> <span class="o">=</span> <span class="n">IG_twoing</span><span class="p">(</span><span class="n">target_lb</span><span class="p">,</span><span class="n">target_rb</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"A: </span><span class="si">{}</span><span class="s2">, B: </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">IG_a</span><span class="p">,</span><span class="n">IG_b</span><span class="p">))</span>
@@ -746,14 +712,14 @@ $$\hat{y}_t=\frac{1}{N_t}\sum_{i\in D_t}y^{(i)}$$
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="k">def</span> <span class="nf">mse</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">target</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">target</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
@@ -805,14 +771,14 @@ $$\hat{y}_t=\frac{1}{N_t}\sum_{i\in D_t}y^{(i)}$$
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="k">def</span> <span class="nf">search_best_split</span><span class="p">(</span><span class="n">impurity_func</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>   
     <span class="n">features</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">best_thrs</span> <span class="o">=</span> <span class="kc">None</span>
@@ -851,14 +817,14 @@ $$\hat{y}_t=\frac{1}{N_t}\sum_{i\in D_t}y^{(i)}$$
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
@@ -888,14 +854,14 @@ $$\hat{y}_t=\frac{1}{N_t}\sum_{i\in D_t}y^{(i)}$$
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="n">IG_max</span><span class="p">,</span> <span class="n">best_thrs</span><span class="p">,</span> <span class="n">best_f</span> <span class="o">=</span> <span class="n">search_best_split</span><span class="p">(</span><span class="n">gini</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">'Information gain: </span><span class="si">{}</span><span class="s1">, Best threshold: </span><span class="si">{}</span><span class="s1">, Best feature: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">IG_max</span><span class="p">,</span> <span class="n">best_thrs</span><span class="p">,</span> <span class="n">features_name</span><span class="p">[</span><span class="n">best_f</span><span class="p">]))</span>
 </pre></div>
@@ -953,14 +919,14 @@ $$\hat{y}_t=\frac{1}{N_t}\sum_{i\in D_t}y^{(i)}$$
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="n">feature_importances</span> <span class="o">=</span> <span class="p">{}</span>
 
 <span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
@@ -1053,14 +1019,14 @@ $$\hat{y}_t=\frac{1}{N_t}\sum_{i\in D_t}y^{(i)}$$
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="k">class</span> <span class="nc">DesicionTreeClassifier</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_depth</span><span class="p">,</span> <span class="n">impurity</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_depth</span> <span class="o">=</span> <span class="n">max_depth</span>
@@ -1100,14 +1066,14 @@ $$\hat{y}_t=\frac{1}{N_t}\sum_{i\in D_t}y^{(i)}$$
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="n">clf</span> <span class="o">=</span> <span class="n">DesicionTreeClassifier</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">'gini'</span><span class="p">)</span>
 <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 <span class="n">y_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
@@ -1157,14 +1123,14 @@ Classification accuracy: 0.9777777777777777
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 
@@ -1219,14 +1185,14 @@ Classification accuracy: 0.9777777777777777
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span> <span class="k">as</span> <span class="n">DecisionTreeClassifier2</span>
 
 <span class="n">clf2</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier2</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
@@ -1270,14 +1236,14 @@ Classification accuracy: 0.9777777777777777
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="kn">import</span> <span class="nn">graphviz</span>
 <span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">export_graphviz</span>
 
@@ -1320,14 +1286,14 @@ Classification accuracy: 0.9777777777777777
     
     
 <div class="cell border-box-sizing code_cell rendered">
-<details class="description">
+<details class="description" open="">
       <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
         <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span><span class="p">,</span><span class="n">display_png</span>
 <span class="n">display_png</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="s1">'iris-tree.png'</span><span class="p">))</span>
 </pre></div>

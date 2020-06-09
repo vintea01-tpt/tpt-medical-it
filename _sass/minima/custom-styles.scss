@@ -20,6 +20,74 @@ h1 {
 	}
 }
 
+.sidebar {
+	clear: both
+  }
+  
+.sidebar::after {
+	clear: both;
+	content: "";
+	display: table
+  }
+  
+@media (max-width: 64em) {
+.sidebar {
+	position: relative;
+	z-index: 10;
+	-webkit-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0)
+}
+}
+
+@media (min-width: 64em) {
+.sidebar {
+	float: left;
+	width: calc(200px - 1em);
+	opacity: 0.75;
+	-webkit-transition: opacity 0.2s ease-in-out;
+	transition: opacity 0.2s ease-in-out
+}
+
+.sidebar:hover {
+	opacity: 1
+}
+
+.sidebar.sticky {
+	overflow-y: auto;
+	height: calc(100vh - 2em - 2em)
+}
+}
+
+@media (min-width: 80em) {
+.sidebar {
+	width: calc(300px - 1em)
+}
+}
+
+.sidebar>* {
+margin-top: 1em;
+margin-bottom: 1em
+}
+
+.sidebar h2,.sidebar h3,.sidebar h4,.sidebar h5,.sidebar h6 {
+margin-bottom: 0;
+font-family: -apple-system,BlinkMacSystemFont,"Roboto","Segoe UI","Helvetica Neue","Lucida Grande",Arial,sans-serif
+}
+
+.sidebar p,.sidebar li {
+font-family: -apple-system,BlinkMacSystemFont,"Roboto","Segoe UI","Helvetica Neue","Lucida Grande",Arial,sans-serif;
+font-size: .75em;
+line-height: 1.5
+}
+
+.sidebar img {
+width: 100%
+}
+
+.sidebar img.emoji {
+width: 20px;
+height: 20px
+}
 
 // If you want to turn off dark background for syntax highlighting, comment or delete the below line.
 @import "minima/fastpages-dracula-highlight"; 

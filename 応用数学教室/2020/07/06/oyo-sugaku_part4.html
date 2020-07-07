@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>応用数学 Part4 離散フーリエ変換 | T/T</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="応用数学 Part4 離散フーリエ変換" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="フーリエ変換の離散化" />
+<meta property="og:description" content="フーリエ変換の離散化" />
+<link rel="canonical" href="https://vintea01.github.io/tpt-medical-it/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6%E6%95%99%E5%AE%A4/2020/07/06/oyo-sugaku_part4.html" />
+<meta property="og:url" content="https://vintea01.github.io/tpt-medical-it/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6%E6%95%99%E5%AE%A4/2020/07/06/oyo-sugaku_part4.html" />
+<meta property="og:site_name" content="T/T" />
+<meta property="og:image" content="https://vintea01.github.io/tpt-medical-it/images/dag1.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-07-06T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"フーリエ変換の離散化","@type":"BlogPosting","headline":"応用数学 Part4 離散フーリエ変換","dateModified":"2020-07-06T00:00:00-05:00","datePublished":"2020-07-06T00:00:00-05:00","image":"https://vintea01.github.io/tpt-medical-it/images/dag1.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://vintea01.github.io/tpt-medical-it/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6%E6%95%99%E5%AE%A4/2020/07/06/oyo-sugaku_part4.html"},"url":"https://vintea01.github.io/tpt-medical-it/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6%E6%95%99%E5%AE%A4/2020/07/06/oyo-sugaku_part4.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/tpt-medical-it/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://vintea01.github.io/tpt-medical-it/feed.xml" title="T/T" /><link rel="shortcut icon" type="image/x-icon" href="/tpt-medical-it/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>応用数学 Part4 離散フーリエ変換 | T/T</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="応用数学 Part4 離散フーリエ変換" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="フーリエ変換の離散化" />
+<meta property="og:description" content="フーリエ変換の離散化" />
+<link rel="canonical" href="https://vintea01.github.io/tpt-medical-it/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6%E6%95%99%E5%AE%A4/2020/07/06/oyo-sugaku_part4.html" />
+<meta property="og:url" content="https://vintea01.github.io/tpt-medical-it/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6%E6%95%99%E5%AE%A4/2020/07/06/oyo-sugaku_part4.html" />
+<meta property="og:site_name" content="T/T" />
+<meta property="og:image" content="https://vintea01.github.io/tpt-medical-it/images/dag1.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-07-06T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"フーリエ変換の離散化","@type":"BlogPosting","headline":"応用数学 Part4 離散フーリエ変換","dateModified":"2020-07-06T00:00:00-05:00","datePublished":"2020-07-06T00:00:00-05:00","image":"https://vintea01.github.io/tpt-medical-it/images/dag1.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://vintea01.github.io/tpt-medical-it/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6%E6%95%99%E5%AE%A4/2020/07/06/oyo-sugaku_part4.html"},"url":"https://vintea01.github.io/tpt-medical-it/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6%E6%95%99%E5%AE%A4/2020/07/06/oyo-sugaku_part4.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://vintea01.github.io/tpt-medical-it/feed.xml" title="T/T" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/tpt-medical-it/">T/T</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/tpt-medical-it/about/">団体について</a><a class="page-link" href="/tpt-medical-it/search/">サイト内検索</a><a class="page-link" href="/tpt-medical-it/categories/">タグ一覧</a><a class="page-link" href="/tpt-medical-it/timeline/">Twitter</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">応用数学 Part4 離散フーリエ変換</h1><p class="page-description">フーリエ変換の離散化</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-07-06T00:00:00-05:00" itemprop="datePublished">
+        Jul 6, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      4 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/tpt-medical-it/categories/#応用数学教室">応用数学教室</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/Vintea01/tpt-medical-it/tree/master/_notebooks/2020-07-06-oyo-sugaku_part4.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/tpt-medical-it/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          
+          
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Reference:">Reference: </a></li>
+<li class="toc-entry toc-h2"><a href="#Plot">Plot </a></li>
+<li class="toc-entry toc-h2"><a href="#この章を読むのに必要な復習">この章を読むのに必要な復習 </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#3.3-フーリエ級数展開">3.3 フーリエ級数展開 </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#離散フーリエ変換">離散フーリエ変換 </a></li>
+<li class="toc-entry toc-h2"><a href="#たたみこみ和定理">たたみこみ和定理 </a></li>
+<li class="toc-entry toc-h2"><a href="#パワースペクトル">パワースペクトル </a></li>
+<li class="toc-entry toc-h2"><a href="#自己相関係数">自己相関係数 </a></li>
+<li class="toc-entry toc-h2"><a href="#離散コサイン変換">離散コサイン変換 </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-07-06-oyo-sugaku_part4.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Reference:">
+<a class="anchor" href="#Reference:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference:<a class="anchor-link" href="#Reference:"> </a>
+</h2>
+<p></p>
+<div class="footnotes"><p id="fn-1">1. <a href="https://www.kyoritsu-pub.co.jp/bookdetail/9784320017382">金谷 健一. これなら分かる応用数学教室―最小二乗法からウェーブレットまで― . 共立出版, 2003.</a><a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Plot">
+<a class="anchor" href="#Plot" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plot<a class="anchor-link" href="#Plot"> </a>
+</h2>
+<ul>
+<li>N個の離散点に対してフーリエ変換を適応させた離散フーリエ変換について学ぶ</li>
+<li>パワースペクトルと自己相関係数を導入して、（連続）フーリエ変換と同じような世界を構築できることを示す。</li>
+<li>離散コサイン変換を説明する。(今回はここまで）</li>
+<li>離散フーリエ変換の世界におけるサンプリング定理を導く</li>
+<li>高速フーリエ変換を目指す。</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="この章を読むのに必要な復習">
+<a class="anchor" href="#%E3%81%93%E3%81%AE%E7%AB%A0%E3%82%92%E8%AA%AD%E3%82%80%E3%81%AE%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E5%BE%A9%E7%BF%92" aria-hidden="true"><span class="octicon octicon-link"></span></a>この章を読むのに必要な復習<a class="anchor-link" href="#%E3%81%93%E3%81%AE%E7%AB%A0%E3%82%92%E8%AA%AD%E3%82%80%E3%81%AE%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E5%BE%A9%E7%BF%92"> </a>
+</h2>
+<h3 id="3.3-フーリエ級数展開">
+<a class="anchor" href="#3.3-%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E7%B4%9A%E6%95%B0%E5%B1%95%E9%96%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.3 フーリエ級数展開<a class="anchor-link" href="#3.3-%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E7%B4%9A%E6%95%B0%E5%B1%95%E9%96%8B"> </a>
+</h3>
+<p>周期Tの関数f(t)をフーリエ級数展開すると、
+$$
+f(t) = \sum_{k = -\infty}^{\infty}C_k e^{ikwt}
+$$
+$$
+C_k = \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-ikwt} dt
+$$
+となる。ただし、
+$$
+\omega = \frac{2 \pi}{T}
+$$
+とおいた。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="離散フーリエ変換">
+<a class="anchor" href="#%E9%9B%A2%E6%95%A3%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E5%A4%89%E6%8F%9B" aria-hidden="true"><span class="octicon octicon-link"></span></a>離散フーリエ変換<a class="anchor-link" href="#%E9%9B%A2%E6%95%A3%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E5%A4%89%E6%8F%9B"> </a>
+</h2>
+<p>円周に沿って値が定義された関数$f(\theta)\,0\leq\theta\leq2\pi$を考える</p>
+$$
+\begin{eqnarray}
+  F_k &amp;=&amp; \frac{1}{N} \sum_{l=0}^{N-1} f_l e^{\frac{-i2\pi kl}{N}}
+\end{eqnarray}
+$$<p>で離散フーリエ変換を定義するとき、逆離散フーリエ変換を求める。今、
+$$
+\sum_{k=0}^{N-1} F_k e^{i2\pi kl}{N}
+$$
+を考えると、</p>
+$$
+\begin{eqnarray}
+    \sum_{k=0}^{N-1} F_k e^\frac{i2\pi kl}{N} &amp;=&amp; \sum_{k=0}^{N-1} \left( \frac{1}{N} \sum_{m=0}^{N-1} f_m e^{\frac{-2\pi km}{N}} \right) e^\frac{i2\pi kl}{N} \\
+    &amp;=&amp; \sum_{k=0}^{N-1} \left( \frac{1}{N} \sum_{m=0}^{N-1} f_m e^{\frac{2\pi k(l-m)}{N}} \right) \\
+     &amp;=&amp; \sum_{m=0}^{N-1} \left( \frac{1}{N}  f_m \sum_{k=0}^{N-1} e^{\frac{2\pi k(l-m)}{N}} \right) \\
+\end{eqnarray}
+$$<p>今$\sum_{k=0}^{N-1} e^{\frac{2\pi k(l-m)}{N}} $は等比級数の総和であり、これを解くと、
+$$
+\sum_{k=0}^{N-1} e^{\frac{2\pi k(l-m)}{N}} = \begin{cases}
+    N (l=m) \\
+    0 (Other)
+  \end{cases}
+$$
+となる。ゆえに
+$$
+\sum_{m=0}^{N-1} \left( \frac{1}{N}  f_m \sum_{k=0}^{N-1} e^{\frac{2\pi k(l-m)}{N}} \right) = f_l
+$$
+となるから、逆離散フーリエ変換は
+$$
+f_l = \sum_{k=0}^{N-1} F_k e^{i2\pi kl}{N}
+$$
+(答えありきの変形で済まない)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="たたみこみ和定理">
+<a class="anchor" href="#%E3%81%9F%E3%81%9F%E3%81%BF%E3%81%93%E3%81%BF%E5%92%8C%E5%AE%9A%E7%90%86" aria-hidden="true"><span class="octicon octicon-link"></span></a>たたみこみ和定理<a class="anchor-link" href="#%E3%81%9F%E3%81%9F%E3%81%BF%E3%81%93%E3%81%BF%E5%92%8C%E5%AE%9A%E7%90%86"> </a>
+</h2>
+<p>以下で定義されるものを（循環）たたみこみ和という。これは3章でやった畳み込み積分の離散版に対応する
+$$
+f_l * g_l = \frac{1}{N} \sum_{m=0}^{N-1} f_m g_{l-m}
+$$
+そのために、畳み込み積分の性質と同じような性質を有する。つまり、線型法則、結合法則、交換法則が成立する。
+$$
+\begin{eqnarray}
+    f_l * g_l &amp;=&amp; g_l * f_l \\
+    f_l * (ag_l + bh_l) &amp;=&amp; a f_l * g_l + b f_l * h_l \\
+    (f_l * g_l) * h_l &amp;=&amp; f_l * (g_l * h_l)
+\end{eqnarray}
+$$</p>
+<p>たたみこみ和$f_l * g_l$を離散フーリエ変換をすると、どうなるか見てみる。
+$$
+\begin{eqnarray}
+    \frac{1}{N} \sum_{l=0}^{N-1} f_l * g_l e^{\frac{-i2\pi kl}{N}} &amp;=&amp; \frac{1}{N} \sum_{l=0}^{N-1} \left( \frac{1}{N} \sum_{m=0}^{N-1} f_m g_{l-m} \right) e^{\frac{-i2\pi kl}{N}} \\
+    &amp;=&amp; \frac{1}{N} \sum_{m=0}^{N-1} f_m \left( \frac{1}{N} \sum_{l=0}^{N-1} g_{l-m} e^{\frac{-i2\pi k(l-m)}{N}} \right) e^{\frac{-i2\pi km}{N}} (\because 外と内のΣを入れ替えた) \\
+    &amp;=&amp; \left( \frac{1}{N} \sum_{m=0}^{N-1} f_m e^{\frac{-i2\pi km}{N}} \right) \left( \frac{1}{N} \sum_{l=0}^{N-1} g_{l-m} e^{\frac{-i2\pi k(l-m)}{N}} \right) \\
+    &amp;=&amp; F_k G_k
+\end{eqnarray}
+$$
+故に、たたみこみ和の離散フーリエ変換はそれらのデータ列の離散フーリエ変換の積になることがわかった。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="パワースペクトル">
+<a class="anchor" href="#%E3%83%91%E3%83%AF%E3%83%BC%E3%82%B9%E3%83%9A%E3%82%AF%E3%83%88%E3%83%AB" aria-hidden="true"><span class="octicon octicon-link"></span></a>パワースペクトル<a class="anchor-link" href="#%E3%83%91%E3%83%AF%E3%83%BC%E3%82%B9%E3%83%9A%E3%82%AF%E3%83%88%E3%83%AB"> </a>
+</h2>
+<p>パーセバルの式と呼ばれる次の式が成り立つ
+$$
+ \frac{1}{N} \sum_{l=0}^{N-1} f_l \overline{g_l} = \sum_{k=0}^{N-1} F_k \overline{G_k} \\
+ \frac{1}{N} \sum_{l=0}^{N-1} |f_l|^2 = \sum_{k=0}^{N-1} |F_k|^2
+$$</p>
+<p>証明</p>
+<p>第一式が示せれば第二式が成立するのは明らか（$\because g_l$に$f_l$を代入)。よって第一式だけを示せば良い</p>
+$$
+\begin{eqnarray}
+  \frac{1}{N} \sum_{l=0}^{N-1} f_l \overline{g_l} &amp;=&amp; \frac{1}{N} \sum_{l=0}^{N-1} f_l \sum_{k=0}^{N-1} \overline{G_k} e^{\frac{-i2\pi kl}{N}} \\
+  &amp;=&amp; \frac{1}{N} \sum_{l=0}^{N-1} f_l \sum_{k=0}^{N-1} \overline{G_k} e^{\frac{-i2\pi kl}{N}} \\
+  &amp;=&amp; \sum_{k=0}^{N-1} \left( \frac{1}{N} \sum_{l=0}^{N-1} f_l e^{\frac{-i2\pi kl}{N}} \right) \overline{G_k} \\
+  &amp;=&amp; \sum_{k=0}^{N-1} F_k \overline{G_k}
+\end{eqnarray}
+$$<p>以上によりパーセバルの式が示された。</p>
+<p>今</p>
+$$
+    \frac{1}{N} \sum_{l=0}^{N-1} |f_l|^2 (= \sum_{k=0}^{N-1} |F_k|^2)
+$$<p>が平均エネルギーを表しているとすると,右辺はそれを周波数ごとにまとめたものだと解釈できる。パワースペクトルを
+$$
+P_k = |F_k|^2
+$$
+と定義すると、
+$$
+\begin{eqnarray}
+    \frac{1}{N} \sum_{l=0}^{N-1} |f_l|^2 (&amp;=&amp; \sum_{k=0}^{N-1} |F_k|^2) \\
+    &amp;=&amp; \sum_{k=0}^{N-1} P_k
+\end{eqnarray}
+$$
+となる。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="自己相関係数">
+<a class="anchor" href="#%E8%87%AA%E5%B7%B1%E7%9B%B8%E9%96%A2%E4%BF%82%E6%95%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>自己相関係数<a class="anchor-link" href="#%E8%87%AA%E5%B7%B1%E7%9B%B8%E9%96%A2%E4%BF%82%E6%95%B0"> </a>
+</h2>$$
+    R_n = \frac{1}{N} \sum_{l=0}^{N-1} f_l \overline{f_{l-n}}
+$$<p>これで定義された数列を$\{f_l\}$の自己相関係数という。$\{R_n\}$は長さNの数列となる。また、$R_0$は上の段落で示した平均エネルギーと同じ式になる。</p>
+<p>こちらも3章でおこなった（連続）フーリエ変換における自己相関係数と同じような性質を持つことを確かめる。いくつか性質はあるが、特に</p>
+<p>「自己相関係数をフーリエ変換するとパワースペクトルになる」</p>
+<p>という性質がこの自己相関係数とパワースペクトルに対しても成立するか見てみることにする。自己相関係数を離散フーリエ変換して</p>
+$$
+\begin{eqnarray}
+　　\frac{1}{N} \sum_{n=0}^{N-1} R_n e^{\frac{-i2\pi kn}{N}} &amp;=&amp; \frac{1}{N} \sum_{n=0}^{N-1} \left( \frac{1}{N}  \sum_{l=0}^{N-1} f_l \overline{f_{l-n}}  \right) e^{\frac{-i2\pi kn}{N}} \\
+  &amp;=&amp; \frac{1}{N} \sum_{l=0}^{N-1} f_l  \left( \frac{1}{N}  \sum_{n=0}^{N-1} \overline{f_{l-n}} e^{\frac{-i2\pi kn}{N}} \right) (\because \sum を入れ替えた) \\
+  &amp;=&amp; \frac{1}{N} \sum_{l=0}^{N-1} f_l \left( \frac{1}{N}  \sum_{n=0}^{N-1} \overline{f_{l-n}e^{\frac{i2\pi kn}{N}} } \right) \\
+  &amp;=&amp; \frac{1}{N} \sum_{l=0}^{N-1} f_l \left( \frac{1}{N}  \sum_{n=0}^{N-1} \overline{f_{l-n}e^{\frac{i2\pi k(-(l-n))}{N}}e^{\frac{i2\pi kl}{N}}  } \right) \\
+  &amp;=&amp; \frac{1}{N} \sum_{l=0}^{N-1} f_l \left( \frac{1}{N}  \sum_{n=0}^{N-1} \overline{f_{l-n}e^{\frac{i2\pi k(-(l-n))}{N}}  } \right)e^{\frac{-i2\pi kl}{N}} \\
+  &amp;=&amp; \left( \frac{1}{N} \sum_{l=0}^{N-1} f_l e^{\frac{-i2\pi kl}{N}} \right) \left( \frac{1}{N}  \sum_{n=0}^{N-1} \overline{f_{l-n}e^{\frac{i2\pi k(-(l-n))}{N}}  } \right) \\
+  &amp;=&amp; F_k \overline{F_k} (\because ()内はf_lのフーリエ変換になっている) \\
+  &amp;=&amp; |F_k|^2 \\
+  &amp;=&amp; P_k
+\end{eqnarray}
+$$<p>したがって、「自己相関係数を離散フーリエ変換するとパワースペクトルになる」。</p>
+<p>故に</p>
+<ul>
+<li>数列$f_l$</li>
+<li>離散フーリエ変換$F_k$</li>
+<li>パワースペクトル$P_k$</li>
+<li>自己相関係数$R_n$</li>
+</ul>
+<p>の間には以下のような関係が存在する。</p>
+$$
+\begin{eqnarray}
+    &amp;f_l&amp; \rightarrow  &amp; F_k &amp; \\
+    &amp;\downarrow&amp; ~~~ &amp;\downarrow&amp; \\
+    &amp;R_n&amp; \rightarrow &amp;P_k&amp;
+\end{eqnarray}
+$$<p>これは3章で（連続）フーリエ変換でみたものとほぼ同じ関係式である。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="離散コサイン変換">
+<a class="anchor" href="#%E9%9B%A2%E6%95%A3%E3%82%B3%E3%82%B5%E3%82%A4%E3%83%B3%E5%A4%89%E6%8F%9B" aria-hidden="true"><span class="octicon octicon-link"></span></a>離散コサイン変換<a class="anchor-link" href="#%E9%9B%A2%E6%95%A3%E3%82%B3%E3%82%B5%E3%82%A4%E3%83%B3%E5%A4%89%E6%8F%9B"> </a>
+</h2>
+<p>フーリエ級数展開まで戻って考える。フーリエ級数展開というのは関数を$\{\cos kx, \sin kx, \frac{1}{2}\}$で表す方法でした。$\frac{1}{2}$は直流成分と呼ばれ波で近似できない部分を担当していました。例えば$f(t)=1$のような関数をフーリエ級数展開するとこの直流成分だけが残ります。</p>
+<p>$\sin kx$ はすべて奇関数なので、これらで表される関数も奇関数です。逆に$\cos kx$ はすべて偶関数なので、これで表される関数も偶関数です。</p>
+<p>今N個の実数データ点$\{f_l\} \ (0\leq l &lt; N)$ が与えられたとき、これを反転して加えるとこれは偶関数と見ることができる。つまり</p>
+$$
+f_{N-1}, f_{N-2}, ..., f_0, f_0, f_1, ..., f_{N-1}
+$$<p>と並べるとこれは偶関数となる。これをrenameして、
+$$
+\overline{f_l} = \begin{cases}
+    f_l \  (0 \leq l &lt; N) \\
+    f_{-l-1} \  (-N \leq l &lt; 0)
+  \end{cases}
+$$
+とした$\bar{f_l}$にたいしてフーリエ級数展開すると、(これらは実数で上線の意味は共役でないことと、添字lはーN～N-1で定義されていることに注意）</p>
+$$
+\begin{eqnarray}
+  \bar{f_l} &amp;=&amp; \sum_{k=-N}^{N-1} \bar{F_k} e^{\frac{i2\pi kl}{2N}} \\
+  \bar{F_k} &amp;=&amp; \frac{1}{2N} \sum_{l=-N}^{N-1} \bar{f_l} e^{\frac{-i2\pi kl}{2N}}...(1)
+\end{eqnarray}
+$$<p>これを解いていく。これは偶関数なので、最終的にはeの虚数乗を消してcosだけで表すことを目指す。まずは第2式
+$$
+\begin{eqnarray}
+ \bar{F_k} &amp;=&amp; \frac{1}{2N} \sum_{l=-N}^{N-1} \bar{f_l} e^{\frac{-i\pi kl}{N}} \\
+ &amp;=&amp; \frac{1}{2N} \sum_{l=-N}^{-1} \bar{f_l} e^{\frac{-i\pi kl}{N}} + \frac{1}{2N} \sum_{l=0}^{N-1} \bar{f_l} e^{\frac{-i\pi kl}{N}} \\
+ &amp;=&amp; \frac{1}{2N} \sum_{l=-N}^{-1} f_{-l-1} e^{\frac{-i\pi kl}{N}} + \frac{1}{2N} \sum_{l=0}^{N-1} f_l e^{\frac{-i\pi kl}{N}} \\
+ &amp;=&amp; \frac{1}{2N} \sum_{l=0}^{N-1} f_{l} e^{\frac{-i\pi k(-l-1)}{N}} + \frac{1}{2N} \sum_{l=0}^{N-1} f_l e^{\frac{-i\pi kl}{N}} (\because 第一項のlを変えた) \\
+ &amp;=&amp; \frac{1}{2N} \sum_{l=0}^{N-1} \left( f_{l} e^{\frac{i\pi k(l+1)}{N}} + f_l e^{\frac{-i\pi kl}{N}} \right) \\
+ &amp;=&amp; \frac{1}{2N} \sum_{l=0}^{N-1} \left( f_{l} e^{\frac{i\pi k(l+\frac{1}{2})}{N}} e^{\frac{i\pi k\frac{1}{2}}{N}} + f_l e^{\frac{-i\pi k(l+\frac{1}{2})}{N}} e^{\frac{i\pi k\frac{1}{2}}{N}} \right) \\
+  &amp;=&amp; \frac{1}{2N} \sum_{l=0}^{N-1} f_{l}  \left( e^{\frac{i\pi k(l+\frac{1}{2})}{N}}  + e^{\frac{-i\pi k(l+\frac{1}{2})}{N}}  \right) e^{\frac{i\pi k\frac{1}{2}}{N}} \\
+  &amp;=&amp; \frac{1}{N} \sum_{l=0}^{N-1} f_{l} \frac{1}{2} \left( e^{\frac{i\pi k(l+\frac{1}{2})}{N}}  + e^{\frac{-i\pi k(l+\frac{1}{2})}{N}}  \right) e^{\frac{i\pi k\frac{1}{2}}{N}} \\
+  &amp;=&amp; \frac{1}{N} e^{\frac{i\pi k}{2N}} \sum_{l=0}^{N-1} f_{l} \cos(\frac{\pi k(l+\frac{1}{2})}{N}) 
+ \end{eqnarray}
+$$</p>
+<p>これで、第2式は解けた。
+形を整えるために
+$$
+F_k =  e^{\frac{-i\pi k}{2N}} 2 \bar{F_k} ...(2)
+$$
+と定義すると
+$$
+F_k = \frac{2}{N} \sum_{l=0}^{N-1} f_{l} \cos(\frac{\pi k(l+\frac{1}{2})}{N}) 
+$$
+となる</p>
+<p>次は第一式。最終的に求めたいのは$f_l$なので、$0\leq l&lt;N$と仮定して考える。先の式より$F_k$が実数であること(※)を用いる。</p>
+$$
+\begin{eqnarray}
+    f_l &amp;=&amp; \bar{f_l} \\
+    &amp;=&amp;  \sum_{k=-N}^{N-1} \bar{F_k} e^{\frac{i2\pi kl}{2N}} \\
+    &amp;=&amp; \bar{F_0} +  \sum_{k=1}^{N-1} \bar{F_k} e^{\frac{i\pi kl}{N}} +  \sum_{k=-N+1}^{-1} \bar{F_k} e^{\frac{i\pi kl}{N}}(\because \bar{F}_{-N}=0) \\
+    &amp;=&amp; \bar{F_0} +  \sum_{k=1}^{N-1} \bar{F_k} e^{\frac{i\pi kl}{N}} +  \sum_{k=1}^{N-1} \bar{F_{-k}} e^{\frac{-i\pi kl}{N}} \\
+    &amp;=&amp; \bar{F_0} +  \sum_{k=1}^{N-1} \bar{F_k} e^{\frac{i\pi kl}{N}} +  \sum_{k=1}^{N-1} \overline{\bar{F_k}} e^{\frac{-i\pi kl}{N}} (\because (1)) \\
+    &amp;=&amp; \frac{F_0}{2} + \sum_{k=1}^{N-1} (\frac{1}{2} e^{\frac{i\pi k}{2N}} F_k) e^{\frac{i\pi kl}{N}} + \sum_{k=1}^{N-1} \overline{(\frac{1}{2} e^{\frac{i\pi k}{2N}} F_k) } e^{\frac{-i\pi kl}{N}} \\
+    &amp;=&amp; \frac{F_0}{2} + \frac{1}{2} \sum_{k=1}^{N-1} (e^{\frac{i\pi k(2l+1)}{2N}} F_k) + \frac{1}{2} \sum_{k=1}^{N-1} e^{\frac{-i\pi k(2l+1)}{2N}} F_k(\because (※)) \\
+    &amp;=&amp; \frac{F_0}{2} + \frac{1}{2} \sum_{k=1}^{N-1}F_k (e^{\frac{i\pi k(2l+1)}{2N}} +e^{\frac{-i\pi k(2l+1)}{2N}} ) \\
+    &amp;=&amp; \frac{F_0}{2} + \sum_{k=1}^{N-1}F_k \cos {\frac{\pi k(2l+1)}{2N}}
+\end{eqnarray}
+$$<p>よって離散コサイン変換が求まった
+$$
+ f_l = \frac{F_0}{2} + \sum_{k=1}^{N-1}F_k \cos {\frac{\pi k(2l+1)}{2N}} \\
+ F_k = \frac{2}{N} \sum_{l=0}^{N-1} f_{l} \cos(\frac{\pi k(l+\frac{1}{2})}{N}) 
+$$</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="Vintea01/tpt-medical-it"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/tpt-medical-it/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6%E6%95%99%E5%AE%A4/2020/07/06/oyo-sugaku_part4.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/tpt-medical-it/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/tpt-medical-it/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/tpt-medical-it/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Medical/Dental students playing with Information Technologies and Mathematics.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/Vintea01" title="Vintea01"><svg class="svg-icon grey"><use xlink:href="/tpt-medical-it/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/tpt_ochanomizu" title="tpt_ochanomizu"><svg class="svg-icon grey"><use xlink:href="/tpt-medical-it/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

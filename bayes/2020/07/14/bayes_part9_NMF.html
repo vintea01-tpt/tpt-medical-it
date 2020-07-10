@@ -110,7 +110,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      6 min read
+      4 min read
     
 </span></p>
 
@@ -143,7 +143,11 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h1"><a href="#非負値行列因子分解とは">非負値行列因子分解とは </a></li>
 <li class="toc-entry toc-h1"><a href="#とりあえず使ってみる">とりあえず使ってみる </a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#データのimportと前処理">データのimportと前処理 </a></li>
+<li class="toc-entry toc-h2"><a href="#データのimportと前処理">データのimportと前処理 </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#作成過程">作成過程 </a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h2"><a href="#NMF">NMF </a></li>
 </ul>
 </li>
@@ -244,8 +248,10 @@ window.onload = wrap_img;
 </h2>
 <p><a href="https://www.kaggle.com/terminus7/pokemon-challenge">Kaggleにあるポケモン(第6世代まで)のデータセット</a>を使う。</p>
 <p>英語名だとわかりにくいので日本語訳する。 対応表は<a href="https://yakkun.com/swsh/pokemon_en.htm">ポケモン徹底攻略</a>から拝借した。</p>
-<p>作成過程</p>
-
+<p>日本語訳したものを<a href="https://gist.githubusercontent.com/Vintea01/9f83dd0b54dd0360067a08fad167fe98/raw/f20234f48ae12d2ad67f5e55f43ae505a65cecac/pokemon_data_g6.csv">gist</a>に置いてある。</p>
+<h3 id="作成過程">
+<a class="anchor" href="#%E4%BD%9C%E6%88%90%E9%81%8E%E7%A8%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>作成過程<a class="anchor-link" href="#%E4%BD%9C%E6%88%90%E9%81%8E%E7%A8%8B"> </a>
+</h3>
 </div>
 </div>
 </div>
@@ -277,288 +283,7 @@ window.onload = wrap_img;
 <span class="n">translate</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'data/for0714/japanese.csv'</span><span class="p">)</span>
 <span class="n">pokemon</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">pokemon</span><span class="p">,</span> <span class="n">translate</span><span class="p">,</span> <span class="n">on</span> <span class="o">=</span> <span class="s1">'English'</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">'left'</span><span class="p">)</span>
 
-<span class="n">pokemon</span><span class="p">[</span><span class="n">pokemon</span><span class="o">.</span><span class="n">Pokedex_No</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-    </details>
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>#</th>
-      <th>Name</th>
-      <th>Type 1</th>
-      <th>Type 2</th>
-      <th>HP</th>
-      <th>Attack</th>
-      <th>Defense</th>
-      <th>Sp. Atk</th>
-      <th>Sp. Def</th>
-      <th>Speed</th>
-      <th>Generation</th>
-      <th>Legendary</th>
-      <th>English</th>
-      <th>Pokedex_No</th>
-      <th>Japanese</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>Bulbasaur</td>
-      <td>Grass</td>
-      <td>Poison</td>
-      <td>45</td>
-      <td>49</td>
-      <td>49</td>
-      <td>65</td>
-      <td>65</td>
-      <td>45</td>
-      <td>1</td>
-      <td>False</td>
-      <td>Bulbasaur</td>
-      <td>1.0</td>
-      <td>フシギダネ</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2</td>
-      <td>Ivysaur</td>
-      <td>Grass</td>
-      <td>Poison</td>
-      <td>60</td>
-      <td>62</td>
-      <td>63</td>
-      <td>80</td>
-      <td>80</td>
-      <td>60</td>
-      <td>1</td>
-      <td>False</td>
-      <td>Ivysaur</td>
-      <td>2.0</td>
-      <td>フシギソウ</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3</td>
-      <td>Venusaur</td>
-      <td>Grass</td>
-      <td>Poison</td>
-      <td>80</td>
-      <td>82</td>
-      <td>83</td>
-      <td>100</td>
-      <td>100</td>
-      <td>80</td>
-      <td>1</td>
-      <td>False</td>
-      <td>Venusaur</td>
-      <td>3.0</td>
-      <td>フシギバナ</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>4</td>
-      <td>Mega Venusaur</td>
-      <td>Grass</td>
-      <td>Poison</td>
-      <td>80</td>
-      <td>100</td>
-      <td>123</td>
-      <td>122</td>
-      <td>120</td>
-      <td>80</td>
-      <td>1</td>
-      <td>False</td>
-      <td>Venusaur</td>
-      <td>3.0</td>
-      <td>フシギバナ</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>5</td>
-      <td>Charmander</td>
-      <td>Fire</td>
-      <td>NaN</td>
-      <td>39</td>
-      <td>52</td>
-      <td>43</td>
-      <td>60</td>
-      <td>50</td>
-      <td>65</td>
-      <td>1</td>
-      <td>False</td>
-      <td>Charmander</td>
-      <td>4.0</td>
-      <td>ヒトカゲ</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>795</th>
-      <td>796</td>
-      <td>Diancie</td>
-      <td>Rock</td>
-      <td>Fairy</td>
-      <td>50</td>
-      <td>100</td>
-      <td>150</td>
-      <td>100</td>
-      <td>150</td>
-      <td>50</td>
-      <td>6</td>
-      <td>True</td>
-      <td>Diancie</td>
-      <td>719.0</td>
-      <td>ディアンシー</td>
-    </tr>
-    <tr>
-      <th>796</th>
-      <td>797</td>
-      <td>Mega Diancie</td>
-      <td>Rock</td>
-      <td>Fairy</td>
-      <td>50</td>
-      <td>160</td>
-      <td>110</td>
-      <td>160</td>
-      <td>110</td>
-      <td>110</td>
-      <td>6</td>
-      <td>True</td>
-      <td>Diancie</td>
-      <td>719.0</td>
-      <td>ディアンシー</td>
-    </tr>
-    <tr>
-      <th>797</th>
-      <td>798</td>
-      <td>Hoopa Confined</td>
-      <td>Psychic</td>
-      <td>Ghost</td>
-      <td>80</td>
-      <td>110</td>
-      <td>60</td>
-      <td>150</td>
-      <td>130</td>
-      <td>70</td>
-      <td>6</td>
-      <td>True</td>
-      <td>Hoopa</td>
-      <td>720.0</td>
-      <td>フーパ</td>
-    </tr>
-    <tr>
-      <th>798</th>
-      <td>799</td>
-      <td>Hoopa Unbound</td>
-      <td>Psychic</td>
-      <td>Dark</td>
-      <td>80</td>
-      <td>160</td>
-      <td>60</td>
-      <td>170</td>
-      <td>130</td>
-      <td>80</td>
-      <td>6</td>
-      <td>True</td>
-      <td>Hoopa</td>
-      <td>720.0</td>
-      <td>フーパ</td>
-    </tr>
-    <tr>
-      <th>799</th>
-      <td>800</td>
-      <td>Volcanion</td>
-      <td>Fire</td>
-      <td>Water</td>
-      <td>80</td>
-      <td>110</td>
-      <td>120</td>
-      <td>130</td>
-      <td>90</td>
-      <td>70</td>
-      <td>6</td>
-      <td>True</td>
-      <td>Volcanion</td>
-      <td>721.0</td>
-      <td>ボルケニオン</td>
-    </tr>
-  </tbody>
-</table>
-<p>800 rows × 15 columns</p>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>オコリザルがNaNになってるデータセットの不備や、ゲンシカイキやロトムのフォルムチェンジを忘れていたことで漏れが出た。少ないので直接直してしまう。</p>
-
-</div>
-</div>
-</div>
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<details class="description">
-      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
-        <p></p>
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="c1"># 以下特殊事例の処理</span>
 <span class="c1"># オコリザル</span>
 <span class="n">pokemon</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">62</span><span class="p">,</span><span class="s1">'Name'</span><span class="p">]</span><span class="o">=</span><span class="s1">'Primeape'</span>
 <span class="n">pokemon</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">62</span><span class="p">,</span><span class="s1">'Pokedex_No'</span><span class="p">]</span><span class="o">=</span><span class="mi">57</span>
@@ -586,8 +311,8 @@ window.onload = wrap_img;
 <span class="c1"># フラベベ</span>
 <span class="n">pokemon</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">737</span><span class="p">,</span><span class="s1">'Pokedex_No'</span><span class="p">]</span><span class="o">=</span><span class="mi">669</span>
 <span class="n">pokemon</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">737</span><span class="p">,</span><span class="s1">'Japanese'</span><span class="p">]</span><span class="o">=</span><span class="s1">'フラベベ'</span>
-<span class="n">pokemon</span><span class="p">[</span><span class="n">pokemon</span><span class="o">.</span><span class="n">Pokedex_No</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span>
 
+<span class="c1"># 出力</span>
 <span class="c1"># pokemon.drop(['#','English'],axis=1).to_csv('pokemon_data_g6.csv',index=False)</span>
 </pre></div>
 
@@ -596,59 +321,6 @@ window.onload = wrap_img;
 </div>
 
     </details>
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>#</th>
-      <th>Name</th>
-      <th>Type 1</th>
-      <th>Type 2</th>
-      <th>HP</th>
-      <th>Attack</th>
-      <th>Defense</th>
-      <th>Sp. Atk</th>
-      <th>Sp. Def</th>
-      <th>Speed</th>
-      <th>Generation</th>
-      <th>Legendary</th>
-      <th>English</th>
-      <th>Pokedex_No</th>
-      <th>Japanese</th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
     
 

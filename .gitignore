@@ -13,3 +13,5 @@ _notebooks/.ipynb_checkpoints
 __pycache__
 .vscode/
 .DS_Store
+*.dio
+_notebooks/*.dio

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>応用数学 Part4 離散フーリエ変換 | T/T</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="応用数学 Part4 離散フーリエ変換" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="フーリエ変換の離散化" />
+<meta property="og:description" content="フーリエ変換の離散化" />
+<link rel="canonical" href="https://vintea01.github.io/tpt-medical-it/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6%E6%95%99%E5%AE%A4/2020/08/04/oyo-sugaku_part5.html" />
+<meta property="og:url" content="https://vintea01.github.io/tpt-medical-it/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6%E6%95%99%E5%AE%A4/2020/08/04/oyo-sugaku_part5.html" />
+<meta property="og:site_name" content="T/T" />
+<meta property="og:image" content="https://vintea01.github.io/tpt-medical-it/images/ouyo_ch05.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-08-04T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"応用数学 Part4 離散フーリエ変換","dateModified":"2020-08-04T00:00:00-05:00","description":"フーリエ変換の離散化","datePublished":"2020-08-04T00:00:00-05:00","@type":"BlogPosting","image":"https://vintea01.github.io/tpt-medical-it/images/ouyo_ch05.png","url":"https://vintea01.github.io/tpt-medical-it/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6%E6%95%99%E5%AE%A4/2020/08/04/oyo-sugaku_part5.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://vintea01.github.io/tpt-medical-it/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6%E6%95%99%E5%AE%A4/2020/08/04/oyo-sugaku_part5.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/tpt-medical-it/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://vintea01.github.io/tpt-medical-it/feed.xml" title="T/T" /><link rel="shortcut icon" type="image/x-icon" href="/tpt-medical-it/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>応用数学 Part4 離散フーリエ変換 | T/T</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="応用数学 Part4 離散フーリエ変換" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="フーリエ変換の離散化" />
+<meta property="og:description" content="フーリエ変換の離散化" />
+<link rel="canonical" href="https://vintea01.github.io/tpt-medical-it/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6%E6%95%99%E5%AE%A4/2020/08/04/oyo-sugaku_part5.html" />
+<meta property="og:url" content="https://vintea01.github.io/tpt-medical-it/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6%E6%95%99%E5%AE%A4/2020/08/04/oyo-sugaku_part5.html" />
+<meta property="og:site_name" content="T/T" />
+<meta property="og:image" content="https://vintea01.github.io/tpt-medical-it/images/ouyo_ch05.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-08-04T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"応用数学 Part4 離散フーリエ変換","dateModified":"2020-08-04T00:00:00-05:00","description":"フーリエ変換の離散化","datePublished":"2020-08-04T00:00:00-05:00","@type":"BlogPosting","image":"https://vintea01.github.io/tpt-medical-it/images/ouyo_ch05.png","url":"https://vintea01.github.io/tpt-medical-it/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6%E6%95%99%E5%AE%A4/2020/08/04/oyo-sugaku_part5.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://vintea01.github.io/tpt-medical-it/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6%E6%95%99%E5%AE%A4/2020/08/04/oyo-sugaku_part5.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://vintea01.github.io/tpt-medical-it/feed.xml" title="T/T" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/tpt-medical-it/">T/T</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/tpt-medical-it/about/">団体について</a><a class="page-link" href="/tpt-medical-it/search/">サイト内検索</a><a class="page-link" href="/tpt-medical-it/categories/">タグ一覧</a><a class="page-link" href="/tpt-medical-it/timeline/">Twitter</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">応用数学 Part4 離散フーリエ変換</h1><p class="page-description">フーリエ変換の離散化</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-08-04T00:00:00-05:00" itemprop="datePublished">
+        Aug 4, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      1 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/tpt-medical-it/categories/#応用数学教室">応用数学教室</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/Vintea01/tpt-medical-it/tree/master/_notebooks/2020-08-04-oyo-sugaku_part5.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/tpt-medical-it/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          
+          
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Reference:">Reference: </a></li>
+<li class="toc-entry toc-h2"><a href="#はじめに">はじめに </a></li>
+<li class="toc-entry toc-h2"><a href="#Plot">Plot </a></li>
+<li class="toc-entry toc-h2"><a href="#この章を読むのに必要な復習">この章を読むのに必要な復習 </a></li>
+<li class="toc-entry toc-h2"><a href="#雰囲気だけわかる最終目的地">雰囲気だけわかる最終目的地 </a></li>
+<li class="toc-entry toc-h2"><a href="#二次形式について">二次形式について </a></li>
+<li class="toc-entry toc-h1"><a href="#\right)-\">\right) \ </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#固有値分解">固有値分解 </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#※行列式">※行列式 </a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-08-04-oyo-sugaku_part5.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Reference:">
+<a class="anchor" href="#Reference:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference:<a class="anchor-link" href="#Reference:"> </a>
+</h2>
+<p></p>
+<div class="footnotes"><p id="fn-1">1. <a href="https://www.kyoritsu-pub.co.jp/bookdetail/9784320017382">金谷 健一. これなら分かる応用数学教室―最小二乗法からウェーブレットまで― . 共立出版, 2003.</a><a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="はじめに">
+<a class="anchor" href="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB" aria-hidden="true"><span class="octicon octicon-link"></span></a>はじめに<a class="anchor-link" href="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB"> </a>
+</h2>
+<p>この章は応用数学教室を読みすすめる上で必要な線形代数をさらうことを目的に作られた章です。そのため、</p>
+<ul>
+<li>連立方程式の行列表示</li>
+<li>連立方程式が解けることと行列が正則で有ることの関係</li>
+<li>行列式</li>
+<li>行列式の余因子展開とクラメルの公式</li>
+<li>逆行列と転置行列</li>
+<li>線形独立、線形従属</li>
+<li>線形空間、部分線形空間、元の集合によって貼られる空間、次元、ランク</li>
+</ul>
+<p>といった、いわゆる線形空間の基礎について前半10ページくらいを使って触れています。
+（ここまでやって基底について触れないあたり、応用数学教室で必要ないことは省くの精神が垣間見えますね）</p>
+<p>以前線形代数はTPTで取り扱った（し、一応教養部でやったので）割愛しています。勉強会では触れるかも。固有値と固有ベクトルに関しては後半に絡むので、かんたんな解説入れています。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Plot">
+<a class="anchor" href="#Plot" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plot<a class="anchor-link" href="#Plot"> </a>
+</h2>
+<p>応用数学教室本書の順番を後ろから解いていく。</p>
+<ul>
+<li>この章の最終目的地であるところの2次形式の標準化を雰囲気だけ説明する</li>
+<li>そのために係数行列を対角化する必要があることを確認する</li>
+<li>行列を対角化するための手段として、固有値分解について説明する</li>
+<li>最後に応用数学教室と同じ順番でまとめる</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="この章を読むのに必要な復習">
+<a class="anchor" href="#%E3%81%93%E3%81%AE%E7%AB%A0%E3%82%92%E8%AA%AD%E3%82%80%E3%81%AE%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E5%BE%A9%E7%BF%92" aria-hidden="true"><span class="octicon octicon-link"></span></a>この章を読むのに必要な復習<a class="anchor-link" href="#%E3%81%93%E3%81%AE%E7%AB%A0%E3%82%92%E8%AA%AD%E3%82%80%E3%81%AE%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E5%BE%A9%E7%BF%92"> </a>
+</h2>
+<p>線形代数。行列の積と行列式と内積がわかれば一応大丈夫</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="雰囲気だけわかる最終目的地">
+<a class="anchor" href="#%E9%9B%B0%E5%9B%B2%E6%B0%97%E3%81%A0%E3%81%91%E3%82%8F%E3%81%8B%E3%82%8B%E6%9C%80%E7%B5%82%E7%9B%AE%E7%9A%84%E5%9C%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>雰囲気だけわかる最終目的地<a class="anchor-link" href="#%E9%9B%B0%E5%9B%B2%E6%B0%97%E3%81%A0%E3%81%91%E3%82%8F%E3%81%8B%E3%82%8B%E6%9C%80%E7%B5%82%E7%9B%AE%E7%9A%84%E5%9C%B0"> </a>
+</h2>
+<p>応用数学教室の6章が主成分分析(TPT内部生は過去の勉強会の録画があります)になります。
+主成分分析の雰囲気を知るなら<a href="https://logics-of-blue.com/principal-components-analysis/">主成分分析の考え方</a>などを見てください。</p>
+<p>この章を理解するためだけにざっくりとした理解をすると斜めのいい感じの軸で座標を取り直すようなことをしているという理解をしてください。</p>
+<p>少し強引ですが、離散的なデータ点に対して軸を取り直す前にきれいな形に対して軸を取り直すことを考えます。、、、例えば「楕円」とか</p>
+<h2 id="二次形式について">
+<a class="anchor" href="#%E4%BA%8C%E6%AC%A1%E5%BD%A2%E5%BC%8F%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" aria-hidden="true"><span class="octicon octicon-link"></span></a>二次形式について<a class="anchor-link" href="#%E4%BA%8C%E6%AC%A1%E5%BD%A2%E5%BC%8F%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6"> </a>
+</h2>
+<p>次数が2でのみ構成された式を考えます。例えば、</p>
+$$
+ax^2 + 2bxy + cy^2  ~~~ 式(1.1)
+$$<p>などです。これを軸を回転させることで、$x^2$と$y^2$のみにできると数Ⅲでやったx軸かy軸に沿った二次曲線（放物線、楕円、双曲線）になり、うまく回転できたと評価できる。</p>
+<p>斜めの楕円を治す、(images/ouyo_ch05.png)</p>
+<p>式(1.1)を行列と内積を用いて表すと、</p>
+$$
+\\
+\left(
+\left(
+    \begin{array}{c}
+        x \\
+        y
+    \end{array}
+\right),
+  \left(
+    \begin{array}{cc}
+      a &amp; b \\
+      b &amp; c
+    \end{array}
+  \right)
+\left(
+    \begin{array}{c}
+        x \\
+        y
+    \end{array}
+\right)
+\right) 
+$$<p>となる。この係数を表した行列を係数行列という。</p>
+<p>今、対角成分以外を0にできれば変数の2乗だけが残ることになる。</p>
+<p>例えば</p>
+$$
+\left( \begin{array}{c}
+    x \\
+    y
+    \end{array}
+    \right) := B \left(
+    \begin{array}{c}
+        x' \\
+        y'
+    \end{array}
+\right)
+$$<p>と変換すると、
+$$
+\left(
+\left(
+    \begin{array}{c}
+        x \\
+        y
+    \end{array}
+\right),
+  \left(
+    \begin{array}{cc}
+      a &amp; b \\
+      b &amp; c
+    \end{array}
+  \right)
+\left(
+    \begin{array}{c}
+        x \\
+        y
+    \end{array}
+\right)
+\right) = 
+\left(
+B \left(
+    \begin{array}{c}
+        x' \\
+        y'
+    \end{array}
+\right),
+  \left(
+    \begin{array}{cc}
+      a &amp; b \\
+      b &amp; c
+    \end{array}
+  \right)
+B \left(
+    \begin{array}{c}
+        x' \\
+        y'
+    \end{array}
+\right)</p>
+<h1 id="\right)-\">
+<a class="anchor" href="#%5Cright)-%5C" aria-hidden="true"><span class="octicon octicon-link"></span></a>\right) \<a class="anchor-link" href="#%5Cright)-%5C"> </a>
+</h1>
+<p>\left(
+ \left(
+    \begin{array}{c}
+        x' \\
+        y'
+    \end{array}
+\right),
+B^{\mathrm{T}} 
+  \left(
+    \begin{array}{cc}
+      a &amp; b \\
+      b &amp; c
+    \end{array}
+  \right)
+B\left(
+    \begin{array}{c}
+        x' \\
+        y'
+    \end{array}
+\right)
+\right) 
+$$</p>
+<p>となる。この３つの行列の積が対角成分以外が0の行列となればよい。そのために固有値分解を用いることになる。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="固有値分解">
+<a class="anchor" href="#%E5%9B%BA%E6%9C%89%E5%80%A4%E5%88%86%E8%A7%A3" aria-hidden="true"><span class="octicon octicon-link"></span></a>固有値分解<a class="anchor-link" href="#%E5%9B%BA%E6%9C%89%E5%80%A4%E5%88%86%E8%A7%A3"> </a>
+</h2>
+<p>今行列Aに対して、
+$$
+Au = \lambda u
+$$
+となる定数$\lambda$と(ゼロではない)ベクトル$u$が存在するとき、$\lambda$を固有値、$u$を固有ベクトルという。
+これを整理して$u\neq0$を仮定して、
+$$
+Au = \lambda u
+\Leftrightarrow |A-\lambda I|u = 0
+\Leftrightarrow |A-\lambda I| = 0
+$$
+これを解けば固有値と固有ベクトルを得る。</p>
+<p>互いに直行したベクトルを列にして並べたものを直交行列という。直交というのは内積と0で無いベクトルu, vを用いて、
+$$
+(u, v) = 0
+$$
+で定義する。</p>
+<p>証明は省くが、今、固有ベクトルは互いに直行しているから、
+固有ベクトルを列として並べた行列は直交行列となる。</p>
+<p>これをUとおくと、
+$$
+U^{\mathrm{T}}AU = 
+\left( \begin{array}{c} \lambda_1~~ 0~~ 0~~ \cdots~~ 0 \\
+0~~ \lambda_2 ~~0 ~~\cdots~~ 0 \\
+\vdots \\
+0 ~~0 ~~0~~ \cdots ~~\lambda_n \\
+\end{array}
+\right)
+$$
+として対角化が成功する。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="※行列式">
+<a class="anchor" href="#%E2%80%BB%E8%A1%8C%E5%88%97%E5%BC%8F" aria-hidden="true"><span class="octicon octicon-link"></span></a>※行列式<a class="anchor-link" href="#%E2%80%BB%E8%A1%8C%E5%88%97%E5%BC%8F"> </a>
+</h3>
+<p>この章は行列式がわからないというときのための補足です。飛ばしてもいいよ。
+n*n正方行列Aに対して行列式を定義する。n個の置換すべてを元として持った集合をSとして行列式$|A|$を定義すると、</p>
+$$
+\begin{eqnarray}
+sgn(\sigma):&amp;=&amp; (置換 \sigma を恒等置換から有限回の互換で表したときの互換の個数が偶数なら1, 奇数なら-1を返す関数) \\
+a_{ij}:&amp;=&amp; Aのi行目j列目の要素 \\
+\sigma_i :&amp;=&amp; 添字iが置換された先 \\
+|A| &amp;=&amp; \sum_{\sigma \in S} sgn(\sigma) \Pi_{i=1}^n a_{i \sigma_i}
+\end{eqnarray}
+$$<p>ちょっと複雑なので、具体例</p>
+<p>${1, 2}$の置換は$(1, 2), (2, 1)$の2種類$(=2!)$存在する。よって
+
+$$S = \{(1, 2), (2, 1)\}$$
+</p>
+<p>置換(1,2)は恒等置換なので、表すのに必要な互換の個数は0.よって
+
+$$sgn((1,2))=1$$
+
+同様にして
+$$
+    sgn((2,1)) = -1
+$$
+また、置換$\sigma = (2,1)$に対して$\sigma_i$は、
+
+$$\sigma_1 = 2, \sigma_2 = 1$$
+
+ということを表している。</p>
+$$
+\begin{eqnarray}
+|A| &amp;=&amp; \left|
+    \begin{array}{cc}
+        a_{11} &amp; a_{12} \\
+        a_{21} &amp; a_{22}
+    \end{array}
+\right| \\
+&amp;=&amp; sgn((1,2)) a_{11} a_{22} + sgn((2,1)) a_{12} a_{21} \\
+&amp;=&amp; a_{11} a_{22} - a_{12} a_{21}
+\end{eqnarray}
+$$<p>行列式の説明終わり。まとめとしては、行列式の計算の仕方をたすき掛けやサラスの公式で対応しているとAの列数(=行数)が4以上のときに対応できなくなるので、上の定義で覚えましょう</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="Vintea01/tpt-medical-it"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/tpt-medical-it/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6%E6%95%99%E5%AE%A4/2020/08/04/oyo-sugaku_part5.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/tpt-medical-it/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/tpt-medical-it/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/tpt-medical-it/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Medical/Dental students playing with Information Technologies and Mathematics.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/Vintea01" title="Vintea01"><svg class="svg-icon grey"><use xlink:href="/tpt-medical-it/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/tpt_ochanomizu" title="tpt_ochanomizu"><svg class="svg-icon grey"><use xlink:href="/tpt-medical-it/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
